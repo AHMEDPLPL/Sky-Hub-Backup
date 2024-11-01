@@ -1,0 +1,75 @@
+local Services = {
+            Players = game:GetService("Players"),
+            RunService = game:GetService("RunService"),
+            StarterGui = game:GetService("StarterGui"),
+            Workspace = game:GetService("Workspace"),
+        }
+
+        local LocalPlayer = Services.Players.LocalPlayer
+
+        local function PlayerAdded(Player)
+            local Detected = false
+            local Character
+            local PrimaryPart
+
+            local function CharacterAdded(NewCharacter)
+                Character = NewCharacter
+                repeat
+                    wait()
+                    PrimaryPart = NewCharacter:FindFirstChild("HumanoidRootPart")
+                until PrimaryPart
+                Detected = false
+            end
+
+            CharacterAdded(Player.Character or Player.CharacterAdded:Wait())
+            Player.CharacterAdded:Connect(CharacterAdded)
+
+            Services.RunService.Heartbeat:Connect(function()
+                if Character and Character:IsDescendantOf(Services.Workspace) and PrimaryPart and PrimaryPart:IsDescendantOf(Character) then
+                    if PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 or PrimaryPart.AssemblyLinearVelocity.Magnitude > 100 then
+                        if not Detected then
+                            Services.StarterGui:SetCore("ChatMakeSystemMessage", {
+                                Text = "Fling Exploit detected, Player: " .. tostring(Player),
+                                Color = Color3.fromRGB(255, 200, 0),
+                            })
+                        end
+                        Detected = true
+                        for _, v in ipairs(Character:GetDescendants()) do
+                            if v:IsA("BasePart") then
+                                v.CanCollide = false
+                                v.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                                v.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                                v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+
+        for _, player in ipairs(Services.Players:GetPlayers()) do
+            if player ~= LocalPlayer then
+                PlayerAdded(player)
+            end
+        end
+
+        Services.Players.PlayerAdded:Connect(PlayerAdded)
+
+        local LastPosition = nil
+        Services.RunService.Heartbeat:Connect(function()
+            pcall(function()
+                local PrimaryPart = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if PrimaryPart and (PrimaryPart.AssemblyLinearVelocity.Magnitude > 250 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 250) then
+                    PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                    PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                    if LastPosition then
+                        PrimaryPart.CFrame = LastPosition
+                    end
+
+                   
+                elseif PrimaryPart and PrimaryPart.AssemblyLinearVelocity.Magnitude < 50 and PrimaryPart.AssemblyAngularVelocity.Magnitude < 50 then
+                    LastPosition = PrimaryPart.CFrame
+                end
+            end)
+        end)
+        
