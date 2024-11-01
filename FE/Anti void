@@ -1,0 +1,22 @@
+local voidYPosition = -50
+
+-- Define the position to teleport players to when they fall into the void
+local safePosition = Vector3.new(0, 10, 0)
+
+-- Function to check player's position and teleport if necessary
+local function checkPlayerPosition()
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = player.Character.HumanoidRootPart
+            if rootPart.Position.Y < voidYPosition then
+                rootPart.CFrame = CFrame.new(safePosition)
+            end
+        end
+    end
+end
+
+-- Run the checkPlayerPosition function every second
+while true do
+    checkPlayerPosition()
+    wait(1)
+end	
