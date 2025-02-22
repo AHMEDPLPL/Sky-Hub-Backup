@@ -905,7 +905,6 @@ end
 local basgui = it("GuiMain")
 basgui.Parent = plr.PlayerGui
 basgui.Name = "VISgui"
-FDless.keepGui(basgui)
 local fullscreenz = it("Frame")
 fullscreenz.Parent = basgui
 fullscreenz.BackgroundColor3 = Color3.new(255, 255, 255)
