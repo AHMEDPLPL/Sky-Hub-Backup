@@ -585,35 +585,17 @@ game:GetService("RunService").Stepped:Connect(SimRad)
     allowframeloss = false
     tossremainder = false
     lastframe = tick()
-    script.Heartbeat:Fire()
-    game:GetService("RunService").Heartbeat:connect(function(s, p)
-        tf = tf + s
-        if tf >= frame then
-            if allowframeloss then
-                script.Heartbeat:Fire()
-                lastframe = tick()
-            else
-                for i = 1, math.floor(tf / frame) do
-                    script.Heartbeat:Fire()
-                end
-                lastframe = tick()
-            end
-            if tossremainder then
-                tf = 0
-            else
-                tf = tf - frame * math.floor(tf / frame)
-            end
-        end
-    end)
+    
     function swait(num)
-        if num == 0 or num == nil then
-            ArtificialHB.Event:wait()
-        else
-            for i = 0, num do
-                ArtificialHB.Event:wait()
-            end
-        end
+        	if num == 0 or num == nil then
+		game:GetService("RunService").RenderStepped:wait()
+	else
+		for i = 0, num do
+			game:GetService("RunService").RenderStepped:wait()
+		end
+	end
     end
+    
     mouse.KeyDown:connect(function(key)
         if key == "c" then
             repeat
