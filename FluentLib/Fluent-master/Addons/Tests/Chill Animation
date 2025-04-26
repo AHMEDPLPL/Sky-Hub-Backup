@@ -699,8 +699,7 @@ game:GetService("RunService").Stepped:Connect(SimRad)
         if equipped == true or equipped == false then
             if attack == false then
                 idle = idle + 1
-                Character.Humanoid.MaxHealth = math.huge
-                Character.Humanoid.Health = math.huge
+               
             else
                 idle = 0
             end
