@@ -1,0 +1,525 @@
+
+
+--[[
+    fe nameless animations v4
+    made by MyWorld#4430
+    discord.gg/pYVHtSJmEY
+    no hats needed, r15 supported
+]]
+local Global = getgenv and getgenv() or _G
+local Empyrean = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Emper%20reanimte"))()
+
+Empyrean = Start({
+Accessories = {
+-- on sale rigs
+
+     -- Free Rig
+
+    { MeshId = "4819720316", Name = "Torso", Offset = CFrame.Angles(0, 0, -0.25), TextureId = "4819722776" },
+    { MeshId = "3030546036", Name = "Left Arm", Offset = CFrame.Angles(-1.57, 0, 1.57), TextureId = "3033903209" },
+    { MeshId = "3030546036", Name = "Right Arm", Offset = CFrame.Angles(-1.57, 0, -1.57), TextureId = "3360978739" },
+    { MeshId = "3030546036", Name = "Left Leg", Offset = CFrame.Angles(-1.57, 0, 1.57), TextureId = "3033898741" },
+    { MeshId = "3030546036", Name = "Right Leg", Offset = CFrame.Angles(-1.57, 0, -1.57), TextureId = "3409604993" },
+
+     -- SB Rig
+
+    { MeshId = "125443585075666", Name = "Torso", Offset = CFrame.Angles(0, 3.15, 0), TextureId = "121023324229475" },
+    { MeshId = "121342985816617", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.57), TextureId = "129264637819824" },
+    { MeshId = "121342985816617", Name = "Right Arm", Offset = CFrame.Angles(0, 3.15, 1.57), TextureId = "129264637819824" },
+    { MeshId = "83395427313429", Names = { "Left Leg", "Right Leg" }, Offset = CFrame.Angles(0, 0, 1.57), TextureId = "97148121718581" },--18641142410
+
+    -- black rig
+
+    { MeshId = "110684113028749", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "" },
+    { MeshId = "125405780718494", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+
+    -- white rig
+
+    { MeshId = "139733645770094", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "99608462237958", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "90736849096372", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "105141400603933", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "17170940529", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "17237696667" },
+    { MeshId = "105063268471198", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "108855352006001" },
+    
+    -- mashless rig
+    
+    { MeshId = "13953094351", Name = "Head", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "127552124837034", Name = "Torso", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "121304376791439", Name = "Left Leg", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "121304376791439", Name = "Right Leg", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "117287001096396", Name = "Left Arm", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "117287001096396", Name = "Right Arm", Offset = CFrame.identity, TextureId = "" },
+   
+    -- noob rig
+
+    { MeshId = "126825022897778", Name = "Torso", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "73798034827573" },
+    { MeshId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "73798034827573" },
+    { MeshId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "135650240593878" },
+    { MeshId = "114041469540605", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "100316330483069" },
+    
+    -- og body
+    
+    { MeshId = "13953154391", Name = "Head", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "13778226115", Name = "Torso", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "11159370334", Name = "Left Leg", Offset = CFrame.Angles(1.5707963267948966, 0, 1.5707963267948966), TextureId = "11159284657" },
+    { MeshId = "11263221350", Name = "Right Leg", Offset = CFrame.Angles(-1.5707963267948966, 0, 1.5707963267948966), TextureId = "11263219250" },
+    { MeshId = "12344207333", Name = "Left Arm", Offset = CFrame.Angles(2, 0, 0), TextureId = "" },
+    { MeshId = "12344206657", Name = "Right Arm", Offset = CFrame.Angles(2, 0, 0), TextureId = "" },
+    
+    -- hulk rig
+    { MeshId = "rbxassetid://117266446967358", TextureId = "rbxassetid://99186239316470", Name = "Right Leg", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://86485200451901", TextureId = "rbxassetid://99186239316470", Name = "Left Leg", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://73664911305187", TextureId = "rbxassetid://71196320463952", Name = "Left Arm", Offset = CFrame.identity},
+    { MeshId = "rbxassetid://124336532477181", TextureId = "rbxassetid://71196320463952", Name = "Right Arm", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://100185816449786", TextureId = "rbxassetid://118274332607797", Name = "Torso", Offset = CFrame.identity },
+       
+-- Knight rig 
+
+{ MeshId = "rbxassetid://14458457016", TextureId = "rbxassetid://14458457136", Name = "Head", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://119861389229755", TextureId = "rbxassetid://102031430418572", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://88252207064016", TextureId = "rbxassetid://88715584742936", Name = "Left Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://88252207064016", TextureId = "rbxassetid://88715584742936", Name = "Right Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://117554824897780", TextureId = "rbxassetid://84429400539007", Name = "Right Leg", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://123388937940630", TextureId = "rbxassetid://84429400539007", Name = "Left Leg", Offset = CFrame.identity },
+
+-- Soldier Rig
+
+{ MeshId = "rbxassetid://119861389229755", TextureId = "rbxassetid://102031430418572", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://17500732084", TextureId = "rbxassetid://17500731685", Name = "Head",Offset = CFrame.identity  },
+{ MeshId = "rbxassetid://136378854630150", TextureId = "rbxassetid://120675101379312", Name = "Right Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://18989397242", TextureId = "rbxassetid://18989397363", Name = "Left Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://117554824897780", TextureId = "rbxassetid://84429400539007", Name = "Right Leg", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://123388937940630", TextureId = "rbxassetid://84429400539007", Name = "Left Leg", Offset = CFrame.identity },
+
+
+-- off sale rigs
+--black torsos
+{ MeshId = "rbxassetid://14768666349", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://14241018198", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://13421774668", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+
+--black rig
+{ MeshId = "rbxassetid://17387586286", TextureId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17387586286", TextureId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17374767929", TextureId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17374767929", TextureId = "", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+
+
+--white rig
+{ MeshId = "rbxassetid://14255522247", TextureId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://14255522247", TextureId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966)},
+{ MeshId = "rbxassetid://14768684979", TextureId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://14768684979", TextureId = "", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+
+-- Noob Rig
+{ MeshId = "18640899369", Name = "Torso", Offset = CFrame.Angles(0, 0, 0), TextureId = "18640899481" },
+{ MeshId = "18640914129", Names = { "Left Arm", "Right Arm"}, Offset = CFrame.Angles(0, 0, 0), TextureId = "18640914168" },
+{ MeshId = "18640901641", Names = { "Left Leg", "Right Leg"}, Offset = CFrame.Angles(0, 0, 0), TextureId = "18640901676" },
+
+
+
+},
+ApplyDescription = true,
+BreakJointsDelay = 0.255,
+ClickFling = Global.Fling,
+DefaultFlingOptions = {
+HatFling = Global.HatFling,--{ MeshId="", TextureId = ""},
+Highlight = Global.Fling,
+PredictionFling = Global.Fling,
+Timeout = 1,
+ToolFling = Global.ToolFling,--"Boombox",
+},
+DisableCharacterCollisions = true,
+DisableHealthBar = true,
+DisableRigCollisions = true,
+HatDrop = Global.HatDrop,
+HideCharacter = Vector3.new(0, -50, 0),
+ParentCharacter = true,
+PermanentDeath = Global.PremadeathEnabled,
+Refit = true,
+RigSize = 1,
+RigTransparency = 1,
+R15 = false,
+SetCameraSubject = true,
+SetCameraType = true,
+SetCharacter = false,
+SetCollisionGroup = true,
+SimulationRadius = 2147483647,
+TeleportRadius = 12,
+UseServerBreakJoints = Global.ServerBreakJoints,
+})
+
+game.TestService.IsSleepAllowed = false
+
+local lp = game:GetService("Players").LocalPlayer
+local hidden = game:GetService("RunService"):IsStudio() and sethiddenproperty or set_hidden_property
+
+local function SimRad()
+    pcall(function()
+        hidden(lp, "MaximumSimulationRadius",2081989891)
+        hidden(lp, "SimulationRadius",2081989891)
+    end)
+end
+game:GetService("RunService").Stepped:Connect(SimRad)
+
+
+local c = workspace.non
+if not c then return end
+local ws = game:GetService("Workspace")
+c.AncestryChanged:Connect(function()
+    if not c:IsDescendantOf(ws) then
+        c = nil
+    end
+end)
+local rs = game:GetService("RunService")
+local stepped, renderstepped, heartbeat = rs.Stepped, rs.RenderStepped, rs.Heartbeat
+local function gp(parent, name, classname)
+    if typeof(parent) == "Instance" then
+        for i, v in pairs(parent:GetChildren()) do
+            if (v.Name == name) and v:IsA(classname) then
+                return v
+            end
+        end
+    end
+    return nil
+end
+
+local function joint(name, parent, Part0, Part1, fakejoint)
+    fakejoint.C0 = CFrame.new()
+    fakejoint.C1 = CFrame.new()
+    local joint = gp(parent, name, "Motor6D")
+    if joint then
+        fakejoint.C0 = joint.C0
+        fakejoint.C1 = joint.C1
+    end
+    local con = nil
+    con = stepped:Connect(function()
+        if not c then
+            return con:Disconnect()
+        end
+        local fix = nil
+        fix = function()
+            if not joint then 
+                joint = Instance.new("Motor6D")
+                joint.Changed:Connect(fix)
+                joint.Destroying:Connect(function() joint = nil end)
+            end
+            joint.Part0 = Part0
+            joint.Part1 = Part1
+            joint.C0 = fakejoint.C0
+            joint.C1 = fakejoint.C1
+            joint.Parent = parent
+        end
+        fix()
+    end)
+end
+
+local function part(name)
+    local part = gp(c, name, "BasePart")
+    if not part then
+        part = Instance.new("Part")
+        part.Name = name
+        part.Transparency = 1
+        part.CanCollide = false
+        part.Massless = true
+        part.Size = Vector3.new(1, 1, 1)
+        part.Parent = c
+    end
+    local size = part.Size
+    part.Destroying:Connect(function()
+        part = nil
+        c = nil
+    end)
+    local con = nil
+    con = stepped:Connect(function()
+        if not part then
+            return con:Disconnect()
+        end
+        part.Anchored = false
+        part.Name = name
+        part.Size = size
+        part.CanQuery = false
+        part.CanTouch = false
+        part.Parent = c
+    end)
+    return part
+end
+
+local part = workspace.non
+
+local Torso = part["Torso"]
+local RightArm = part["Right Arm"]
+local LeftArm = part["Left Arm"]
+local LeftLeg = part["Left Leg"]
+local RightLeg = part["Right Leg"]
+local Head = part["Head"]
+local HumanoidRootPart = part["HumanoidRootPart"]
+
+local RootJoint = {}
+local RightShoulder = {}
+local LeftShoulder = {}
+local RightHip = {}
+local LeftHip = {}
+local Neck = {}
+
+joint("Neck", Torso, Torso, Head, Neck)
+joint("RootJoint", HumanoidRootPart, HumanoidRootPart, Torso, RootJoint)
+joint("Right Shoulder", Torso, Torso, RightArm, RightShoulder)
+joint("Left Shoulder", Torso, Torso, LeftArm, LeftShoulder)
+joint("Right Hip", Torso, Torso, RightLeg, RightHip)
+joint("Left Hip", Torso, Torso, LeftLeg, LeftHip)
+
+local animate = gp(c, "Animate", "LocalScript")
+if animate then
+    animate.Disabled = true
+end
+
+local hum = c:FindFirstChildOfClass("Humanoid") or Instance.new("Humanoid", c)
+local states = {
+    [0]=false,[8]=true,
+    [10]=false,[12]=false,
+    [11]=false,[1]=false,
+    [2]=true,[3]=true,
+    [7]=true,[6]=false,
+    [5]=true,[13]=false,
+    [14]=false,[15]=false,
+    [4]=false,[16]=false
+}
+for i, v in pairs(states) do
+    hum:SetStateEnabled(i, v)
+end
+for i, v in pairs(hum:GetPlayingAnimationTracks()) do
+    v:Stop()
+end
+hum.RigType = Enum.HumanoidRigType.R6
+hum.BreakJointsOnDeath = false
+hum.RequiresNeck = false
+hum.MaxHealth = 0
+hum.Health = 0
+hum:ChangeState(8)
+
+local modes = {
+    q = "lay",
+    e = "sit",
+    r = "rickroll",
+    t = "wave",
+    y = "dab",
+    u = "dance",
+    p = "T",
+    f = "float",
+    g = "floss",
+    h = "emote",
+    j = "pushups",
+    k = "kazotsky",
+    l = "L"
+}
+for i, v in pairs(modes) do
+    if type(i) == "string" then
+        modes[Enum.KeyCode[i:upper()]] = v
+    end
+end
+local uis, mode = game:GetService("UserInputService"), ""
+uis.InputBegan:Connect(function(key)
+    if uis:GetFocusedTextBox() then return end
+    key = key.KeyCode
+    if mode == modes[key] then
+        mode = ""
+    else
+        mode = modes[key] or mode
+    end
+end)
+
+local cf, v3, euler, sin, sine, abs = CFrame.new, Vector3.new, CFrame.fromEulerAnglesXYZ, math.sin, 0, math.abs
+local con = nil
+con = renderstepped:Connect(function(deltaTime)
+    if not c then
+        return con:Disconnect()
+    end
+    local vel = HumanoidRootPart.Velocity
+    sine += deltaTime
+    deltaTime *= 10
+    if vel.Magnitude > 2 then
+        if abs(vel.X) + abs(vel.Z) > abs(vel.Y) then -- walk
+            
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1, 0.5, 0) * euler(-0.6108652381980153 * sin(sine * 8), 1.5707963267948966 + 0.17453292519943295 * sin(sine * 8), 0), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 0.2 * sin(sine * 16), 0) * euler(-1.6580627893946132 + 0.04363323129985824 * sin(sine * 16), 0.03490658503988659 * sin(sine * 8), -3.141592653589793 - 0.08726646259971647 * sin((sine + 0.25) * 8)), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1, 0.5, 0) * euler(0.6108652381980153 * sin(sine * 8), -1.5707963267948966 + 0.17453292519943295 * sin(sine * 8), 0), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966 - 0.08726646259971647 * sin((sine + 0.1) * 16), -0.03490658503988659 * sin((sine + 0.05) * 8), -3.141592653589793 + 0.08726646259971647 * sin((sine + 0.25) * 8)), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1 + 0.2 * sin((sine + 0.125) * 8), 0) * euler(1.5707963267948966 + 0.6981317007977318 * sin(sine * 8), 1.5707963267948966 + 0.08726646259971647 * sin(sine * 8), -1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1 - 0.2 * sin((sine + 0.125) * 8), 0) * euler(1.5707963267948966 - 0.6981317007977318 * sin(sine * 8), -1.5707963267948966 + 0.08726646259971647 * sin(sine * 8), 1.5707963267948966), deltaTime) 
+            --RightArm,1,0,0,8,0,-35,0,8,0.5,0,0,8,90,10,0,8,0,0,0,8,0,0,0,8,Torso,0,0,0,8,-95,2.5,0,16,0,0.2,0,16,0,2,0,8,0,0,0,8,-180,-5,0.25,8,Fedora_Handle,8.657480066176504e-09,0,0,8,-6,0,0,8,-0.15052366256713867,0,0,8,0,0,0,8,-0.010221302509307861,0,0,8,0,0,0,8,LeftArm,-1,0,0,8,-0,35,0,8,0.5,0,0,8,-90,10,0,8,0,0,0,8,0,0,0,8,Head,0,0,0,8,-90,-5,0.1,16,1,0,0,8,0,-2,0.05,8,0,0,0,8,-180,5,0.25,8,RightLeg,1,0,0,8,90,40,0,8,-1,0.2,0.125,8,90,5,0,8,0,0,0,8,-90,0,0,8,LeftLeg,-1,0,0,8,90,-40,0,8,-1,-0.2,0.125,8,-90,5,0,8,0,0,0,8,90,0,0,8
+            
+        elseif vel.Y > 0 then -- jump
+            
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 0, 0) * euler(-1.5707963267948966 + 0.08726646259971647 * sin((sine + 0.25) * 4), 0.08726646259971647 * sin(sine * 4), -3.141592653589793), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.3962634015954636 - 0.08726646259971647 * sin((sine + 0.5) * 4), -0.08726646259971647 * sin((sine + 0.25) * 4), -3.141592653589793), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1, 0.5, 0) * euler(4.014257279586958 - 0.08726646259971647 * sin((sine + 0.5) * 4), -1.7453292519943295 - 0.08726646259971647 * sin((sine + 0.25) * 4), 1.5707963267948966), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1, 0) * euler(1.5707963267948966 - 0.08726646259971647 * sin((sine + 0.5) * 4), 1.6580627893946132 + 0.08726646259971647 * sin((sine + 0.25) * 4), -1.5707963267948966), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1, 0.5, 0) * euler(4.014257279586958 - 0.08726646259971647 * sin((sine + 0.5) * 4), 1.7453292519943295 - 0.08726646259971647 * sin((sine + 0.25) * 4), -1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(1.5707963267948966 - 0.08726646259971647 * sin((sine + 0.5) * 4), -1.6580627893946132 + 0.08726646259971647 * sin((sine + 0.25) * 4), 1.5707963267948966), deltaTime) 
+            --Fedora_Handle,8.657480066176504e-09,0,0,4,-6,0,0,4,-0.15052366256713867,0,0,4,0,0,0,4,-0.010221302509307861,0,0,4,0,0,0,4,Torso,0,0,0,4,-90,5,0.25,4,0,0,0,4,0,5,0,4,0,0,0,4,-180,0,0,4,Head,0,0,0,4,-80,-5,0.5,4,1,0,0,4,0,-5,0.25,4,0,0,0,4,-180,0,0,4,LeftArm,-1,0,0,4,230,-5,0.5,4,0.5,0,0,4,-100,-5,0.25,4,0,0,0,4,90,0,0,4,RightLeg,1,0,0,4,90,-5,0.5,4,-1,0,0,4,95,5,0.25,4,0,0,0,4,-90,0,0,4,RightArm,1,0,0,4,230,-5,0.5,4,0.5,0,0,4,100,-5,0.25,4,0,0,0,4,-90,0,0,4,LeftLeg,-1,0,0,4,90,-5,0.5,4,-1,0,0,4,-95,5,0.25,4,0,0,0,4,90,0,0,4
+            
+        else -- fall
+            
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 0, 0) * euler(-1.6580627893946132 + 0.08726646259971647 * sin((sine + 0.25) * 4), 0.08726646259971647 * sin(sine * 4), -3.141592653589793), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.7453292519943295 - 0.08726646259971647 * sin((sine + 0.5) * 4), -0.08726646259971647 * sin((sine + 0.25) * 4), -3.141592653589793), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1, 0.5, 0) * euler(3.839724354387525 - 0.08726646259971647 * sin((sine + 0.5) * 4), -1.7453292519943295 - 0.08726646259971647 * sin((sine + 0.25) * 4), 1.5707963267948966), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1, 0) * euler(1.7453292519943295, 1.6580627893946132 + 0.08726646259971647 * sin((sine + 0.25) * 4), -1.5707963267948966), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1, 0.5, 0) * euler(3.839724354387525 - 0.08726646259971647 * sin((sine + 0.5) * 4), 1.7453292519943295 - 0.08726646259971647 * sin((sine + 0.25) * 4), -1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(1.7453292519943295, -1.6580627893946132 + 0.08726646259971647 * sin((sine + 0.25) * 4), 1.5707963267948966), deltaTime) 
+            --Fedora_Handle,8.657480066176504e-09,0,0,4,-6,0,0,4,-0.15052366256713867,0,0,4,0,0,0,4,-0.010221302509307861,0,0,4,0,0,0,4,Torso,0,0,0,4,-95,5,0.25,4,0,0,0,4,0,5,0,4,0,0,0,4,-180,0,0,4,Head,0,0,0,4,-100,-5,0.5,4,1,0,0,4,0,-5,0.25,4,0,0,0,4,-180,0,0,4,LeftArm,-1,0,0,4,220,-5,0.5,4,0.5,0,0,4,-100,-5,0.25,4,0,0,0,4,90,0,0,4,RightLeg,1,0,0,4,100,0,0,4,-1,0,0,4,95,5,0.25,4,0,0,0,4,-90,0,0,4,RightArm,1,0,0,4,220,-5,0.5,4,0.5,0,0,4,100,-5,0.25,4,0,0,0,4,-90,0,0,4,LeftLeg,-1,0,0,4,100,0,0,4,-1,0,0,4,-95,5,0.25,4,0,0,0,4,90,0,0,4
+            
+        end
+    else --idle
+        
+        if mode == "" then
+             
+           RightShoulder.C0 = RightShoulder.C0:Lerp(cf(0.9999998807907104, 0.4999999403953552, -2.765073337516225e-32) * euler(-1.5707963267948966, 1.3962634015954636 + 0.08726646259971647 * sin((sine + 1) * 2), 1.5707963267948966), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 1.1739236345820182e-24 + 0.1 * sin((sine + 0.35) * 2), 0.1 * sin(sine * 2)) * euler(-1.5707963267948966 + 0.08726646259971647 * sin(sine * 2), 0.017453292519943295 * sin(sine * 2), -2.792526803190927), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-0.9999998807907104, 0.4999999403953552, -1.2568507556530796e-32) * euler(1.5707963267948966, -1.3962634015954636 + 0.08726646259971647 * sin((sine + 1) * 2), 1.2217304763960306), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966 + 0.08726646259971647 * sin((sine - 0.375) * 2), 0, 2.792526803190927 + 0.5235987755982988 * sin(sine * 0.6)), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(0.9999998807907104, -1.100000023841858 - 0.1 * sin((sine + 0.35) * 2), 0) * euler(-1.0471975511965976 - 0.08726646259971647 * sin(sine * 2), 1.3962634015954636, 1.3962634015954636), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1.100000023841858 - 0.1 * sin((sine + 0.35) * 2), 0) * euler(-1.7453292519943295 - 0.08726646259971647 * sin(sine * 2), -1.3962634015954636, -1.3962634015954636), deltaTime)  
+            --RightArm,0.9999998807907104,0,0,2,-90,0,0,2,0.4999999403953552,0,0,2,80,5,1,2,-2.765073337516225e-32,0,0,2,90,0,0,2,Torso,0,0,0,2,-90,5,0,2,1.1739236345820182e-24,0.1,0.35,2,0,1,0,2,0,0.1,0,2,-160,0,0,2,Fedora_Handle,8.657480066176504e-09,0,0,2,-6,0,0,2,-0.15052366256713867,0,0,2,0,0,0,2,-0.010221302509307861,0,0,2,0,0,0,2,LeftArm,-0.9999998807907104,0,0,2,90,0,0,2,0.4999999403953552,0,0,2,-80,5,1,2,-1.2568507556530796e-32,0,0,2,70,0,0,2,Head,0,0,0,2,-90,5,-0.375,2,1,0,0,2,0,0,0,2,0,0,0,2,160,30,0,0.6,RightLeg,0.9999998807907104,0,0,2,-60,-5,0,2,-1.100000023841858,-0.1,0.35,2,80,0,0,2,0,0,0,2,80,0,0,2,LeftLeg,-1,0,0,2,-100,-5,0,2,-1.100000023841858,-0.1,0.35,2,-80,0,0,2,0,0,0,2,-80,0,0,2
+
+        elseif mode == "lay" then
+            
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, -2.4 - 0.1 * sin(sine), 0) * euler(-0.04363323129985824 + 0.08726646259971647 * sin(sine), 0, -3.141592653589793), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1.25, -1.25, 0) * euler(1.5707963267948966 - 0.08726646259971647 * sin(sine), 1.0471975511965976, -1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(1.5707963267948966 - 0.08726646259971647 * sin(sine), -1.2217304763960306, 1.2217304763960306), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1 + 0.05 * sin(sine - 0.5), 0.7 + 0.05 * sin(sine), 0) * euler(1.5707963267948966 - 0.08726646259971647 * sin(sine + 1), -0.3490658503988659, 0.8726646259971648), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, -0.075 * sin(sine)) * euler(-1.5707963267948966 - 0.17453292519943295 * sin(sine), 0, -3.141592653589793), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(0.7 - 0.1 * sin(sine), 0.5, -0.2) * euler(1.3962634015954636, 1.0471975511965976 + 0.08726646259971647 * sin(sine + 0.5), -1.0471975511965976), deltaTime) 
+            --Torso,0,0,0,1,-2.5,5,0,1,-2.4,-0.1,0,1,0,0,0,1,0,0,0,1,-180,0,0,1,RightLeg,1.25,0,0,1,90,-5,0,1,-1.25,0,0,1,60,0,0,1,0,0,0,1,-90,0,0,1,LeftLeg,-1,0,0,1,90,-5,0,1,-1,0,0,1,-70,0,0,1,0,0,0,1,70,0,0,1,Fedora_Handle,8.657480066176504e-09,0,0,1,-6,0,0,1,-0.15052366256713867,0,0,1,0,0,0,1,-0.010221302509307861,0,0,1,0,0,0,1,LeftArm,-1,0.05,-0.5,1,90,-5,1,1,0.7,0.05,0,1,-20,0,0,1,0,0,0,1,50,0,0,1,Head,0,0,0,1,-90,-10,0,1,1,0,0,1,0,0,0,1,0,-0.075,0,1,-180,0,0,1,RightArm,0.7,-0.1,0,1,80,0,0,1,0.5,0,0,1,60,5,0.5,1,-0.2,0,0,1,-60,0,0,1
+
+        elseif mode == "sit" then
+            
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-0.9 + 0.1 * sin(sine), 0.25 + 0.1 * sin(sine), 0) * euler(1.3089969389957472, -1.6580627893946132 - 0.08726646259971647 * sin(sine), 1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-0.7, 0.25, -0.7 - 0.3 * sin(sine)) * euler(1.5707963267948966 - 0.17453292519943295 * sin(sine), -1.7453292519943295, 1.5707963267948966), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, -1.8 - 0.1 * sin(sine), 0) * euler(-1.3962634015954636, 0, -3.141592653589793), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.6580627893946132 + 0.17453292519943295 * sin(sine + 1.25), 0, -3.141592653589793 + 0.5235987755982988 * sin(sine * 0.25)), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -0.7, 0) * euler(2.9670597283903604 + 0.04363323129985824 * sin(sine), 1.6580627893946132, -1.5707963267948966), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(0.9 - 0.1 * sin(sine), 0.25 + 0.1 * sin(sine), 0) * euler(1.3089969389957472, 1.6580627893946132 + 0.08726646259971647 * sin(sine), -1.5707963267948966), deltaTime) 
+            --LeftArm,-0.9,0.1,0,1,75,0,0,1,0.25,0.1,0,1,-95,-5,0,1,0,0,0,1,90,0,0,1,LeftLeg,-0.7,0,0,1,90,-10,0,1,0.25,0,0,1,-100,0,0,1,-0.7,-0.3,0,1,90,0,0,1,Torso,0,0,0,1,-80,0,0,1,-1.8,-0.1,0,1,0,0,0,1,0,0,0,1,-180,0,0,1,Head,0,0,0,1,-95,10,1.25,1,1,0,0,1,0,0,0,1,0,0,0,1,-180,30,0,0.25,RightLeg,1,0,0,1,170,2.5,0,1,-0.7,0,0,1,95,0,0,1,0,0,0,1,-90,0,0,1,Fedora_Handle,8.657480066176504e-09,4,0,0.5,-6,0,0,1,-0.15052366256713867,0,0,0.5,0,360,0,0.5,-0.010221302509307861,0,0,1,0,0,0,1,RightArm,0.9,-0.1,0,1,75,0,0,1,0.25,0.1,0,1,95,5,0,1,0,0,0,1,-90,0,0,1
+
+        elseif mode == "rickroll" then
+            
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -0.9 - 0.2 * sin(sine * 2), 0) * euler(1.5707963267948966, 1.6580627893946132 - 0.17453292519943295 * sin(sine + 0.8), -1.5707963267948966), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0.3 * sin(sine + 0.8), -0.1 + 0.2 * sin(sine * 2), 0) * euler(-1.5707963267948966, 0, -3.141592653589793), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966 + 0.08726646259971647 * sin((sine - 0.5) * 2), 0.08726646259971647 * sin(sine - 1), -3.141592653589793 + 0.2617993877991494 * sin(sine * 5)), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1 + 0.1 * sin(sine * 7), 0.2 - 0.1 * sin(sine + 0.8), -0.25) * euler(1.5707963267948966 + 0.5235987755982988 * sin(sine * 7), -0.6981317007977318, 0.3490658503988659 * sin(sine * 7)), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -0.9 - 0.2 * sin(sine * 2), 0) * euler(1.5707963267948966, -1.6580627893946132 - 0.17453292519943295 * sin(sine + 0.8), 1.5707963267948966), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1 + 0.1 * sin(sine * 7), 0.2 + 0.1 * sin(sine + 0.8), -0.25) * euler(1.5707963267948966 - 0.5235987755982988 * sin(sine * 7), 0.6981317007977318, 0.3490658503988659 * sin(sine * 7)), deltaTime) 
+            --RightLeg,1,0,0,1,90,0,0,1,-0.9,-0.2,0,2,95,-10,0.8,1,0,0,0,1,-90,0,0,1,Torso,0,0.3,0.8,1,-90,0,0,1,-0.1,0.2,0,2,0,0,0,1,0,0,0,1,-180,0,0,1,Head,0,0,0,1,-90,5,-0.5,2,1,0,0,1,0,5,-1,1,0,0,0,1,-180,15,0,5,Fedora_Handle,8.657480066176504e-09,0,0,1,-6,0,0,1,-0.15052366256713867,0,0,1,0,0,0,1,-0.010221302509307861,0,0,1,0,0,0,1,LeftArm,-1,0.1,0,7,90,30,0,7,0.2,-0.1,0.8,1,-40,0,0,1,-0.25,0,0,1,0,20,0,7,LeftLeg,-1,0,0,1,90,0,0,1,-0.9,-0.2,0,2,-95,-10,0.8,1,0,0,0,1,90,0,0,1,RightArm,1,0.1,0,7,90,-30,0,7,0.2,0.1,0.8,1,40,0,0,1,-0.25,0,0,1,-0,20,0,7
+            
+        elseif mode == "wave" then
+            
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0.1 * sin(sine * 4), 0, 0) * euler(-1.5707963267948966, -0.08726646259971647 + 0.08726646259971647 * sin(sine * 4), -3.141592653589793), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1, 0.5, 0) * euler(1.5707963267948966, -1.6580627893946132 + 0.08726646259971647 * sin((sine - 0.2) * 4), 1.5707963267948966), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966, 0.04363323129985824 - 0.08726646259971647 * sin((sine + 0.1) * 4), -3.141592653589793), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1.1 + 0.1 * sin(sine * 4), 0) * euler(1.5707963267948966, 1.5707963267948966 + 0.08726646259971647 * sin(sine * 4), -1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -0.925 - 0.07 * sin(sine * 4), 0) * euler(1.5707963267948966, -1.7453292519943295 + 0.06981317007977318 * sin(sine * 4), 1.5707963267948966), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1 + 0.1 * sin((sine + 0.3) * 4), 1.4, 0) * euler(1.5707963267948966, 1.4835298641951802 - 0.2617993877991494 * sin((sine + 0.3) * 4), 1.5707963267948966), deltaTime) 
+            --Fedora_Handle,8.657480066176504e-09,0,0,4,-6,0,0,4,-0.15052366256713867,0,0,4,0,0,0,4,-0.010221302509307861,0,0,4,0,0,0,4,Torso,0,0.1,0,4,-90,0,0,4,0,0,0,4,-5,5,0,4,0,0,0,4,-180,0,0,4,LeftArm,-1,0,0,4,90,0,0,4,0.5,0,0,4,-95,5,-0.2,4,0,0,0,4,90,0,0,4,Head,0,0,0,4,-90,0,0,4,1,0,0,4,2.5,-5,0.1,4,0,0,0,4,-180,0,0,4,RightLeg,1,0,0,4,90,0,0,4,-1.1,0.1,0,4,90,5,0,4,0,0,0,4,-90,0,0,4,LeftLeg,-1,0,0,4,90,0,0,4,-0.925,-0.07,0,4,-100,4,0,4,0,0,0,4,90,0,0,4,RightArm,1,0.1,0.3,4,90,0,0,4,1.4,0,0,4,85,-15,0.3,4,0,0,0,4,90,0,0,4
+        
+        elseif mode == "dab" then
+            
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1.5, 0.5, 0) * euler(-1.7453292519943295, 0.17453292519943295 - 0.04363323129985824 * sin(sine * 2), -1.4835298641951802), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -0.9000000953674316 - 0.1 * sin(sine * 2), 0) * euler(-1.3962634015954636, 1.3962634015954636, 1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1.0000001192092896 - 0.1 * sin(sine * 2), 0) * euler(-1.5707963267948966, -1.3962634015954636, -1.5707963267948966), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-2.0943951023931953 + 0.08726646259971647 * sin((sine - 1) * 2), -0.08726646259971647, 2.792526803190927), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1, 1.2000000476837158, 0) * euler(2.6179938779914944 + 0.08726646259971647 * sin((sine - 1) * 2), 0.6981317007977318, -1.3962634015954636), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 0.1 * sin(sine * 2), 0) * euler(-1.6580627893946132, 0.08726646259971647, 3.0543261909900767), deltaTime) 
+            --LeftArm,-1.5,0,0,2,-100,0,0,2,0.5,0,0,2,10,-2.5,0,2,0,0,0,2,-85,0,0,2,RightLeg,1,0,0,2,-80,0,0,2,-0.9000000953674316,-0.1,0,2,80,0,0,2,0,0,0,2,90,0,0,2,LeftLeg,-1,0,0,2,-90,0,0,2,-1.0000001192092896,-0.1,0,2,-80,0,0,2,0,0,0,2,-90,0,0,2,Fedora_Handle,8.657480066176504e-09,0,0,2,-6,0,0,2,-0.15052366256713867,0,0,2,0,0,0,2,-0.010221302509307861,0,0,2,0,0,0,2,Head,0,0,0,2,-120,5,-1,2,1,0,0,2,-5,0,0,2,0,0,0,2,160,0,0,2,RightArm,1,0,0,2,150,5,-1,2,1.2000000476837158,0,0,2,40,0,0,2,0,0,0,2,-80,0,0,2,Torso,0,0,0,2,-95,0,0,2,0,0.1,0,2,5,0,0,2,0,0,0,2,175,0,0,2
+            
+        elseif mode == "dance" then
+            
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1, 1 + 0.5 * sin((sine + 0.078125) * 6.4), -0.5) * euler(-0.3490658503988659 + 1.0471975511965976 * sin((sine + 0.078125) * 6.4), -1.6580627893946132 + 0.6108652381980153 * sin((sine + 0.078125) * 6.4), -1.5707963267948966), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1, 0) * euler(1.5707963267948966 - 0.17453292519943295 * sin((sine + 0.078125) * 6.4), 1.8325957145940461 + 0.2617993877991494 * sin(sine * 6.4), -1.5707963267948966), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5882496193148399 + 0.17453292519943295 * sin((sine - 0.078125) * 6.4), 0.08726646259971647 + 0.17453292519943295 * sin((sine + 0.078125) * 6.4), 3.141592653589793), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1, 0.5 + 0.15 * sin((sine + 0.546875) * 12.8), 0) * euler(1.9198621771937625 + 0.2617993877991494 * sin((sine + 0.546875) * 12.8), 1.6580627893946132 - 0.2617993877991494 * sin(sine * 6.4), -1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(1.5707963267948966 - 0.12217304763960307 * sin((sine + 0.078125) * 6.4), -1.8325957145940461 + 0.2617993877991494 * sin(sine * 6.4), 1.5707963267948966), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(-0.6 * sin(sine * 6.4), 0, 0) * euler(-1.5882496193148399 + 0.08726646259971647 * sin((sine + 0.078125) * 6.4), -0.08726646259971647 * sin(sine * 6.4), 3.141592653589793 + 0.08726646259971647 * sin(sine * 6.4)), deltaTime) 
+            --LeftArm,-1,0,0,6.4,-20,60,0.078125,6.4,1,0.5,0.078125,6.4,-95,35,0.078125,6.4,-0.5,0,0,6.4,-90,0,0,6.4,RightLeg,1,0,0,6.4,90,-10,0.078125,6.4,-1,0,0,6.4,105,15,0,6.4,0,0,0,6.4,-90,0,0,6.4,Head,0,0,0,6.4,-91,10,-0.078125,6.4,1,0,0,6.4,5,10,0.078125,6.4,0,0,0,6.4,180,0,0,6.4,RightArm,1,0,0,6.4,110,15,0.546875,12.8,0.5,0.15,0.546875,12.8,95,-15,0,6.4,0,0,0,6.4,-90,0,0,6.4,LeftLeg,-1,0,0,6.4,90,-7,0.078125,6.4,-1,0,0,6.4,-105,15,0,6.4,0,0,0,6.4,90,0,0,6.4,Fedora_Handle,8.657480066176504e-09,0,0,6.4,-6,0,0,6.4,-0.15052366256713867,0,0,6.4,0,0,0,6.4,-0.010221302509307861,0,0,6.4,-1,0,0,6.4,Torso,0,-0.6,0,6.4,-91,5,0.078125,6.4,0,0,0,6.4,-0,-5,0,6.4,0,0,0,6.4,180,5,0,6.4
+            
+        elseif mode == "T" then
+            
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1.5, 0.5, 0) * euler(1.5707963267948966, 3.141592653589793, -1.5707963267948966), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1, 0) * euler(0, 1.5707963267948966, 0), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1.5, 0.5, 0) * euler(1.5707963267948966, 3.141592653589793, 1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(0, -1.5707963267948966, 0), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966, 0, -3.141592653589793), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 0, 0) * euler(-1.5707963267948966, 0, -3.141592653589793), deltaTime) 
+            --RightArm,1.5,0,0,1,90,0,0,1,0.5,0,0,1,180,0,0,1,0,0,0,1,-90,0,0,1,RightLeg,1,0,0,1,0,0,0,1,-1,0,0,1,90,0,0,1,0,0,0,1,0,0,0,1,Fedora_Handle,8.657480066176504e-09,0,0,1,-6,0,0,1,-0.15052366256713867,0,0,1,0,0,0,1,-0.010221302509307861,0,0,1,0,0,0,1,LeftArm,-1.5,0,0,1,90,0,0,1,0.5,0,0,1,180,0,0,1,0,0,0,1,90,0,0,1,LeftLeg,-1,0,0,1,-0,0,0,1,-1,0,0,1,-90,0,0,1,0,0,0,1,0,0,0,1,Head,0,0,0,1,-90,0,0,1,1,0,0,1,0,0,0,1,0,0,0,1,-180,0,0,1,Torso,0,0,0,1,-90,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,-180,0,0,1
+
+        elseif mode == "float" then
+            
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1.5 - 0.5 * sin((sine + 0.1) * 2), 0.5 + 0.5 * sin((sine - 0.5) * 2), 0) * euler(1.5707963267948966, 3.141592653589793 + 0.5235987755982988 * sin((sine - 1) * 2), -1.5707963267948966 - 0.2617993877991494 * sin(sine * 0.5)), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1, 0) * euler(1.5707963267948966 - 0.17453292519943295 * sin(sine * 2), 1.5707963267948966 - 0.08726646259971647 * sin((sine + 0.7) * 2), -1.5707963267948966), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 3 + 0.7 * sin((sine + 0.15) * 2), 0) * euler(-1.5707963267948966 + 0.08726646259971647 * sin((sine - 0.5) * 2), 0, -3.141592653589793 + 0.2617993877991494 * sin(sine * 0.5)), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(1.5707963267948966 - 0.08726646259971647 * sin(sine * 2), -1.5707963267948966 + 0.08726646259971647 * sin((sine + 0.7) * 2), 1.5707963267948966), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1.5 + 0.5 * sin((sine + 0.1) * 2), 0.5 + 0.5 * sin((sine - 0.5) * 2), 0) * euler(1.5707963267948966, 3.141592653589793 - 0.5235987755982988 * sin((sine - 1) * 2), 1.5707963267948966 - 0.2617993877991494 * sin(sine * 0.5)), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966 - 0.17453292519943295 * sin((sine + 0.5) * 2), 0.17453292519943295 * sin(sine * 1), -3.141592653589793 + 0.5235987755982988 * sin(sine * 0.3)), deltaTime) 
+            --RightArm,1.5,-0.5,0.1,2,90,0,0,2,0.5,0.5,-0.5,2,180,30,-1,2,0,0,0,2,-90,-15,0,0.5,Fedora_Handle,8.657480066176504e-09,0,0,2,-6,0,0,2,-0.15052366256713867,0,0,2,0,0,0,2,-0.010221302509307861,0,0,2,0,0,0,2,RightLeg,1,0,0,2,90,-10,0,2,-1,0,0,2,90,-5,0.7,2,0,0,0,2,-90,0,0,2,Torso,0,0,0,2,-90,5,-0.5,2,3,0.7,0.15,2,0,0,0,1,0,0,0,2,-180,15,0,0.5,LeftLeg,-1,0,0,2,90,-5,0,2,-1,0,0,2,-90,5,0.7,2,0,0,0,2,90,0,0,2,LeftArm,-1.5,0.5,0.1,2,90,0,0,2,0.5,0.5,-0.5,2,180,-30,-1,2,0,0,0,2,90,-15,0,0.5,Head,0,0,0,2,-90,-10,0.5,2,1,0,0,2,0,10,0,1,0,0,0,2,-180,30,0,0.3
+            
+        elseif mode == "floss" then
+            
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966 + 0.04363323129985824 * sin((sine + 0.125) * 16), -0.2617993877991494 * sin((sine + 0.05) * 8), -3.141592653589793 + 0.5235987755982988 * sin(sine * 1.1)), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(0.9 + 0.4 * sin(sine * 8), 0.5, -0.5 * sin((sine - 0.35) * 4)) * euler(1.5707963267948966 + 0.6981317007977318 * sin(sine * 4), 1.5707963267948966 + 0.8726646259971648 * sin(sine * 8), -1.5707963267948966 + 0.17453292519943295 * sin((sine - 0.35) * 4)), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(-0.1 * sin((sine + 0.4) * 8), 0, 0) * euler(-1.5707963267948966, 0.3490658503988659 * sin(sine * 8), -3.141592653589793), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1 - 0.4 * sin((sine - 0.01) * 8), 0) * euler(1.5707963267948966, -1.7453292519943295 + 0.5235987755982988 * sin(sine * 8), 1.5707963267948966), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1 + 0.4 * sin((sine - 0.01) * 8), 0) * euler(1.5707963267948966, 1.7453292519943295 + 0.5235987755982988 * sin(sine * 8), -1.5707963267948966), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-0.9 + 0.4 * sin(sine * 8), 0.5, 0.5 * sin((sine + 0.25) * 4)) * euler(1.5707963267948966, -1.5707963267948966 + 0.8726646259971648 * sin(sine * 8), 1.5707963267948966 + 0.6981317007977318 * sin((sine + 0.25) * 4)), deltaTime) 
+            --Head,0,0,0,8,-90,2.5,0.125,16,1,0,0,8,0,-15,0.05,8,0,0,0,8,-180,30,0,1.1,RightArm,0.9,0.4,0,8,90,40,0,4,0.5,0,0,8,90,50,0,8,0,-0.5,-0.35,4,-90,10,-0.35,4,Fedora_Handle,8.657480066176504e-09,0,0,8,-6,0,0,8,-0.15052366256713867,0,0,8,0,0,0,8,-0.010221302509307861,0,0,8,0,0,0,8,Torso,0,-0.1,0.4,8,-90,0,0,8,0,0,0,4,0,20,0,8,0,0,0,8,-180,0,0,8,LeftLeg,-1,0,0,8,90,0,0,8,-1,-0.4,-0.01,8,-100,30,0,8,0,0,0,8,90,0,0,8,RightLeg,1,0,0,8,90,0,0,8,-1,0.4,-0.01,8,100,30,0,8,0,0,0,8,-90,0,0,8,LeftArm,-0.9,0.4,0,8,90,0,0.25,4,0.5,0,0,8,-90,50,0,8,0,0.5,0.25,4,90,40,0.25,4
+            
+        elseif mode == "emote" then
+            
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966, -0.4363323129985824 * sin(sine * 8), -3.141592653589793), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1 + 0.3 * sin(sine * 8), 0) * euler(1.5707963267948966, 1.5707963267948966 + 0.5235987755982988 * sin(sine * 8), -1.5707963267948966), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-0.5, 1, 0) * euler(-0.5235987755982988, -1.5707963267948966 - 0.5235987755982988 * sin(sine * 8), 3.141592653589793), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(0.5, 1, 0) * euler(-0.5235987755982988, 1.5707963267948966 - 0.5235987755982988 * sin(sine * 8), 3.141592653589793), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(-0.1 * sin(sine * 8), 0.2 * sin((sine + 0.1) * 16), 0) * euler(-1.5707963267948966, 0.2617993877991494 * sin(sine * 8), -3.141592653589793), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1 - 0.3 * sin(sine * 8), 0) * euler(1.5707963267948966, -1.5707963267948966 + 0.5235987755982988 * sin(sine * 8), 1.5707963267948966), deltaTime) 
+            --Head,0,0,0,8,-90,0,0,8,1,0,0,8,0,-25,0,8,0,0,0,8,-180,0,0,8,RightLeg,1,0,0,8,90,0,0,8,-1,0.3,0,8,90,30,0,8,0,0,0,8,-90,0,0,8,LeftArm,-0.5,0,0,8,-30,0,0,8,1,0,0,8,-90,-30,0,8,0,0,0,8,180,0,0,8,RightArm,0.5,0,0,8,-30,0,0,8,1,0,0,16,90,-30,0,8,0,0,0,8,180,0,0,8,Torso,0,-0.1,0,8,-90,0,0,8,0,0.2,0.1,16,0,15,0,8,0,0,0,8,-180,0,0,8,LeftLeg,-1,0,0,8,90,0,0,8,-1,-0.3,0,8,-90,30,0,8,0,0,0,8,90,0,0,8,Fedora_Handle,8.657480066176504e-09,0,0,8,-6,0,0,8,-0.15052366256713867,0,0,8,0,0,0,8,-0.010221302509307861,0,0,8,0,0,0,8
+            
+        elseif mode == "pushups" then
+            
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, -1.7 + 0.5 * sin(sine * 3.2), 0.3 * sin(sine * 3.2)) * euler(3.4033920413889427 + 0.17453292519943295 * sin(sine * 3.2), 0, 3.141592653589793), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(1 - 0.25 * sin(sine * 3.2), 0.5 + 0.2 * sin(sine * 3.2), -0.75 * sin(sine * 3.2)) * euler(3.0543261909900767 - 0.17453292519943295 * sin(sine * 3.2), 1.3962634015954636 + 0.17453292519943295 * sin(sine * 3.2), -1.5707963267948966), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-1 + 0.25 * sin(sine * 3.2), 0.5 + 0.2 * sin(sine * 3.2), -0.75 * sin(sine * 3.2)) * euler(3.0543261909900767 - 0.17453292519943295 * sin(sine * 3.2), -1.3962634015954636 - 0.17453292519943295 * sin(sine * 3.2), 1.5707963267948966), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.6580627893946132 + 0.17453292519943295 * sin((sine - 0.3125) * 3.2), 0, 3.141592653589793), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(-1.5707963267948966, -1.7453292519943295, -1.5707963267948966), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1, 0) * euler(1.5707963267948966, 1.3962634015954636, -1.5707963267948966), deltaTime) 
+            --Torso,0,0,0,3.2,195,10,0,3.2,-1.7,0.5,0,3.2,-0,0,0,3.2,0,0.3,0,3.2,180,0,0,3.2,RightArm,1,-0.25,0,3.2,175,-10,0,3.2,0.5,0.2,0,3.2,80,10,0,3.2,0,-0.75,0,3.2,-90,0,0,0,LeftArm,-1,0.25,0,3.2,175,-10,0,3.2,0.5,0.2,0,3.2,-80,-10,0,3.2,0,-0.75,0,3.2,90,0,0,3.2,Head,0,0,0,3.2,-95,10,-0.3125,3.2,1,0,0,3.2,-0,0,0,3.2,0,0,0,3.2,180,0,0,3.2,LeftLeg,-1,0,0,3.2,-90,0,0,3.2,-1,0,0,3.2,-100,0,0,3.2,0,0,0,3.2,-90,0,0,3.2,RightLeg,1,0,0,3.2,90,0,0,3.2,-1,0,0,3.2,80,0,0,3.2,0,0,0,3.2,-90,0,0,3.2,Fedora_Handle,8.657480066176504e-09,0,0,3.2,-6,0,0,3.2,-0.15052366256713867,0,0,3.2,0,0,0,3.2,-0.010221302509307861,0,0,3.2,-1,0,0,3.2
+            
+        elseif mode == "kazotsky" then
+            
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-0.5 - 0.15 * sin(sine * 6.4), 0.3, 0) * euler(2.792526803190927 + 0.08726646259971647 * sin(sine * 12.8), -0.17453292519943295 - 0.08726646259971647 * sin(sine * 6.4), 1.4835298641951802 - 0.08726646259971647 * sin(sine * 12.8)), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1, 0) * euler(2.0943951023931953 - 0.8726646259971648 * sin(sine * 6.4), 1.6580627893946132 - 0.08726646259971647 * sin(sine * 6.4), -1.5707963267948966), deltaTime) 
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 0.2 + 0.3 * sin((sine + 0.171875) * 12.8), 0) * euler(-1.4835298641951802 + 0.08726646259971647 * sin((sine + 0.15625) * 12.8), 0.08726646259971647 * sin(sine * 6.4), 3.141592653589793 + 0.17453292519943295 * sin(sine * 6.4)), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(0.5 - 0.15 * sin(sine * 6.4), 0.3, 0) * euler(2.792526803190927 + 0.08726646259971647 * sin(sine * 12.8), 0.17453292519943295 - 0.08726646259971647 * sin(sine * 6.4), -1.4835298641951802 + 0.08726646259971647 * sin(sine * 12.8)), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5882496193148399 + 0.08726646259971647 * sin(sine * 12.8), -0.08726646259971647 * sin((sine + 0.15625) * 6.4), 3.141592653589793), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(2.0943951023931953 + 0.8726646259971648 * sin(sine * 6.4), -1.6580627893946132 - 0.08726646259971647 * sin(sine * 6.4), 1.5707963267948966), deltaTime) 
+            --LeftArm,-0.5,-0.15,0,6.4,160,5,0,12.8,0.3,0,0,6.4,-10,-5,0,6.4,0,0,0,6.4,85,-5,0,12.8,RightLeg,1,0,0,6.4,120,-50,0,6.4,-1,0,0,6.4,95,-5,0,6.4,0,0,0,6.4,-90,0,0,6.4,Fedora_Handle,8.657480066176504e-09,0,0,6.4,-6,0,0,6.4,-0.15052366256713867,0,0,6.4,0,0,0,6.4,-0.010221302509307861,0,0,6.4,-1,0,0,6.4,Torso,0,0,0,6.4,-85,5,0.15625,12.8,0.2,0.3,0.171875,12.8,-0,5,0,6.4,0,0,0,6.4,180,10,0,6.4,RightArm,0.5,-0.15,0,6.4,160,5,0,12.8,0.3,0,0,6.4,10,-5,0,6.4,0,0,0,6.4,-85,5,0,12.8,Head,0,0,0,6.4,-91,5,0,12.8,1,0,0,6.4,-0,-5,0.15625,6.4,0,0,0,6.4,180,0,0,6.4,LeftLeg,-1,0,0,6.4,120,50,0,6.4,-1,0,0,6.4,-95,-5,0,6.4,0,0,0,6.4,90,0,0,6.4
+            
+        elseif mode == "L" then
+            
+            RootJoint.C0 = RootJoint.C0:Lerp(cf(0, 0.25 + 0.25 * sin((sine + 0.25) * 8), 0) * euler(-1.5707963267948966, 0.17453292519943295 * sin(sine * 4), -3.141592653589793), deltaTime) 
+            LeftShoulder.C0 = LeftShoulder.C0:Lerp(cf(-0.7, 0.5, -0.3) * euler(1.7453292519943295, -0.8726646259971648, 1.5707963267948966), deltaTime) 
+            Neck.C0 = Neck.C0:Lerp(cf(0, 1, 0) * euler(-1.5707963267948966 + 0.04363323129985824 * sin((sine + 0.1) * 8), -0.17453292519943295 * sin((sine + 0.1) * 4), -3.141592653589793), deltaTime) 
+            RightShoulder.C0 = RightShoulder.C0:Lerp(cf(0.7, 0.8, 0) * euler(1.0471975511965976 + 0.03490658503988659 * sin(sine * 8), 2.0943951023931953 + 0.10471975511965978 * sin((sine + 0.1) * 4), 1.5707963267948966), deltaTime) 
+            RightHip.C0 = RightHip.C0:Lerp(cf(1, -1, 0) * euler(2.2689280275926285 - 0.8726646259971648 * sin(sine * 4), 1.9198621771937625 - 0.3490658503988659 * sin(sine * 4), -1.5707963267948966), deltaTime) 
+            LeftHip.C0 = LeftHip.C0:Lerp(cf(-1, -1, 0) * euler(2.2689280275926285 + 0.8726646259971648 * sin(sine * 4), -1.9198621771937625 - 0.3490658503988659 * sin(sine * 4), 1.5707963267948966), deltaTime) 
+            --Torso,0,0,0,4,-90,0,0,4,0.25,0.25,0.25,8,0,10,0,4,0,0,0,4,-180,0,0,4,LeftArm,-0.7,0,0,4,100,0,0,4,0.5,0,0,4,-50,0,0,4,-0.3,0,0,4,90,0,0,4,Fedora_Handle,8.657480066176504e-09,0,0,4,-6,0,0,4,-0.15052366256713867,0,0,4,0,0,0,4,-0.010221302509307861,0,0,4,0,0,0,4,Head,0,0,0,4,-90,2.5,0.1,8,1,0,0,4,0,-10,0.1,4,0,0,0,4,-180,0,0,4,RightArm,0.7,0,0,4,60,2,0,8,0.8,0,0,4,120,6,0.1,4,0,0,0,4,90,0,0,4,RightLeg,1,0,0,4,130,-50,0,4,-1,0,0,4,110,-20,0,4,0,0,0,4,-90,0,0,4,LeftLeg,-1,0,0,4,130,50,0,4,-1,0,0,4,-110,-20,0,4,0,0,0,4,90,0,0,4
+
+        end
+        
+    end
+end)
+
+task.wait(1)
