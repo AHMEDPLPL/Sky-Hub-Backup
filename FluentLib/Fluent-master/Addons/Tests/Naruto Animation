@@ -830,10 +830,6 @@ cf=CFrame.new
 euler=CFrame.fromEulerAnglesXYZ
 m=Instance.new("Model",char)
 
-mouse.Button1Down:connect(function()
-print("NEIN")
-end)
-
 local mdel = false
 
 mouse.KeyDown:connect(function(k)
