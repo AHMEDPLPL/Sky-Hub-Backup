@@ -1,0 +1,534 @@
+local Global = getgenv and getgenv() or _G
+local Empyrean = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Emper%20reanimte"))()
+
+Empyrean = Start({
+Accessories = {
+-- on sale rigs
+
+     -- Free Rig
+
+    { MeshId = "4819720316", Name = "Torso", Offset = CFrame.Angles(0, 0, -0.25), TextureId = "4819722776" },
+    { MeshId = "3030546036", Name = "Left Arm", Offset = CFrame.Angles(-1.57, 0, 1.57), TextureId = "3033903209" },
+    { MeshId = "3030546036", Name = "Right Arm", Offset = CFrame.Angles(-1.57, 0, -1.57), TextureId = "3360978739" },
+    { MeshId = "3030546036", Name = "Left Leg", Offset = CFrame.Angles(-1.57, 0, 1.57), TextureId = "3033898741" },
+    { MeshId = "3030546036", Name = "Right Leg", Offset = CFrame.Angles(-1.57, 0, -1.57), TextureId = "3409604993" },
+
+     -- SB Rig
+
+    { MeshId = "125443585075666", Name = "Torso", Offset = CFrame.Angles(0, 3.15, 0), TextureId = "121023324229475" },
+    { MeshId = "121342985816617", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.57), TextureId = "129264637819824" },
+    { MeshId = "121342985816617", Name = "Right Arm", Offset = CFrame.Angles(0, 3.15, 1.57), TextureId = "129264637819824" },
+    { MeshId = "83395427313429", Names = { "Left Leg", "Right Leg" }, Offset = CFrame.Angles(0, 0, 1.57), TextureId = "97148121718581" },--18641142410
+
+    -- black rig
+
+    { MeshId = "110684113028749", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "" },
+    { MeshId = "125405780718494", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+
+    -- white rig
+
+    { MeshId = "139733645770094", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "99608462237958", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "90736849096372", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "105141400603933", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "17170940529", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "17237696667" },
+    { MeshId = "105063268471198", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "108855352006001" },
+    
+    -- mashless rig
+    
+    { MeshId = "13953094351", Name = "Head", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "127552124837034", Name = "Torso", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "121304376791439", Name = "Left Leg", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "121304376791439", Name = "Right Leg", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "117287001096396", Name = "Left Arm", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "117287001096396", Name = "Right Arm", Offset = CFrame.identity, TextureId = "" },
+   
+    -- noob rig
+
+    { MeshId = "126825022897778", Name = "Torso", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "73798034827573" },
+    { MeshId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "73798034827573" },
+    { MeshId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "135650240593878" },
+    { MeshId = "114041469540605", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "100316330483069" },
+    
+    -- og body
+    
+    { MeshId = "13953154391", Name = "Head", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "13778226115", Name = "Torso", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "11159370334", Name = "Left Leg", Offset = CFrame.Angles(1.5707963267948966, 0, 1.5707963267948966), TextureId = "11159284657" },
+    { MeshId = "11263221350", Name = "Right Leg", Offset = CFrame.Angles(-1.5707963267948966, 0, 1.5707963267948966), TextureId = "11263219250" },
+    { MeshId = "12344207333", Name = "Left Arm", Offset = CFrame.Angles(2, 0, 0), TextureId = "" },
+    { MeshId = "12344206657", Name = "Right Arm", Offset = CFrame.Angles(2, 0, 0), TextureId = "" },
+    
+    -- hulk rig
+    { MeshId = "rbxassetid://117266446967358", TextureId = "rbxassetid://99186239316470", Name = "Right Leg", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://86485200451901", TextureId = "rbxassetid://99186239316470", Name = "Left Leg", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://73664911305187", TextureId = "rbxassetid://71196320463952", Name = "Left Arm", Offset = CFrame.identity},
+    { MeshId = "rbxassetid://124336532477181", TextureId = "rbxassetid://71196320463952", Name = "Right Arm", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://100185816449786", TextureId = "rbxassetid://118274332607797", Name = "Torso", Offset = CFrame.identity },
+       
+-- Knight rig 
+
+{ MeshId = "rbxassetid://14458457016", TextureId = "rbxassetid://14458457136", Name = "Head", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://119861389229755", TextureId = "rbxassetid://102031430418572", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://88252207064016", TextureId = "rbxassetid://88715584742936", Name = "Left Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://88252207064016", TextureId = "rbxassetid://88715584742936", Name = "Right Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://117554824897780", TextureId = "rbxassetid://84429400539007", Name = "Right Leg", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://123388937940630", TextureId = "rbxassetid://84429400539007", Name = "Left Leg", Offset = CFrame.identity },
+
+-- Soldier Rig
+
+{ MeshId = "rbxassetid://119861389229755", TextureId = "rbxassetid://102031430418572", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://17500732084", TextureId = "rbxassetid://17500731685", Name = "Head",Offset = CFrame.identity  },
+{ MeshId = "rbxassetid://136378854630150", TextureId = "rbxassetid://120675101379312", Name = "Right Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://18989397242", TextureId = "rbxassetid://18989397363", Name = "Left Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://117554824897780", TextureId = "rbxassetid://84429400539007", Name = "Right Leg", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://123388937940630", TextureId = "rbxassetid://84429400539007", Name = "Left Leg", Offset = CFrame.identity },
+
+
+-- off sale rigs
+--black torsos
+{ MeshId = "rbxassetid://14768666349", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://14241018198", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://13421774668", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+
+--black rig
+{ MeshId = "rbxassetid://17387586286", TextureId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17387586286", TextureId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17374767929", TextureId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17374767929", TextureId = "", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+
+
+--white rig
+{ MeshId = "rbxassetid://14255522247", TextureId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://14255522247", TextureId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966)},
+{ MeshId = "rbxassetid://14768684979", TextureId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://14768684979", TextureId = "", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+
+-- Noob Rig
+{ MeshId = "18640899369", Name = "Torso", Offset = CFrame.Angles(0, 0, 0), TextureId = "18640899481" },
+{ MeshId = "18640914129", Names = { "Left Arm", "Right Arm"}, Offset = CFrame.Angles(0, 0, 0), TextureId = "18640914168" },
+{ MeshId = "18640901641", Names = { "Left Leg", "Right Leg"}, Offset = CFrame.Angles(0, 0, 0), TextureId = "18640901676" },
+
+
+
+},
+ApplyDescription = true,
+BreakJointsDelay = 0.255,
+ClickFling = Global.Fling,
+DefaultFlingOptions = {
+HatFling = Global.HatFling,--{ MeshId="", TextureId = ""},
+Highlight = Global.Fling,
+PredictionFling = Global.Fling,
+Timeout = 1,
+ToolFling = Global.ToolFling,--"Boombox",
+},
+DisableCharacterCollisions = true,
+DisableHealthBar = true,
+DisableRigCollisions = true,
+HatDrop = Global.HatDrop,
+HideCharacter = Vector3.new(0, -50, 0),
+ParentCharacter = true,
+PermanentDeath = Global.PremadeathEnabled,
+Refit = true,
+RigSize = 1,
+RigTransparency = 1,
+R15 = false,
+SetCameraSubject = true,
+SetCameraType = true,
+SetCharacter = false,
+SetCollisionGroup = true,
+SimulationRadius = 2147483647,
+TeleportRadius = 12,
+UseServerBreakJoints = Global.ServerBreakJoints,
+})
+
+game.TestService.IsSleepAllowed = false
+
+local lp = game:GetService("Players").LocalPlayer
+local hidden = game:GetService("RunService"):IsStudio() and sethiddenproperty or set_hidden_property
+
+local function SimRad()
+    pcall(function()
+        hidden(lp, "MaximumSimulationRadius",2081989891)
+        hidden(lp, "SimulationRadius",2081989891)
+    end)
+end
+game:GetService("RunService").Stepped:Connect(SimRad)
+ 
+local p = game.Players.LocalPlayer
+local char = workspace.non
+local mouse = p:GetMouse()
+local larm = char["Left Arm"]
+local rarm = char["Right Arm"]
+local lleg = char["Left Leg"]
+local rleg = char["Right Leg"]
+local hed = char.Head
+local torso = char.Torso
+local hum = char.Humanoid
+local cam = game.Workspace.CurrentCamera
+local root = char.HumanoidRootPart
+local deb = false
+local shot = 0
+local debris=game:service"Debris"
+local l = game:GetService("Lighting")
+local rs = game:GetService("RunService").RenderStepped
+ptz = {0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1}
+math.randomseed(os.time())
+----------------------------------------------------
+Debounces = {
+CanAttack = true;
+NoIdl = false;
+Slashing = false;
+Slashed = false;
+RPunch = false;
+RPunched = false;
+LPunch = false;
+LPunched = false;
+}
+local Touche = {char.Name, }
+----------------------------------------------------
+hed.face.Texture = "rbxassetid://227969918"
+char["Body Colors"].HeadColor = BrickColor.new("Pastel brown")
+char["Body Colors"].TorsoColor = BrickColor.new("Pastel brown")
+char["Body Colors"].LeftArmColor = BrickColor.new("Pastel brown")
+char["Body Colors"].RightArmColor = BrickColor.new("Pastel brown")
+char["Body Colors"].LeftLegColor = BrickColor.new("Pastel brown")
+char["Body Colors"].RightLegColor = BrickColor.new("Pastel brown")
+----------------------------------------------------
+ypcall(function()
+char.Shirt:Destroy()
+char.Pants:Destroy()
+shirt = Instance.new("Shirt", char)
+shirt.Name = "Shirt"
+pants = Instance.new("Pants", char)
+pants.Name = "Pants"
+char.Shirt.ShirtTemplate = "http://www.roblox.com/asset/?id=0"
+char.Pants.PantsTemplate = "http://www.roblox.com/asset/?id=0"
+end)
+----------------------------------------------------
+--------------nico
+
+ 
+do --CFrame lerp
+        local function QuaternionFromCFrame(cf)
+                local mx, my, mz, m00, m01, m02, m10, m11, m12, m20, m21, m22 = cf:components()
+                local trace = m00 + m11 + m22
+                if trace > 0 then
+                        local s = math.sqrt(1 + trace)
+                        local recip = 0.5/s
+                        return (m21-m12)*recip, (m02-m20)*recip, (m10-m01)*recip, s*0.5
+                else
+                        local i = 0
+                        if m11 > m00 then
+                                i = 1
+                        end
+                        if m22 > (i == 0 and m00 or m11) then
+                                i = 2
+                        end
+                        if i == 0 then
+                                local s = math.sqrt(m00-m11-m22+1)
+                                local recip = 0.5/s
+                                return 0.5*s, (m10+m01)*recip, (m20+m02)*recip, (m21-m12)*recip
+                        elseif i == 1 then
+                                local s = math.sqrt(m11-m22-m00+1)
+                                local recip = 0.5/s
+                                return (m01+m10)*recip, 0.5*s, (m21+m12)*recip, (m02-m20)*recip
+                        elseif i == 2 then
+                                local s = math.sqrt(m22-m00-m11+1)
+                                local recip = 0.5/s return (m02+m20)*recip, (m12+m21)*recip, 0.5*s, (m10-m01)*recip
+                        end
+                end
+        end
+        local function QuaternionToCFrame(px, py, pz, x, y, z, w)
+                local xs, ys, zs = x + x, y + y, z + z
+                local wx, wy, wz = w*xs, w*ys, w*zs
+                local xx = x*xs
+                local xy = x*ys
+                local xz = x*zs
+                local yy = y*ys
+                local yz = y*zs
+                local zz = z*zs
+                return CFrame.new(px, py, pz,1-(yy+zz), xy - wz, xz + wy,xy + wz, 1-(xx+zz), yz - wx, xz - wy, yz + wx, 1-(xx+yy))
+                end  
+        local function QuaternionSlerp(a, b, t)
+                local cosTheta = a[1]*b[1] + a[2]*b[2] + a[3]*b[3] + a[4]*b[4]
+                local startInterp, finishInterp;
+                if cosTheta >= 0.0001 then
+                        if (1 - cosTheta) > 0.0001 then
+                                local theta = math.acos(cosTheta)
+                                local invSinTheta = 1/math.sin(theta)
+                                startInterp = math.sin((1-t)*theta)*invSinTheta
+                                finishInterp = math.sin(t*theta)*invSinTheta  
+                        else
+                                startInterp = 1-t
+                                finishInterp = t
+                        end
+                else
+                        if (1+cosTheta) > 0.0001 then
+                                local theta = math.acos(-cosTheta)
+                                local invSinTheta = 1/math.sin(theta)
+                                startInterp = math.sin((t-1)*theta)*invSinTheta
+                                finishInterp = math.sin(t*theta)*invSinTheta
+                        else
+                                startInterp = t-1
+                                finishInterp = t
+                        end
+                end
+                return a[1]*startInterp + b[1]*finishInterp, a[2]*startInterp + b[2]*finishInterp, a[3]*startInterp + b[3]*finishInterp, a[4]*startInterp + b[4]*finishInterp
+        end  
+        function clerp(a,b,t)
+                local qa = {QuaternionFromCFrame(a)}
+                local qb = {QuaternionFromCFrame(b)}
+                local ax, ay, az = a.x, a.y, a.z
+                local bx, by, bz = b.x, b.y, b.z  
+                local _t = 1-t
+                return QuaternionToCFrame(_t*ax + t*bx, _t*ay + t*by, _t*az + t*bz,QuaternionSlerp(qa, qb, t))
+        end
+ 
+end
+do --the animating
+plr = game:service'Players'.LocalPlayer
+char = workspace.non
+mouse = plr:GetMouse()
+humanoid = char:findFirstChild("Humanoid")
+torso = char:findFirstChild("Torso")
+head = char.Head
+ra = char:findFirstChild("Right Arm")
+la = char:findFirstChild("Left Arm")
+rl = char:findFirstChild("Right Leg")
+ll = char:findFirstChild("Left Leg")
+rs = torso:findFirstChild("Right Shoulder")
+ls = torso:findFirstChild("Left Shoulder")
+rh = torso:findFirstChild("Right Hip")
+lh = torso:findFirstChild("Left Hip")
+neck = torso:findFirstChild("Neck")
+rj = char:findFirstChild("HumanoidRootPart"):findFirstChild("RootJoint")
+anim = char:findFirstChild("Animate")
+rootpart = char:findFirstChild("HumanoidRootPart")
+camera = workspace.CurrentCamera
+if anim then
+anim:Destroy()
+end
+ 
+ 
+local rm = Instance.new("Motor", torso)
+rm.C0 = CFrame.new(1.5, 0.5, 0)
+rm.C1 = CFrame.new(0, 0.5, 0)
+rm.Part0 = torso
+rm.Part1 = ra
+local lm = Instance.new("Motor", torso)
+lm.C0 = CFrame.new(-1.5, 0.5, 0)
+lm.C1 = CFrame.new(0, 0.5, 0)
+lm.Part0 = torso
+lm.Part1 = la
+ 
+local rlegm = Instance.new("Motor", torso)
+rlegm.C0 = CFrame.new(0.5, -1, 0)
+rlegm.C1 = CFrame.new(0, 1, 0)
+rlegm.Part0 = torso
+rlegm.Part1 = rl
+local llegm = Instance.new("Motor", torso)
+llegm.C0 = CFrame.new(-0.5, -1, 0)
+llegm.C1 = CFrame.new(0, 1, 0)
+llegm.Part0 = torso
+llegm.Part1 = ll
+ 
+neck.C0 = CFrame.new(0, 1, 0)
+neck.C1 = CFrame.new(0, -0.5, 0)
+ 
+ 
+rj.C0 = CFrame.new()
+rj.C1 = CFrame.new()
+ 
+ 
+local sound = Instance.new("Sound", head)
+sound.SoundId = "http://www.roblox.com/asset/?id=130797915"
+sound.Volume = 0.8
+sound.Looped = true
+ 
+local speed = 0.3
+local angle = 0
+local sitting = false
+local humanwalk = false
+local anglespeed = 1
+rsc0 = rm.C0
+lsc0 = lm.C0
+llc0 = llegm.C0
+rlc0 = rlegm.C0
+neckc0 = neck.C0
+ 
+local controllerService = game:GetService("ControllerService")
+local controller = controllerService:GetChildren()[1]
+
+ 
+while wait() do
+    angle = (angle % 100) + anglespeed/10
+        mvmnt = math.pi * math.sin(math.pi*2/100*(angle*10))
+        local rscf = rsc0
+        local lscf = lsc0
+        local rlcf = rlc0
+        local llcf = llc0
+        local rjcf = CFrame.new()
+        local ncf = neckc0
+        local rayz = Ray.new(rootpart.Position, Vector3.new(0, -6, 0))
+            local hitz, enz = workspace:findPartOnRay(rayz, char)
+            if not hitz then
+        if sound.IsPlaying then
+            sound:stop()
+        end
+ 
+        if Vector3.new(torso.Velocity.x, 0, torso.Velocity.z).magnitude > 2 then
+ 
+        ncf = neckc0 * CFrame.Angles(math.pi/5, 0, 0)
+        rjcf = CFrame.new() * CFrame.Angles(-math.pi/5, math.sin(angle)*0.05, 0)
+        rscf = rsc0 * CFrame.Angles(math.pi/1.7+math.sin(angle)*0.1, 0, 0)
+        lscf = lsc0 * CFrame.Angles(math.pi/1.7+math.sin(-angle)*0.1, 0, 0)
+        rlcf = rlc0 * CFrame.Angles(-math.pi/10+math.sin(-angle)*0.3, 0, 0)
+        llcf = llc0 * CFrame.Angles(-math.pi/10+math.sin(angle)*0.3, 0, 0)
+ 
+        else
+ 
+        ncf = neckc0 * CFrame.Angles(math.pi/14, 0, 0)
+        rjcf = CFrame.new() * CFrame.Angles(-math.pi/18, math.sin(angle)*0.05, 0)
+        rscf = rsc0 * CFrame.Angles(-math.pi/10+math.sin(angle)*0.2, 0, 0)
+        lscf = lsc0 * CFrame.Angles(-math.pi/10+math.sin(-angle)*0.2, 0, 0)
+        rlcf = rlc0 * CFrame.new(0, 0.7, -0.5) CFrame.Angles(-math.pi/14, 0, 0)
+        llcf = llc0 * CFrame.Angles(-math.pi/20, 0, 0)
+ 
+        end
+    elseif humanoid.Sit then
+        if sound.IsPlaying and sound.SoundId == "http://www.roblox.com/asset/?id=150794704" then
+        anglespeed = 6
+        ncf = neckc0 * CFrame.Angles(math.pi/5-math.sin(angle)*0.1, 0, 0)
+        rjcf = CFrame.new(0, -0.8, 0) * CFrame.Angles(-math.pi/5, 0, 0)
+        rscf = rsc0 * CFrame.new(-.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, -math.rad(15))
+        lscf = lsc0 * CFrame.new(.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, math.rad(15))
+        rlcf = rlc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, math.rad(20))
+        llcf = llc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, -math.rad(20))
+        elseif sound.IsPlaying and sound.SoundId == "http://www.roblox.com/asset/?id=135570347" then
+        anglespeed = 4
+        ncf = neckc0 * CFrame.Angles(math.pi/5-math.abs(math.sin(angle))*0.3, 0, 0)
+        rjcf = CFrame.new(0, -0.8, 0) * CFrame.Angles(-math.pi/5, 0, 0)
+        rscf = rsc0 * CFrame.new(-.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, -math.rad(15))
+        lscf = lsc0 * CFrame.new(.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, math.rad(15))
+        rlcf = rlc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, math.rad(20))
+        llcf = llc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, -math.rad(20))
+        elseif sound.IsPlaying and sound.SoundId == "http://www.roblox.com/asset/?id=149713968" then
+        anglespeed = 2
+        ncf = neckc0 * CFrame.Angles(math.pi/5, 0, math.sin(angle)*0.08)
+        rjcf = CFrame.new(0, -0.8, 0) * CFrame.Angles(-math.pi/5, math.sin(angle)*0.01, 0)
+        rscf = rsc0 * CFrame.new(-.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, -math.rad(15))
+        lscf = lsc0 * CFrame.new(.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, math.rad(15))
+        rlcf = rlc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, math.rad(20))
+        llcf = llc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, -math.rad(20))
+        else
+        anglespeed = 1/2
+        ncf = neckc0 * CFrame.Angles(math.pi/5, 0, math.sin(angle)*0.08)
+        rjcf = CFrame.new(0, -0.8, 0) * CFrame.Angles(-math.pi/5, math.sin(angle)*0.01, 0)
+        rscf = rsc0 * CFrame.new(-.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, -math.rad(15))
+        lscf = lsc0 * CFrame.new(.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, math.rad(15))
+        rlcf = rlc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, math.rad(20))
+        llcf = llc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, -math.rad(20))
+        end
+    elseif Vector3.new(torso.Velocity.x, 0, torso.Velocity.z).magnitude < 2 then
+        if sound.IsPlaying and sound.SoundId == "http://www.roblox.com/asset/?id=130797915" then
+        anglespeed = 6
+            ncf = neckc0 * CFrame.Angles(math.pi/10-math.sin(angle)*0.07, 0, 0)
+            rjcf = CFrame.new(0, 0, 0) * CFrame.Angles(-math.pi/10, math.sin(angle)*0.001, 0)
+            rscf = rsc0 * CFrame.Angles(math.pi/1+math.sin(angle)*0.5, 0, 0)
+            lscf = lsc0 * CFrame.Angles(math.pi/1+math.sin(angle)*0.5, 0, 0)
+            rlcf = rlc0 * CFrame.Angles(math.pi/10, math.sin(angle)*0.08, math.rad(6.5))
+            llcf = llc0 * CFrame.Angles(math.pi/10, -math.sin(angle)*0.08, -math.rad(6.5))
+        elseif sound.IsPlaying and sound.SoundId == "http://www.roblox.com/asset/?id=149713968" then
+            anglespeed = 2
+            ncf = neckc0 * CFrame.Angles(math.pi/10-math.abs(math.sin(angle))*0.3, 0, 0)
+            rjcf = CFrame.new(0, 0, 0) * CFrame.Angles(-math.pi/20, math.sin(angle)*0.001, 0)
+            rscf = rsc0 * CFrame.Angles(math.pi/2+math.abs(math.sin(angle)*1), 0, 0)
+            lscf = lsc0 * CFrame.Angles(math.pi/2+math.abs(math.sin(angle)*1), 0, 0)
+            rlcf = rlc0 * CFrame.Angles(math.pi/20, math.sin(angle)*0.08, math.rad(2.5))
+            llcf = llc0 * CFrame.Angles(math.pi/20, -math.sin(angle)*0.08, -math.rad(2.5))
+        elseif sound.IsPlaying and sound.SoundId == "http://www.roblox.com/asset/?id=130802245" then
+        anglespeed = 3
+        ncf = neckc0 * CFrame.Angles(math.sin(angle)*0.07, math.rad(30), 0)
+        rjcf = CFrame.new(0, 0, 0) * CFrame.Angles(0, math.sin(angle)*0.001, 0)
+        rscf = rsc0 * CFrame.Angles(math.sin(angle)*0.05, 0, 0)
+        lscf = lsc0 * CFrame.Angles(math.sin(-angle)*0.05, 0, 0)
+        rlcf = rlc0 * CFrame.new(0, -0.1 + math.abs(mvmnt)*0.1, -0.1) * CFrame.Angles(0, math.rad(5), math.rad(5))
+        llcf = llc0 * CFrame.Angles(0, math.rad(2.5), math.rad(1))
+        else
+            if humanwalk then
+                        anglespeed = 1/4
+        ncf = neckc0 * CFrame.Angles(-math.sin(angle)*0.07, 0, 0)
+        rjcf = CFrame.new(0, 0, 0) * CFrame.Angles(0, math.sin(angle)*0.001, 0)
+        rscf = rsc0 * CFrame.Angles(math.sin(angle)*0.1, 0, 0)
+        lscf = lsc0 * CFrame.Angles(math.sin(-angle)*0.1, 0, 0)
+        rlcf = rlc0 * CFrame.Angles(0, math.sin(angle)*0.08, math.rad(2.5))
+        llcf = llc0 * CFrame.Angles(0, -math.sin(angle)*0.08, -math.rad(2.5))
+                else
+        anglespeed = 1/2
+        ncf = neckc0 * CFrame.Angles(math.pi/5, 0, math.sin(angle)*0.08)
+        rjcf = CFrame.new(0, -2, 0) * CFrame.Angles(-math.pi/5, math.sin(angle)*0.01, 0)
+        rscf = rsc0 * CFrame.new(-.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, -math.rad(15))
+        lscf = lsc0 * CFrame.new(.45, 0.2, -.3) * CFrame.Angles(math.pi/3, 0, math.rad(15))
+        rlcf = rlc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, math.rad(20))
+        llcf = llc0 * CFrame.Angles(math.pi/2+math.pi/5, 0, -math.rad(20))
+            end
+        end
+    elseif Vector3.new(torso.Velocity.x, 0, torso.Velocity.z).magnitude < 20 then
+        if sound.IsPlaying then
+            sound:stop()
+        end
+        if humanwalk then
+                                anglespeed = 4
+        ncf = neckc0 * CFrame.Angles(math.pi/24, mvmnt*.02, 0)
+        rjcf = CFrame.new(0, math.abs(mvmnt)*0.05, 0) * CFrame.Angles(-math.pi/24, -mvmnt*.02, 0)
+        rscf = rsc0 * CFrame.Angles(math.sin(angle)*1.25, 0, -math.abs(mvmnt)*0.02)
+        lscf = lsc0 * CFrame.Angles(math.sin(-angle)*1.25, 0, math.abs(mvmnt)*0.02)
+        rlcf = rlc0 * CFrame.Angles(math.sin(-angle)*1, 0, math.rad(.5))
+        llcf = llc0 * CFrame.Angles(math.sin(angle)*1, 0, -math.rad(.5))
+                else
+        anglespeed = 4
+        ncf = neckc0 * CFrame.new(0, 0, .2) * CFrame.Angles(math.pi/1.9, 0, 0)
+        rjcf = CFrame.new(0, -1.5+math.abs(mvmnt)*0.05, 0) * CFrame.Angles(-math.pi/1.9, math.sin(mvmnt/2)*0.05, 0)
+        rscf = rsc0 * CFrame.new(-.45, 0.2, -.4+math.abs(mvmnt)*0.125) * CFrame.Angles(math.pi/2+math.sin(angle)*0.7, 0, math.rad(5))
+        lscf = lsc0 * CFrame.new(.45, 0.2, .1-math.abs(mvmnt)*0.125) * CFrame.Angles(math.pi/2+math.sin(-angle)*0.7, 0, -math.rad(5))
+        rlcf = rlc0 * CFrame.new(0, 0, -.3+math.abs(mvmnt)*0.125) * CFrame.Angles(math.pi/2.5+math.sin(-angle)*0.6, 0, math.abs(mvmnt)*0.025)
+        llcf = llc0 * CFrame.new(0, 0, .3-math.abs(mvmnt)*0.125) * CFrame.Angles(math.pi/2.5+math.sin(angle)*.6, 0, -math.abs(mvmnt)*0.025)
+        end
+    elseif Vector3.new(torso.Velocity.x, 0, torso.Velocity.z).magnitude >= 20 then
+        if sound.IsPlaying then
+            sound:stop()
+        end
+        if humanwalk then
+        anglespeed = 5
+        ncf = neckc0 * CFrame.Angles(math.pi/20, math.sin(angle)*.04, 0)
+        rjcf = CFrame.new(0, -.4 + math.abs(mvmnt)*0.25, 0) * CFrame.Angles(-math.pi/20, -math.sin(angle)*.08, 0)
+        rscf = rsc0 * CFrame.new(0, 0, -.3+math.abs(mvmnt)*0.125) *  CFrame.Angles(math.pi/18+math.sin(angle)*1.5, 0, -math.abs(mvmnt)*0.02)
+        lscf = lsc0 * CFrame.new(0, 0, .3-math.abs(mvmnt)*0.125) * CFrame.Angles(math.pi/18+math.sin(-angle)*1.5, 0, math.abs(mvmnt)*0.02)
+        rlcf = rlc0 * CFrame.new(0, 0, -.6+math.abs(mvmnt)*0.125) * CFrame.Angles(-math.pi/18+math.sin(-angle)*1.3, 0, math.rad(.5))
+        llcf = llc0 * CFrame.new(0, 0, -math.abs(mvmnt)*0.125) * CFrame.Angles(-math.pi/18+math.sin(angle)*1.3, 0, -math.rad(.5))
+        else
+        anglespeed = 5.5
+        ncf = neckc0 * CFrame.new(0, 0, .2) * CFrame.Angles(math.pi/1.9+math.sin(mvmnt/2)*0.05, 0, 0)
+        rjcf = CFrame.new(0, -1.3+math.abs(mvmnt)*0.05, 0) * CFrame.Angles(-math.pi/1.9+math.abs(mvmnt/2)*0.1, 0, 0)
+        rscf = rsc0 * CFrame.new(-1, 0.2, -.5) * CFrame.Angles(math.pi/2+math.sin(angle)*1.8, 0, math.rad(5))
+        lscf = lsc0 * CFrame.new(1, 0.2, -.5) * CFrame.Angles(math.pi/2+math.sin(angle)*1.8, 0, -math.rad(5))
+        rlcf = rlc0 * CFrame.new(0, .3-math.abs(mvmnt)*0.125, -.3+math.abs(mvmnt)*0.125) * CFrame.Angles(math.pi/2.5+math.sin(-angle)*1.4, 0, math.abs(mvmnt)*0.025)
+        llcf = llc0 * CFrame.new(0, .3-math.abs(mvmnt)*0.125, .3-math.abs(mvmnt)*0.125) * CFrame.Angles(math.pi/2.5+math.sin(-angle)*1.4, 0, -math.abs(mvmnt)*0.025)
+        end
+    end
+ 
+    rm.C0 = clerp(rm.C0,rscf,speed)
+    lm.C0 = clerp(lm.C0,lscf,speed)
+    rj.C0 = clerp(rj.C0,rjcf,speed)
+    neck.C0 = clerp(neck.C0,ncf,speed)
+    rlegm.C0 = clerp(rlegm.C0,rlcf,speed)
+    llegm.C0 = clerp(llegm.C0,llcf,speed)
+end
+ 
+ 
+end
