@@ -357,46 +357,20 @@ local Color1=Torso.BrickColor
 local bodvel=Instance.new("BodyVelocity")
 local bg=Instance.new("BodyGyro")
 
-ArtificialHB = Instance.new("BindableEvent", script)
-ArtificialHB.Name = "Heartbeat"
-
-script:WaitForChild("Heartbeat")
-
 frame = 1 / 60 
 tf = 0
 allowframeloss = true
 tossremainder = false
 lastframe = tick()
-script.Heartbeat:Fire()
-
-game:GetService("RunService").Heartbeat:connect(function(s, p)
-    tf = tf + s
-    if tf >= frame then
-        if allowframeloss then
-            script.Heartbeat:Fire()
-            lastframe = tick()
-        else
-            for i = 1, math.floor(tf / frame) do
-                script.Heartbeat:Fire()
-            end
-            lastframe = tick()
-        end
-        if tossremainder then
-            tf = 0
-        else
-            tf = tf - frame * math.floor(tf / frame)
-        end
-    end
-end)
 
 function swait(num)
     if num == 0 or num == nil then
-        ArtificialHB.Event:wait()
-    else
-        for i = 0, num do
-            ArtificialHB.Event:wait()
-        end
-    end
+		game:GetService("RunService").Stepped:wait()
+	else
+		for i = 0, num do
+			game:GetService("RunService").Stepped:wait()
+		end
+	end
 end
  
  
