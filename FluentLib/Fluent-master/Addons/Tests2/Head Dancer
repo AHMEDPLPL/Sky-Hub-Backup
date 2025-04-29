@@ -1,0 +1,302 @@
+local mode = 0
+local dancing = false
+local Global = getgenv and getgenv() or _G
+
+local Empyrean = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Emper%20reanimte"))()
+
+Empyrean = Start({
+Accessories = {
+-- on sale rigs
+
+     -- Free Rig
+
+    { MeshId = "4819720316", Name = "Torso", Offset = CFrame.Angles(0, 0, -0.25), TextureId = "4819722776" },
+    { MeshId = "3030546036", Name = "Left Arm", Offset = CFrame.Angles(-1.57, 0, 1.57), TextureId = "3033903209" },
+    { MeshId = "3030546036", Name = "Right Arm", Offset = CFrame.Angles(-1.57, 0, -1.57), TextureId = "3360978739" },
+    { MeshId = "3030546036", Name = "Left Leg", Offset = CFrame.Angles(-1.57, 0, 1.57), TextureId = "3033898741" },
+    { MeshId = "3030546036", Name = "Right Leg", Offset = CFrame.Angles(-1.57, 0, -1.57), TextureId = "3409604993" },
+
+     -- SB Rig
+
+    { MeshId = "125443585075666", Name = "Torso", Offset = CFrame.Angles(0, 3.15, 0), TextureId = "121023324229475" },
+    { MeshId = "121342985816617", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.57), TextureId = "129264637819824" },
+    { MeshId = "121342985816617", Name = "Right Arm", Offset = CFrame.Angles(0, 3.15, 1.57), TextureId = "129264637819824" },
+    { MeshId = "83395427313429", Names = { "Left Leg", "Right Leg" }, Offset = CFrame.Angles(0, 0, 1.57), TextureId = "97148121718581" },--18641142410
+
+    -- black rig
+
+    { MeshId = "110684113028749", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "" },
+    { MeshId = "125405780718494", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+    { MeshId = "125405780718494", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "136752500636691" },
+
+    -- white rig
+
+    { MeshId = "139733645770094", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "99608462237958", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "90736849096372", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "105141400603933", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "17170940529", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "17237696667" },
+    { MeshId = "105063268471198", Name = "Torso", Offset = CFrame.new(0, 0, 0), TextureId = "108855352006001" },
+    
+    -- mashless rig
+    
+    { MeshId = "13953094351", Name = "Head", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "127552124837034", Name = "Torso", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "" },
+    { MeshId = "121304376791439", Name = "Left Leg", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "121304376791439", Name = "Right Leg", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "117287001096396", Name = "Left Arm", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "117287001096396", Name = "Right Arm", Offset = CFrame.identity, TextureId = "" },
+   
+    -- noob rig
+
+    { MeshId = "126825022897778", Name = "Torso", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "73798034827573" },
+    { MeshId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "73798034827573" },
+    { MeshId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "135650240593878" },
+    { MeshId = "114041469540605", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966), TextureId = "100316330483069" },
+    
+    -- og body
+    
+    { MeshId = "13953154391", Name = "Head", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "13778226115", Name = "Torso", Offset = CFrame.identity, TextureId = "" },
+    { MeshId = "11159370334", Name = "Left Leg", Offset = CFrame.Angles(1.5707963267948966, 0, 1.5707963267948966), TextureId = "11159284657" },
+    { MeshId = "11263221350", Name = "Right Leg", Offset = CFrame.Angles(-1.5707963267948966, 0, 1.5707963267948966), TextureId = "11263219250" },
+    { MeshId = "12344207333", Name = "Left Arm", Offset = CFrame.Angles(2, 0, 0), TextureId = "" },
+    { MeshId = "12344206657", Name = "Right Arm", Offset = CFrame.Angles(2, 0, 0), TextureId = "" },
+    
+    -- hulk rig
+    { MeshId = "rbxassetid://117266446967358", TextureId = "rbxassetid://99186239316470", Name = "Right Leg", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://86485200451901", TextureId = "rbxassetid://99186239316470", Name = "Left Leg", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://73664911305187", TextureId = "rbxassetid://71196320463952", Name = "Left Arm", Offset = CFrame.identity},
+    { MeshId = "rbxassetid://124336532477181", TextureId = "rbxassetid://71196320463952", Name = "Right Arm", Offset = CFrame.identity },
+    { MeshId = "rbxassetid://100185816449786", TextureId = "rbxassetid://118274332607797", Name = "Torso", Offset = CFrame.identity },
+       
+-- Knight rig 
+
+{ MeshId = "rbxassetid://14458457016", TextureId = "rbxassetid://14458457136", Name = "Head", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://119861389229755", TextureId = "rbxassetid://102031430418572", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://88252207064016", TextureId = "rbxassetid://88715584742936", Name = "Left Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://88252207064016", TextureId = "rbxassetid://88715584742936", Name = "Right Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://117554824897780", TextureId = "rbxassetid://84429400539007", Name = "Right Leg", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://123388937940630", TextureId = "rbxassetid://84429400539007", Name = "Left Leg", Offset = CFrame.identity },
+
+-- Soldier Rig
+
+{ MeshId = "rbxassetid://119861389229755", TextureId = "rbxassetid://102031430418572", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://17500732084", TextureId = "rbxassetid://17500731685", Name = "Head",Offset = CFrame.identity  },
+{ MeshId = "rbxassetid://136378854630150", TextureId = "rbxassetid://120675101379312", Name = "Right Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://18989397242", TextureId = "rbxassetid://18989397363", Name = "Left Arm", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://117554824897780", TextureId = "rbxassetid://84429400539007", Name = "Right Leg", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://123388937940630", TextureId = "rbxassetid://84429400539007", Name = "Left Leg", Offset = CFrame.identity },
+
+
+-- off sale rigs
+--black torsos
+{ MeshId = "rbxassetid://14768666349", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://14241018198", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+{ MeshId = "rbxassetid://13421774668", TextureId = "", Name = "Torso", Offset = CFrame.identity },
+
+--black rig
+{ MeshId = "rbxassetid://17387586286", TextureId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17387586286", TextureId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17374767929", TextureId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://17374767929", TextureId = "", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+
+
+--white rig
+{ MeshId = "rbxassetid://14255522247", TextureId = "", Name = "Left Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://14255522247", TextureId = "", Name = "Right Leg", Offset = CFrame.Angles(0, 0, 1.5707963267948966)},
+{ MeshId = "rbxassetid://14768684979", TextureId = "", Name = "Left Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+{ MeshId = "rbxassetid://14768684979", TextureId = "", Name = "Right Arm", Offset = CFrame.Angles(0, 0, 1.5707963267948966) },
+
+-- Noob Rig
+{ MeshId = "18640899369", Name = "Torso", Offset = CFrame.Angles(0, 0, 0), TextureId = "18640899481" },
+{ MeshId = "18640914129", Names = { "Left Arm", "Right Arm"}, Offset = CFrame.Angles(0, 0, 0), TextureId = "18640914168" },
+{ MeshId = "18640901641", Names = { "Left Leg", "Right Leg"}, Offset = CFrame.Angles(0, 0, 0), TextureId = "18640901676" },
+
+
+
+},
+ApplyDescription = true,
+BreakJointsDelay = 0.255,
+ClickFling = Global.Fling,
+DefaultFlingOptions = {
+HatFling = Global.HatFling,--{ MeshId="", TextureId = ""},
+Highlight = Global.Fling,
+PredictionFling = Global.Fling,
+Timeout = 1,
+ToolFling = Global.ToolFling,--"Boombox",
+},
+DisableCharacterCollisions = true,
+DisableHealthBar = true,
+DisableRigCollisions = true,
+HatDrop = Global.HatDrop,
+HideCharacter = Vector3.new(0, -50, 0),
+ParentCharacter = true,
+PermanentDeath = Global.PremadeathEnabled,
+Refit = true,
+RigSize = 1,
+RigTransparency = 1,
+R15 = false,
+SetCameraSubject = true,
+SetCameraType = true,
+SetCharacter = false,
+SetCollisionGroup = true,
+SimulationRadius = 2147483647,
+TeleportRadius = 12,
+UseServerBreakJoints = Global.ServerBreakJoints,
+})
+
+game.TestService.IsSleepAllowed = false
+
+local lp = game:GetService("Players").LocalPlayer
+local hidden = game:GetService("RunService"):IsStudio() and sethiddenproperty or set_hidden_property
+
+local function SimRad()
+    pcall(function()
+        hidden(lp, "MaximumSimulationRadius",2081989891)
+        hidden(lp, "SimulationRadius",2081989891)
+    end)
+end
+game:GetService("RunService").Stepped:Connect(SimRad)
+
+
+IT = Instance.new
+CF = CFrame.new
+VT = Vector3.new
+RAD = math.rad
+C3 = Color3.new
+UD2 = UDim2.new
+BRICKC = BrickColor.new
+ANGLES = CFrame.Angles
+EULER = CFrame.fromEulerAnglesXYZ
+COS = math.cos
+ACOS = math.acos
+SIN = math.sin
+ASIN = math.asin
+ABS = math.abs
+MRANDOM = math.random
+FLOOR = math.floor
+
+speed = 1
+sine = 1
+srv = game:GetService('RunService')
+
+
+
+function setuptrail(parent,Pos1,Pos2,Color,LT,LE,Texture)
+IT = Instance.new
+local Part1 = parent
+local A1 = IT("Attachment",Part1)
+A1.Position = Pos1
+A1.Name = "ATH10"
+local B1 = IT("Attachment",Part1)
+B1.Position = Pos2
+B1.Name = "ATH11"
+local Trail1 = IT("Trail",Part1)
+Trail1.Name = "Nexo Trail"
+Trail1.Color = Color
+Trail1.Attachment0 = B1
+Trail1.Attachment1 = A1
+Trail1.Lifetime = LT
+Trail1.LightEmission = LE
+Trail1.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0),NumberSequenceKeypoint.new(1, 1)})
+Trail1.Texture = Texture
+Trail1.Enabled = true
+end
+
+--                          |
+--put the setup trail below v
+
+--put the hat script converted below
+
+reanim = workspace.non
+RJ = reanim.HumanoidRootPart.RootJoint
+RS = reanim.Torso['Right Shoulder']
+LS = reanim.Torso['Left Shoulder']
+RH = reanim.Torso['Right Hip']
+LH = reanim.Torso['Left Hip']
+Root = reanim.HumanoidRootPart
+NECK = reanim.Torso.Neck
+NECK.C0 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+NECK.C1 = CF(0,-0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RJ.C1 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RJ.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RS.C1 = CF(-0.5,0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+LS.C1 = CF(0.5,0.5,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RH.C1 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+LH.C1 = CF(0,1,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RH.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+LH.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+RS.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+LS.C0 = CF(0,0,0)*ANGLES(RAD(0),RAD(0),RAD(0))
+
+coroutine.wrap(function()
+while true do -- anim changer
+if HumanDied then break end
+sine = sine + speed
+if Root.Velocity.y > 1 then -- jump
+--jump clerp here
+elseif Root.Velocity.y < -1 then -- fall
+--fall clerp here
+elseif Root.Velocity.Magnitude < 2 and not dancing and mode == 0 then -- idle
+NECK.C0 = NECK.C0:Lerp(CF(1.8+0*math.cos(sine/13),1.4+0.1*math.sin(sine/13),-0.7+0*math.cos(sine/13))*ANGLES(RAD(-4+0*math.sin(sine/13)),RAD(-13+0*math.cos(sine/13)),RAD(-2+0*math.sin(sine/13))),.1)
+RJ.C0 = RJ.C0:Lerp(CF(0+0*math.cos(sine/13),0+0*math.cos(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(0+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(0+0*math.sin(sine/13))),.1)
+RS.C0 = RS.C0:Lerp(CF(1+0*math.cos(sine/13),0.5+0.1*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(88+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(25+0*math.sin(sine/13))),.1)
+LS.C0 = LS.C0:Lerp(CF(-1+0*math.cos(sine/13),0.5+0.1*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(-31+0*math.sin(sine/13)),RAD(3+0*math.cos(sine/13)),RAD(39+0*math.sin(sine/13))),.1)
+RH.C0 = RH.C0:Lerp(CF(0.5+0*math.cos(sine/13),-1+0*math.cos(sine/13),-0.4+0*math.cos(sine/13))*ANGLES(RAD(-2+0*math.sin(sine/13)),RAD(-19+0*math.cos(sine/13)),RAD(-2+0*math.sin(sine/13))),.1)
+LH.C0 = LH.C0:Lerp(CF(-0.5+0*math.cos(sine/13),-1+0*math.cos(sine/13),-0.4+0*math.cos(sine/13))*ANGLES(RAD(3+0*math.sin(sine/13)),RAD(18+0*math.cos(sine/13)),RAD(-8+0*math.sin(sine/13))),.1)
+
+elseif Root.Velocity.Magnitude < 20 and not dancing and mode == 0 then -- walk
+NECK.C0 = NECK.C0:Lerp(CF(1.8+0*math.cos(sine/13),1.4+0.1*math.sin(sine/13),-0.7+0*math.cos(sine/13))*ANGLES(RAD(-4+0*math.sin(sine/13)),RAD(-13+0*math.cos(sine/13)),RAD(-2+0*math.sin(sine/13))),.1)
+RJ.C0 = RJ.C0:Lerp(CF(0+0*math.cos(sine/13),0+0*math.cos(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(0+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(0+0*math.sin(sine/13))),.1)
+RS.C0 = RS.C0:Lerp(CF(1+0*math.cos(sine/13),0.5+0.1*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(88+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(25+0*math.sin(sine/13))),.1)
+LS.C0 = LS.C0:Lerp(CF(-1+0*math.cos(sine/13),0.5+0.1*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(-31+0*math.sin(sine/13)),RAD(3+0*math.cos(sine/13)),RAD(39+0*math.sin(sine/13))),.1)
+RH.C0 = RH.C0:Lerp(CF(0.5+0*math.cos(sine/13),-1+0*math.cos(sine/13),-0.4+0*math.cos(sine/13))*ANGLES(RAD(-6+39*math.sin(sine/13)),RAD(-13+0*math.cos(sine/13)),RAD(3+0*math.sin(sine/13))),.1)
+LH.C0 = LH.C0:Lerp(CF(-0.5+0*math.cos(sine/13),-1+0*math.cos(sine/13),-0.4+0*math.cos(sine/13))*ANGLES(RAD(-6+-30*math.sin(sine/13)),RAD(18+0*math.cos(sine/13)),RAD(-4+0*math.sin(sine/13))),.1)
+
+
+elseif Root.Velocity.Magnitude < 2 and dancing then -- idle
+NECK.C0 = NECK.C0:Lerp(CF(0+0*math.cos(sine/13),1+0*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(0+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(0+0*math.sin(sine/13))),.1)
+RJ.C0 = RJ.C0:Lerp(CF(0+0*math.cos(sine/-36),-1.+0*math.cos(sine/46),0+0*math.cos(sine/-55))*ANGLES(RAD(180+0*math.sin(sine/50)),RAD(-336+290*math.cos(sine/-38)),RAD(0+0*math.sin(sine/68))),.1)
+RS.C0 = RS.C0:Lerp(CF(1+0*math.cos(sine/13),0.5+0*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(179+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(0+0*math.sin(sine/13))),.1)
+LS.C0 = LS.C0:Lerp(CF(-1+0*math.cos(sine/13),0.5+0*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(183+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(0+0*math.sin(sine/13))),.1)
+RH.C0 = RH.C0:Lerp(CF(0.5+0*math.cos(sine/13),-1+0*math.cos(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(0+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(16+0*math.sin(sine/13))),.1)
+LH.C0 = LH.C0:Lerp(CF(-0.5+0*math.cos(sine/13),-1+0*math.cos(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(-6+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(-11+0*math.sin(sine/13))),.1)
+
+elseif Root.Velocity.Magnitude < 20 and dancing then -- walk
+NECK.C0 = NECK.C0:Lerp(CF(0+0*math.cos(sine/13),1+0*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(0+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(0+0*math.sin(sine/13))),.1)
+RJ.C0 = RJ.C0:Lerp(CF(0+0*math.cos(sine/-36),-1.+0*math.cos(sine/46),0+0*math.cos(sine/-55))*ANGLES(RAD(180+0*math.sin(sine/50)),RAD(-336+290*math.cos(sine/-38)),RAD(0+0*math.sin(sine/68))),.1)
+RS.C0 = RS.C0:Lerp(CF(1+0*math.cos(sine/13),0.5+0*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(179+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(0+0*math.sin(sine/13))),.1)
+LS.C0 = LS.C0:Lerp(CF(-1+0*math.cos(sine/13),0.5+0*math.sin(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(183+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(0+0*math.sin(sine/13))),.1)
+RH.C0 = RH.C0:Lerp(CF(0.5+0*math.cos(sine/13),-1+0*math.cos(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(0+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(16+0*math.sin(sine/13))),.1)
+LH.C0 = LH.C0:Lerp(CF(-0.5+0*math.cos(sine/13),-1+0*math.cos(sine/13),0+0*math.cos(sine/13))*ANGLES(RAD(-6+0*math.sin(sine/13)),RAD(0+0*math.cos(sine/13)),RAD(-11+0*math.sin(sine/13))),.1)
+
+elseif Root.Velocity.Magnitude > 20 then -- run
+--run clerp here
+end
+srv.RenderStepped:Wait()
+end
+end)()
+
+m = game.Players.LocalPlayer:GetMouse()
+
+m.KeyDown:Connect(function(k)
+if k == "t" then
+    reanim.Humanoid.WalkSpeed = 16
+   dancing = true
+end
+
+if k == "r" then
+   dancing = false 
+end 
+
+if k == "1" then
+    reanim.Humanoid.WalkSpeed = 16
+   mode = 0 
+end 
+
+end)
+--Created using Nexo Animator.
