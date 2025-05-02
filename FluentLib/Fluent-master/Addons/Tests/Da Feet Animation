@@ -160,45 +160,87 @@ end
 game:GetService("RunService").Stepped:Connect(SimRad)
 
 --// SHORTCUTS \\--
-local RNG = (function()
-    local RNG = Random.new();
-    return function(min,max,int)
-        return int and RNG:NextInteger(min,max) or RNG:NextNumber(min,max)
-    end;
-end)();
-local S = setmetatable({},{__index = function(s,i) return game:service(i) end})
-local CF = {
-	N=CFrame.new;
-	A=CFrame.Angles;
-	fEA=CFrame.fromEulerAnglesXYZ;
-}
-local C3 = {
-	N=Color3.new;
-	RGB=Color3.fromRGB;
-	HSV=function(...)local data={...}if(typeof(data)=='Color3')then return Color3.toHSV(...)else return Color3.fromHSV(...)end;end;
-}
-local V3 = {
-	N=Vector3.new;
-	FNI=Vector3.FromNormalId;
-	A=Vector3.FromAxis;
-}
-local M = {
-	C=math.cos;
-	R=math.rad;
-	S=math.sin;
-	T=math.tan;
-	AT=math.atan;
-	AT2=math.atan2;
-	AS=math.asin;
-	AC=math.acos;
-	A=math.abs;
-	F=math.floor;
-	CE=math.ceil;
-	P=math.pi;
-	RNG=RNG;
-	H=math.huge;
-	RRNG=function(...) return math.rad(RNG(...)) end
-}
+local function InitializeUtilities()
+    local RNG = (function()
+        local rng = Random.new()
+        return function(min, max, int)
+            if int then
+                return rng:NextInteger(min, max)
+            else
+                return rng:NextNumber(min, max)
+            end
+        end
+    end)()
+
+    local S = setmetatable({}, {
+        __index = function(_, i)
+            local success, service = pcall(game.GetService, game, i)
+            return success and service or nil
+        end
+    })
+
+    local CF = {
+        N = CFrame.new,
+        A = CFrame.Angles,
+        fEA = CFrame.fromEulerAnglesXYZ,
+    }
+
+    local C3 = {
+        N = Color3.new,
+        RGB = Color3.fromRGB,
+        HSV = function(...)
+            local data = ...
+            if typeof(data) == "Color3" then
+                return Color3.toHSV(data)
+            else
+                return Color3.fromHSV(...)
+            end
+        end
+    }
+
+    local V3 = {
+        N = Vector3.new,
+        FNI = Vector3.FromNormalId,
+        A = Vector3.FromAxis
+    }
+
+    local M = {
+        C = math.cos,
+        R = math.rad,
+        S = math.sin,
+        T = math.tan,
+        AT = math.atan,
+        AT2 = math.atan2,
+        AS = math.asin,
+        AC = math.acos,
+        A = math.abs,
+        F = math.floor,
+        CE = math.ceil,
+        P = math.pi,
+        RNG = RNG,
+        H = math.huge,
+        RRNG = function(...) return math.rad(RNG(...)) end
+    }
+
+    return {
+        RNG = RNG,
+        S = S,
+        CF = CF,
+        C3 = C3,
+        V3 = V3,
+        M = M
+    }
+end
+
+-- Usage:
+local Utils = InitializeUtilities()
+local RNG = Utils.RNG
+local S = Utils.S
+local CF = Utils.CF
+local C3 = Utils.C3
+local V3 = Utils.V3
+local M = Utils.M
+
 local R3 = Region3.new
 local De = S.Debris
 local WS = workspace
