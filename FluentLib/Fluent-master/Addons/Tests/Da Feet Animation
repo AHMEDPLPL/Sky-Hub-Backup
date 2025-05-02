@@ -158,6 +158,7 @@ local function SimRad()
     end)
 end
 game:GetService("RunService").Stepped:Connect(SimRad)
+Random = nil
 
 --// SHORTCUTS \\--
 local function InitializeUtilities()
