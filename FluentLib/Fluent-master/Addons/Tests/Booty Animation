@@ -1,4 +1,4 @@
-
+ 
 local Global = getgenv and getgenv() or _G
 local Empyrean = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Emper%20reanimte"))()
 
@@ -188,14 +188,14 @@ control = false
 
 ----------------------------------------------------------------------------
 
-function rswait(value)
-  if value ~= nil and value ~= 0 then
-    for i=1,value do
-     rs:wait()
-    end
-  else
-    rs:wait()
-  end
+function rswait(num)
+  if num == 0 or num == nil then
+			game:GetService("RunService").RenderStepped:wait()
+		else
+			for i = 0, num do
+				game:GetService("RunService").RenderStepped:wait()
+			end
+		end
 end
 
 ----------------------------------------------------------------------------
