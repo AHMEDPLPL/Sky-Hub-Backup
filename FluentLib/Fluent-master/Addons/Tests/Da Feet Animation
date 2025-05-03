@@ -233,6 +233,8 @@ local function InitializeUtilities()
     }
 end
 
+workspace.non.Humanoid.HipHeight = 1.1
+
 -- Usage:
 local Utils = InitializeUtilities()
 local RNG = Utils.RNG
