@@ -254,10 +254,8 @@ local Plrs = S.Players
 
 --// INITIALIZATION --
 local Plr = Plrs.LocalPlayer
-print(Plr)
 local Char = workspace.non
 local Hum = Char:FindFirstChildOfClass'Humanoid'
-assert(Hum and Hum.RigType==Enum.HumanoidRigType.R6,"You need to have a valid Humanoid instance! (Exising and R6)")
 local Head = Char.Head
 local RArm = Char["Right Arm"]
 local LArm = Char["Left Arm"]
