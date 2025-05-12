@@ -1,0 +1,4741 @@
+if System_Hub3 == true then
+    warn("System hub Already Loaded")
+    return
+end
+
+pcall(function() getgenv().System_Hub3 = true end)
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local blacklistURL = "https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Blacklist"
+
+local success, blacklistData = pcall(function()
+    return loadstring(game:HttpGet(blacklistURL))()
+end)
+
+if not success then
+    blacklistData = {} 
+end
+
+if blacklistData[LocalPlayer.Name] then
+    LocalPlayer:Kick("You are banned from this hub")
+end
+
+function LoadSySteMHuB()
+
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Library"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Save%20Manager"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Interface%20Manager"))()
+
+local st = tick()
+
+local Window = Fluent:CreateWindow({
+    Title = "System Hub 3.0.0",
+    SubTitle = "by Ahmed",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(600,375),
+    Acrylic = false,
+    Theme = "Darker",
+    MinimizeKey = Enum.KeyCode.RightShift
+})
+
+UserInputService = game:GetService("UserInputService")
+local IsOnMobile = table.find({
+Enum.Platform.IOS,
+Enum.Platform.Android
+}, UserInputService:GetPlatform())
+local Sky = {}
+if IsOnMobile then
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "SystemHubGui"
+ScreenGui.Parent = gethui and gethui() or game.CoreGui
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local Toggle = Instance.new("ImageButton")
+Toggle.Name = "Toggle"
+Toggle.Parent = ScreenGui
+Toggle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Toggle.Position = UDim2.new(0, 170, 0, 40)
+Toggle.Size = UDim2.new(0, 60, 0, 60)
+Toggle.Image = "rbxassetid://74132088634336"
+Toggle.BackgroundTransparency = 0
+
+Toggle.Draggable = true
+Toggle.Visible = true
+
+local Corner1 = Instance.new("UICorner")
+Corner1.CornerRadius = UDim.new(0, 3)
+Corner1.Parent = Toggle
+
+Toggle.MouseButton1Click:Connect(function()
+  for _, gui in pairs(game:GetService("CoreGui"):GetDescendants()) do
+	if gui.Name == "SystemHubV3Gui" then
+		for _, obj in pairs(gui:GetDescendants()) do
+			if obj:IsA("Frame") and obj.Name == "SystemHubV3MainFrame" then
+				obj.Visible = not obj.Visible
+			end
+		end
+	end
+end
+end)
+else
+Fluent:Notify{Title = "Interface", Content = "Press RightShift to toggle the inteface.", Duration = 6}
+end
+
+
+Main = Window:AddTab({ Title = "Main", Icon = "rbxassetid://6026568227" })
+
+function Notify(Title,Content,subcontent,duration)
+Fluent:Notify({
+        Title = Title,
+        Content = Content,
+        SubContent = subcontent,
+        Duration = duration
+})
+end
+
+Main:AddParagraph({
+        Title = "Welcome, " .. game.Players.LocalPlayer.DisplayName,
+        Content = "Hello @" .. game.Players.LocalPlayer.Name .. "! We're glad to have you here. Feel free to explore all the features available in System Hub V3. If you have any new ideas that you’d like to add to the hub, send us feedback, and we’ll consider adding it, or just DM me ahmed121212 in discord. Enjoy your time!"
+})
+
+Main:AddParagraph({
+        Title = "Scripts issues",
+        Content = "If you notice scripts that are not working or the hub not working properly in a game, or if the hub is not working with your executor, please provide feedback so we can fix the issue as soon as possible."
+})
+
+local HttpService = game:GetService("HttpService")
+local player = game.Players.LocalPlayer
+local placeName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+local webhook = "https://discord.com/api/webhooks/1354646294257209364/rTJOV-Kz6Pxzw2glS5DJsdgAlw6Jy1ulAWRPerLyuT-lCDhauacn4ECejHVE01C9fWSG"
+
+local feedbackTimes = {}
+
+local function sendFeedback(txt)
+    local currentTime = os.time()
+    
+    for i = #feedbackTimes, 1, -1 do
+        if currentTime - feedbackTimes[i] > 3600 then
+            table.remove(feedbackTimes, i)
+        end
+    end
+
+    if #feedbackTimes >= 3 then
+        OrionLib:MakeNotification({ 
+            Name = "System Hub", 
+            Content = "You can only send 3 feedbacks per hour!", 
+            Image = "rbxassetid://6031075938", 
+            Time = 5 
+        })
+        return
+    end
+
+    table.insert(feedbackTimes, currentTime)
+
+    local data = {
+        content = "",
+        embeds = {
+            {
+                title = "Feedback From : " .. player.Name,
+                description = "Executor : "..(identifyexecutor and identifyexecutor() or "Unknown").."   Game : "..placeName.."           Feedback : "..txt
+            }
+        }
+    }
+    local jsonData = HttpService:JSONEncode(data)
+    local headers = { ["Content-Type"] = "application/json" }
+
+    local request = syn and syn.request or http and http.request or http_request or request or fluxus and fluxus.request 
+                    or oxygen and oxygen.http or comet and comet.request or yoink and yoink.request 
+                    or venus and venus.request or WRD and WRD.request or solara and solara.request or HttpPost
+
+if request then
+    request({ Url = webhook, Method = "POST", Headers = headers, Body = jsonData })
+        Notify("System Hub","Feedback sent successfully","",5)
+    else
+        Notify("System Hub","Failed to send feedback. Try another executor.","",5)
+    end
+end
+
+local userInput = ""
+
+local Input = Main:AddInput("Input", {
+        Title = "Feedback",
+        Default = "",
+        Numeric = false,
+        Finished = false, 
+        Callback = function(Value)
+            userInput = Value
+        end
+})
+
+Main:AddButton({Title = "Send",Callback = function()
+            if userInput ~= "" then
+            sendFeedback(userInput)
+        else
+            Notify("System Hub","No Feedback to send","",5)
+        end
+end})
+
+Main:AddButton({Title = "Discord Server",Callback = function()
+        setclipboard("https://discord.gg/hh9gBDaWd4")
+        Notify("System Hub","Discord Server Link copied to clipboard!","",5)
+end})
+
+Main:AddParagraph({
+        Title = "Update Logs",
+        Content = "No updates yet\n\n\n\n\n\n"
+})
+
+
+
+LP = Window:AddTab({ Title = "LocalPlayer", Icon = "rbxassetid://6023426915" })
+
+--[[ Services ]]--
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+--[[ VARIABLES ]]--
+
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+
+local Humanoid = Character and Character:FindFirstChildWhichIsA("Humanoid") or false
+IYMouse = Players.LocalPlayer:GetMouse()
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+
+local function onCharacterAdded(character)
+    Character = character
+    Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+end
+
+Player.CharacterAdded:Connect(onCharacterAdded)
+
+if Player.Character then
+    onCharacterAdded(Player.Character)
+end
+
+
+local IsOnMobile = table.find({
+	Enum.Platform.IOS,
+	Enum.Platform.Android
+}, UserInputService:GetPlatform())
+
+
+
+--[[VAULES]]--
+
+function randomString()
+	local length = math.random(10,20)
+	local array = {}
+	for i = 1, length do
+		array[i] = string.char(math.random(32, 126))
+	end
+	return table.concat(array)
+end
+
+
+local CFspeed = 50
+simRadius = false
+local simRadLoop
+local IsRunning = true
+local invisFix
+local invisDied
+local invisibleCharacter
+local invisRunning = false
+local IsInvis = false
+FLYING = false
+QEfly = true
+iyflyspeed = 1
+vehicleflyspeed = 1
+local velocityHandlerName = randomString()
+local gyroHandlerName = randomString()
+local mfly1
+local mfly2
+local TPWalk = false
+local TPWalking = nil
+local flying = true
+local deb = true
+local ctrl = {f = 0, b = 0, l = 0, r = 0}
+local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+local KeyDownFunction = nil
+local KeyUpFunction = nil
+
+
+--[[ FUNCTION ]]--
+
+
+local sethidden = sethiddenproperty or set_hidden_property or set_hidden_prop
+local setsimulation = setsimulationradius or set_simulation_radius
+
+function SimRad()
+    if sethidden then
+        simRadLoop = RunService.Stepped:Connect(function()
+            if setsimulation then
+                setsimulation(1e308, 1/0)
+            else
+                sethidden(Player, "MaximumSimulationRadius", 1/0)
+                sethidden(Player, "SimulationRadius", 1e308)
+            end
+        end)
+        simRadius = true
+    end
+end
+
+function Noclip()
+ Clip = false
+function NoclipLoop()
+  if Clip == false and Character ~= nil then
+    for _, child in pairs(Character:GetDescendants()) do
+      if child:IsA("BasePart") and child.CanCollide == true then
+        child.CanCollide = false
+      end
+    end
+  end
+end
+Noclipping = game:GetService('RunService').Stepped:connect(NoclipLoop)
+end
+
+function getRoot(char)
+ local rootPart = Character:FindFirstChild('HumanoidRootPart') or Character:FindFirstChild('Torso') or Character:FindFirstChild('UpperTorso')
+ return rootPart
+end
+
+function getChar()
+	return game:GetService("Players").Character
+end
+
+function TurnsVisible()
+  if IsInvis == false then return end
+  invisFix:Disconnect()
+  invisDied:Disconnect()
+  CF = game.Workspace.CurrentCamera.CFrame
+  Character = Character
+  local CF_1 = Character.HumanoidRootPart.CFrame
+  Character.HumanoidRootPart.CFrame = CF_1
+  InvisibleCharacter:Destroy()
+  Character = Character
+  Character.Parent = workspace
+  IsInvis = false
+  Character.Animate.Disabled = true
+  Character.Animate.Disabled = false
+  invisDied = Character:FindFirstChildOfClass'Humanoid'.Died:Connect(function()
+    invisRespawn()
+    invisDied:Disconnect()
+  end)
+  invisRunning = false
+end
+
+function invisRespawn()
+  IsRunning = false
+  if IsInvis == true then
+    pcall(function()
+      Character = Character
+      wait()
+      Character.Parent = game.Workspace
+      Character:FindFirstChildWhichIsA'Humanoid':Destroy()
+      IsInvis = false
+      InvisibleCharacter.Parent = nil
+      invisRunning = false
+    end)
+  elseif IsInvis == false then
+    pcall(function()
+      Character = Character
+      wait()
+      Character.Parent = game.Workspace
+      Character:FindFirstChildWhichIsA'Humanoid':Destroy()
+      TurnsVisible()
+    end)
+  end
+end
+
+function TurnVisible()
+  if IsInvis == false then return end
+  invisFix:Disconnect()
+  invisDied:Disconnect()
+  CF = game.Workspace.CurrentCamera.CFrame
+  local CF_1 = Character.HumanoidRootPart.CFrame
+  Character.HumanoidRootPart.CFrame = CF_1
+  InvisibleCharacter:Destroy()
+  Character = Character
+  Character.Parent = workspace
+  IsInvis = false
+  Character.Animate.Disabled = true
+  Character.Animate.Disabled = false
+  invisDied = Character:FindFirstChildOfClass'Humanoid'.Died:Connect(function()
+    invisRespawn()
+    invisDied:Disconnect()
+  end)
+  invisRunning = false
+end
+
+function fixcam()
+   game.Workspace.CurrentCamera:Remove()
+	wait(.1)
+	repeat wait() until Character ~= nil
+	game.Workspace.CurrentCamera.CameraSubject = Character:FindFirstChildWhichIsA('Humanoid')
+	game.Workspace.CurrentCamera.CameraType = "Custom"
+	Player.CameraMinZoomDistance = 0.5
+	Player.CameraMaxZoomDistance = 400
+	Player.CameraMode = "Classic"
+	Character.Head.Anchored = false
+end
+
+function sFLY(vfly)
+	repeat wait() until Players.LocalPlayer and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+	repeat wait() until IYMouse
+	if flyKeyDown or flyKeyUp then flyKeyDown:Disconnect() flyKeyUp:Disconnect() end
+
+	local T = getRoot(Players.LocalPlayer.Character)
+	local CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+	local lCONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+	local SPEED = 0
+
+	local function FLY()
+		FLYING = true
+		local BG = Instance.new('BodyGyro')
+		local BV = Instance.new('BodyVelocity')
+		BG.P = 9e4
+		BG.Parent = T
+		BV.Parent = T
+		BG.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+		BG.cframe = T.CFrame
+		BV.velocity = Vector3.new(0, 0, 0)
+		BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+		task.spawn(function()
+			repeat wait()
+				if not vfly and Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid') then
+					Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
+				end
+				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0 then
+					SPEED = 50
+				elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 or CONTROL.Q + CONTROL.E ~= 0) and SPEED ~= 0 then
+					SPEED = 0
+				end
+				if (CONTROL.L + CONTROL.R) ~= 0 or (CONTROL.F + CONTROL.B) ~= 0 or (CONTROL.Q + CONTROL.E) ~= 0 then
+					BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+					lCONTROL = {F = CONTROL.F, B = CONTROL.B, L = CONTROL.L, R = CONTROL.R}
+				elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and (CONTROL.Q + CONTROL.E) == 0 and SPEED ~= 0 then
+					BV.velocity = ((workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B + CONTROL.Q + CONTROL.E) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+				else
+					BV.velocity = Vector3.new(0, 0, 0)
+				end
+				BG.cframe = workspace.CurrentCamera.CoordinateFrame
+			until not FLYING
+			CONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+			lCONTROL = {F = 0, B = 0, L = 0, R = 0, Q = 0, E = 0}
+			SPEED = 0
+			BG:Destroy()
+			BV:Destroy()
+			if Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid') then
+				Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
+			end
+		end)
+	end
+	flyKeyDown = IYMouse.KeyDown:Connect(function(KEY)
+		if KEY:lower() == 'w' then
+			CONTROL.F = (vfly and vehicleflyspeed or iyflyspeed)
+		elseif KEY:lower() == 's' then
+			CONTROL.B = - (vfly and vehicleflyspeed or iyflyspeed)
+		elseif KEY:lower() == 'a' then
+			CONTROL.L = - (vfly and vehicleflyspeed or iyflyspeed)
+		elseif KEY:lower() == 'd' then 
+			CONTROL.R = (vfly and vehicleflyspeed or iyflyspeed)
+		elseif QEfly and KEY:lower() == 'e' then
+			CONTROL.Q = (vfly and vehicleflyspeed or iyflyspeed)*2
+		elseif QEfly and KEY:lower() == 'q' then
+			CONTROL.E = -(vfly and vehicleflyspeed or iyflyspeed)*2
+		end
+		pcall(function() workspace.CurrentCamera.CameraType = Enum.CameraType.Track end)
+	end)
+	flyKeyUp = IYMouse.KeyUp:Connect(function(KEY)
+		if KEY:lower() == 'w' then
+			CONTROL.F = 0
+		elseif KEY:lower() == 's' then
+			CONTROL.B = 0
+		elseif KEY:lower() == 'a' then
+			CONTROL.L = 0
+		elseif KEY:lower() == 'd' then
+			CONTROL.R = 0
+		elseif KEY:lower() == 'e' then
+			CONTROL.Q = 0
+		elseif KEY:lower() == 'q' then
+			CONTROL.E = 0
+		end
+	end)
+	FLY()
+end
+
+function NOFLY()
+	FLYING = false
+	if flyKeyDown or flyKeyUp then flyKeyDown:Disconnect() flyKeyUp:Disconnect() end
+	if Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid') then
+		Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
+	end
+	pcall(function() workspace.CurrentCamera.CameraType = Enum.CameraType.Custom end)
+end
+
+local unmobilefly = function(Player)
+	pcall(function()
+		FLYING = false
+		local root = getRoot(Character)
+		root:FindFirstChild(velocityHandlerName):Destroy()
+		root:FindFirstChild(gyroHandlerName):Destroy()
+		Character:FindFirstChildWhichIsA("Humanoid").PlatformStand = false
+		mfly1:Disconnect()
+		mfly2:Disconnect()
+	end)
+end
+
+local mobilefly = function(Player, vfly)
+	unmobilefly(Player)
+	FLYING = true
+
+	local root = getRoot(Character)
+	local camera = workspace.CurrentCamera
+	local v3none = Vector3.new()
+	local v3zero = Vector3.new(0, 0, 0)
+	local v3inf = Vector3.new(9e9, 9e9, 9e9)
+
+	local controlModule = require(Player.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule"))
+	local bv = Instance.new("BodyVelocity")
+	bv.Name = velocityHandlerName
+	bv.Parent = root
+	bv.MaxForce = v3zero
+	bv.Velocity = v3zero
+
+	local bg = Instance.new("BodyGyro")
+	bg.Name = gyroHandlerName
+	bg.Parent = root
+	bg.MaxTorque = v3inf
+	bg.P = 1000
+	bg.D = 50
+
+	mfly1 = Player.CharacterAdded:Connect(function()
+		local bv = Instance.new("BodyVelocity")
+		bv.Name = velocityHandlerName
+		bv.Parent = root
+		bv.MaxForce = v3zero
+		bv.Velocity = v3zero
+
+		local bg = Instance.new("BodyGyro")
+		bg.Name = gyroHandlerName
+		bg.Parent = root
+		bg.MaxTorque = v3inf
+		bg.P = 1000
+		bg.D = 50
+	end)
+
+	mfly2 = RunService.RenderStepped:Connect(function()
+		root = getRoot(Character)
+		camera = workspace.CurrentCamera
+		if Character:FindFirstChildWhichIsA("Humanoid") and root and root:FindFirstChild(velocityHandlerName) and root:FindFirstChild(gyroHandlerName) then
+			local humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+			local VelocityHandler = root:FindFirstChild(velocityHandlerName)
+			local GyroHandler = root:FindFirstChild(gyroHandlerName)
+
+			VelocityHandler.MaxForce = v3inf
+			GyroHandler.MaxTorque = v3inf
+			if not vfly then humanoid.PlatformStand = true end
+			GyroHandler.CFrame = camera.CoordinateFrame
+			VelocityHandler.Velocity = v3none
+
+			local direction = controlModule:GetMoveVector()
+			if direction.X > 0 then
+				VelocityHandler.Velocity = VelocityHandler.Velocity + camera.CFrame.RightVector * (direction.X * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
+			end
+			if direction.X < 0 then
+				VelocityHandler.Velocity = VelocityHandler.Velocity + camera.CFrame.RightVector * (direction.X * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
+			end
+			if direction.Z > 0 then
+				VelocityHandler.Velocity = VelocityHandler.Velocity - camera.CFrame.LookVector * (direction.Z * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
+			end
+			if direction.Z < 0 then
+				VelocityHandler.Velocity = VelocityHandler.Velocity - camera.CFrame.LookVector * (direction.Z * ((vfly and vehicleflyspeed or iyflyspeed) * 50))
+			end
+		end
+	end)
+end
+
+
+
+
+local Section = LP:AddSection("Player Stats")
+
+LP:AddInput("Input", {Title = "TP/Walk Speed",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+         if TPWalk then
+            Speed = tonumber(txt) or 1
+        else
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(txt)
+        end   
+end})
+
+LP:AddToggle("MyToggle", {Title = "TP Walk", Default = false ,Callback = function(state)
+	local Player = game.Players.LocalPlayer
+    local Character = Player.Character
+        TPWalk = state
+        if TPWalk then
+            Speed = 1
+            local RunService = game:GetService("RunService")
+            TPWalking = RunService.Heartbeat:Wait()
+            game:GetService("RunService").Stepped:Connect(function()
+                if TPWalk then
+                    local humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+                    if humanoid and humanoid.MoveDirection.Magnitude > 0 then
+                        Character:TranslateBy(
+                            humanoid.MoveDirection * Speed * TPWalking * 10
+                        )
+                    end
+                end
+            end)
+        else
+            if TPWalking then TPWalking = nil end
+        end
+end})
+
+LP:AddButton({Title = "Reset Walk Speed",Callback = function()
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end})
+
+LP:AddInput("Input", {Title = "JumpPower",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+     game.Players.LocalPlayerCharacter.Humanoid.JumpPower = txt       
+end})
+
+LP:AddButton({Title = "Reset JumpPower",Callback = function()
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+end})
+
+LP:AddInput("Input", {Title = "Gravity",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+           workspace.Gravity = txt 
+end})
+
+LP:AddButton({Title = "Reset Gravity",Callback = function()
+     workspace.Gravity = 192.6   
+end})
+
+LP:AddInput("Input", {Title = "Hipheight",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+            game.Players.LocalPlayer.Character.Humanoid.HipHeight = txt
+end})
+
+LP:AddInput("Input", {Title = "Fov",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+            game.Workspace.CurrentCamera.FieldOfView = txt
+end})
+
+LP:AddButton({Title = "Reset Fov",Callback = function()
+   game.Workspace.CurrentCamera.FieldOfView = 70     
+end})
+
+LP:AddInput("Input", {Title = "Spin",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+      spinSpeed = txt
+      local Character = game.Players.LocalPlayer.Character
+      for i,v in pairs(getRoot(Character):GetChildren()) do
+          if v.Name == "Spinning" then
+              v:Destroy()
+          end
+      end
+      local Spin = Instance.new("BodyAngularVelocity")
+      Spin.Name = "Spinning"
+      Spin.Parent = getRoot(Character)
+      Spin.MaxTorque = Vector3.new(0, math.huge, 0)
+      Spin.AngularVelocity = Vector3.new(0,spinSpeed,0)      
+end})
+
+LP:AddButton({Title = "Unspin",Callback = function()
+        function getRoot(char)
+            local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+            return rootPart
+        end
+        for i, v in pairs(getRoot(game.Players.LocalPlayer.Character):GetChildren()) do
+            if v.Name == "Spinning" then
+                v:Destroy()
+            end
+        end
+end})
+
+
+LP:AddButton({Title = "Reset All",Callback = function()
+     local player = game.Players.LocalPlayer
+        local character = player.Character
+        local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+        Character.Humanoid.WalkSpeed = 16
+        Character.Humanoid.JumpPower = 50
+        workspace.Gravity = 192.6
+        workspace.CurrentCamera.FieldOfView = 70
+        if humanoid then
+            if humanoid.RigType == Enum.HumanoidRigType.R6 then
+                humanoid.HipHeight = 0
+            elseif humanoid.RigType == Enum.HumanoidRigType.R15 then
+                humanoid.HipHeight = 2.3
+            end
+        end   
+end})
+
+local Section = LP:AddSection("Player Stats")
+
+LP:AddButton({Title = "Rejoin",Callback = function()
+    PlaceId, JobId = game.PlaceId, game.JobId
+if #Players:GetPlayers() <= 1 then
+		game.Players.LocalPlayer:Kick("\nRejoining...")
+		wait()
+		game:GetService("TeleportService"):Teleport(PlaceId, game.Players.LocalPlayer)
+	else
+		game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceId, JobId, game.Players.LocalPlayer)
+	end
+end})
+
+LP:AddButton({Title = "Reset",Callback = function()
+        game.Players.LocalPlayer.Character.Head:Destroy()
+end})
+
+LP:AddButton({
+    Title = "Respawn",
+    Callback = function()
+        local Player = game.Players.LocalPlayer
+        local Character = Player.Character
+        local oldCFrame = Character:WaitForChild("HumanoidRootPart").CFrame
+
+        Player.Character:BreakJoints()
+        local newChar = Player.CharacterAdded:Wait()
+        newChar:WaitForChild("HumanoidRootPart").CFrame = oldCFrame
+    end
+})
+
+LP:AddButton({Title = "Fixcam",Callback = function()
+      fixcam()
+end})
+
+
+LP:AddToggle("MyToggle", {Title = "Fly", Default = false ,Callback = function(state)
+        if state == true then
+            if not IsOnMobile then
+                NOFLY()
+                wait()
+                sFLY()
+            else
+                mobilefly(Player)
+            end
+        else
+            if not IsOnMobile then
+                NOFLY()
+            else
+                unmobilefly(Player)
+            end
+        end
+end})
+
+
+LP:AddInput("Input", {Title = "Fly Speed",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+        iyflyspeed = txt
+end})
+
+LP:AddToggle("MyToggle", {Title = "Cframe Fly", Default = false ,Callback = function(cFly)
+        if cFly == true then
+        local Player = game.Players.LocalPlayer
+local Character = Player.Character
+            Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
+            local Head = Character:WaitForChild("Head")
+            Head.Anchored = true
+            
+            CFloop = game:GetService("RunService").Heartbeat:Connect(function(deltaTime)
+                local moveDirection = Character:FindFirstChildOfClass('Humanoid').MoveDirection * (CFspeed * deltaTime)
+                local headCFrame = Head.CFrame
+                local cameraCFrame = game.Workspace.CurrentCamera.CFrame
+                local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
+                
+                cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
+                local cameraPosition = cameraCFrame.Position
+                local headPosition = headCFrame.Position
+                
+                local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
+                Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
+            end)
+        else
+            cFly = false
+            if CFloop then
+                CFloop:Disconnect()
+                Character:FindFirstChildOfClass('Humanoid').PlatformStand = false
+                local Head = Character:WaitForChild("Head")
+                Head.Anchored = false
+            end
+        end
+end})
+
+LP:AddInput("Input", {Title = "Cframe Fly Speed",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+        CFspeed = txt
+end})
+
+LP:AddToggle("MyToggle", {Title = "Fling Fly", Default = false ,Callback = function(Fly)
+        if Fly == true then
+            if not IsOnMobile then
+                NOFLY()
+            else
+                unmobilefly(Player)
+            end        
+            wait()    
+           for _, v in pairs(Character:GetDescendants()) do
+                if v:IsA("Part") then
+                    v.CustomPhysicalProperties = PhysicalProperties.new(9e99, 9e99, 9e99, 9e99, 9e99)
+                end
+            end    
+            Noclip() 
+            if not IsOnMobile then
+                wait()
+                sFLY()
+            else
+                mobilefly(Player)
+            end    
+            local BodyAV = Instance.new("BodyAngularVelocity", Character:FindFirstChild("HumanoidRootPart"))
+            BodyAV.AngularVelocity = Vector3.new(0, 2000, 0)
+            BodyAV.MaxTorque = Vector3.new(0, math.huge, 0)
+            BodyAV.Name = "FlyFling"
+            BodyAV.P = 1250
+        else
+            Fly = false
+            if not IsOnMobile then
+                NOFLY()
+            else
+                unmobilefly(Player)
+            end      
+            for _, child in pairs(Character:GetDescendants()) do
+                if child.ClassName == "Part" then
+                    child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5, 0, 0)
+                end
+            end       
+            for _, v in pairs(Character:GetDescendants()) do
+                if v:IsA("BodyAngularVelocity") and v.Name == "FlyFling" then
+                    v:Destroy()
+                end
+            end      
+            vNoclip = false
+            if Noclipping then
+                Noclipping:Disconnect()
+            end
+            Clip = true
+        end
+end})
+
+LP:AddInput("Input", {Title = "Fly Fling Speed",Default = "",Numeric = true, Finished = false, Callback = function(txt)
+  iyflyspeed = txt
+end})
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Workspace = game:GetService("Workspace")
+
+local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local Folder = Instance.new("Folder", Workspace)
+local Part = Instance.new("Part", Folder)
+local Attachment1 = Instance.new("Attachment", Part)
+Part.Anchored = true
+Part.CanCollide = false
+Part.Transparency = 1
+
+if not getgenv().Network then
+    getgenv().Network = {
+        BaseParts = {},
+        Velocity = Vector3.new(14.46262424, 14.46262424, 14.46262424)
+    }
+
+    Network.RetainPart = function(Part)
+        if typeof(Part) == "Instance" and Part:IsA("BasePart") and Part:IsDescendantOf(Workspace) then
+            table.insert(Network.BaseParts, Part)
+            Part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
+            Part.CanCollide = false
+        end
+    end
+
+    local function EnablePartControl()
+        LocalPlayer.ReplicationFocus = Workspace
+        RunService.Heartbeat:Connect(function()
+            sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge)
+            for _, Part in pairs(Network.BaseParts) do
+                if Part:IsDescendantOf(Workspace) then
+                    Part.Velocity = Network.Velocity
+                end
+            end
+        end)
+    end
+
+    EnablePartControl()
+end
+
+local function ForcePart(v)
+    if v:IsA("Part") and not v.Anchored and not v.Parent:FindFirstChild("Humanoid") and not v.Parent:FindFirstChild("Head") and v.Name ~= "Handle" then
+        for _, x in next, v:GetChildren() do
+            if x:IsA("BodyAngularVelocity") or x:IsA("BodyForce") or x:IsA("BodyGyro") or x:IsA("BodyPosition") or x:IsA("BodyThrust") or x:IsA("BodyVelocity") or x:IsA("RocketPropulsion") then
+                x:Destroy()
+            end
+        end
+        if v:FindFirstChild("Attachment") then
+            v:FindFirstChild("Attachment"):Destroy()
+        end
+        if v:FindFirstChild("AlignPosition") then
+            v:FindFirstChild("AlignPosition"):Destroy()
+        end
+        if v:FindFirstChild("Torque") then
+            v:FindFirstChild("Torque"):Destroy()
+        end
+        v.CanCollide = false
+        local Torque = Instance.new("Torque", v)
+        Torque.Torque = Vector3.new(100000, 100000, 100000)
+        local AlignPosition = Instance.new("AlignPosition", v)
+        local Attachment2 = Instance.new("Attachment", v)
+        Torque.Attachment0 = Attachment2
+        AlignPosition.MaxForce = 9999999999999999
+        AlignPosition.MaxVelocity = math.huge
+        AlignPosition.Responsiveness = 200
+        AlignPosition.Attachment0 = Attachment2
+        AlignPosition.Attachment1 = Attachment1
+    end
+end
+
+local blackHoleActive = true
+
+local function toggleBlackHole()
+    blackHoleActive = not blackHoleActive
+    if blackHoleActive then
+        for _, v in next, Workspace:GetDescendants() do
+            ForcePart(v)
+        end
+
+        Workspace.DescendantAdded:Connect(function(v)
+            if blackHoleActive then
+                ForcePart(v)
+            end
+        end)
+
+        spawn(function()
+            while blackHoleActive and RunService.RenderStepped:Wait() do
+                Attachment1.WorldCFrame = humanoidRootPart
+            end
+        end)
+    end
+end
+
+LP:AddToggle("MyToggle", {Title = "Black Hole", Default = false ,Callback = function(state)
+if state then
+toggleBlackHole()
+else
+toggleBlackHole()
+end
+end})
+
+LP:AddButton({Title = "Max Zoom",Callback = function()
+        game.Players.LocalPlayer.CameraMaxZoomDistance = math.huge
+end})
+
+LP:AddButton({Title = "FirstP",Callback = function()
+        game.Players.LocalPlayer.CameraMode = "LockFirstPerson"
+end})
+
+LP:AddButton({Title = "ThirdP",Callback = function()
+        game.Players.LocalPlayer.CameraMaxZoomDistance = 50
+        game.Players.LocalPlayer.CameraMode = "Classic"    
+end})
+
+LP:AddToggle("MyToggle", {Title = "Infinite Jump", Default = false ,Callback = function(jumpsFly)
+  local Player = game.Players.LocalPlayer
+local Character = Player.Character
+    if jumpsFly == true then
+      if flyjump then 
+        flyjump:Disconnect() 
+      end
+      flyjump = UserInputService.JumpRequest:Connect(function(Jump)
+        Character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")
+      end)
+    else
+      jumpsFly = false
+      if flyjump then 
+        flyjump:Disconnect() 
+      end
+    end
+end})
+
+LP:AddToggle("MyToggle", {Title = "Freeze", Default = false ,Callback = function(Playerfree)
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+        if Playerfree == true then
+            for i,v in pairs(Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                v.Anchored = true
+            end
+            end
+		else
+		    Playerfree = false
+			for i,v in pairs(Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                v.Anchored = false
+            end
+            end
+		end		
+end})
+
+LP:AddToggle("MyToggle", {Title = "Invisible", Default = false ,Callback = function(invisibleofc)
+	local Player = game.Players.LocalPlayer
+local Character = Player.Character
+		if invisibleofc == true then
+	if invisRunning then return end
+	invisRunning = true
+	repeat wait(.1) until Player.Character
+	local Character = Player.Character
+	Character.Archivable = true
+	local IsInvis = false
+	local IsRunning = true
+	local InvisibleCharacter = Character:Clone()
+	InvisibleCharacter.Parent = Lighting
+	local Void = workspace.FallenPartsDestroyHeight
+	InvisibleCharacter.Name = ""
+	local CF
+
+	local invisFix = RunService.Stepped:Connect(function()
+		pcall(function()
+			local IsInteger
+			if tostring(Void):find'-' then
+				IsInteger = true
+			else
+				IsInteger = false
+			end
+			local Pos = Player.Character.HumanoidRootPart.Position
+			local Pos_String = tostring(Pos)
+			local Pos_Seperate = Pos_String:split(', ')
+			local X = tonumber(Pos_Seperate[1])
+			local Y = tonumber(Pos_Seperate[2])
+			local Z = tonumber(Pos_Seperate[3])
+			if IsInteger == true then
+				if Y <= Void then
+					Respawn()
+				end
+			elseif IsInteger == false then
+				if Y >= Void then
+					Respawn()
+				end
+			end
+		end)
+	end)
+
+	for i,v in pairs(InvisibleCharacter:GetDescendants())do
+		if v:IsA("BasePart") then
+			if v.Name == "HumanoidRootPart" then
+				v.Transparency = 1
+			else
+				v.Transparency = .5
+			end
+		end
+	end
+
+	function Respawn()
+		IsRunning = false
+		if IsInvis == true then
+			pcall(function()
+				Player.Character = Character
+				wait()
+				Character.Parent = workspace
+				Character:FindFirstChildWhichIsA'Humanoid':Destroy()
+				IsInvis = false
+				InvisibleCharacter.Parent = nil
+				invisRunning = false
+			end)
+		elseif IsInvis == false then
+			pcall(function()
+				Player.Character = Character
+				wait()
+				Character.Parent = workspace
+				Character:FindFirstChildWhichIsA'Humanoid':Destroy()
+				TurnVisible()
+			end)
+		end
+	end
+
+	local invisDied
+	invisDied = InvisibleCharacter:FindFirstChildOfClass'Humanoid'.Died:Connect(function()
+		Respawn()
+		invisDied:Disconnect()
+	end)
+
+	if IsInvis == true then return end
+	IsInvis = true
+	CF = workspace.CurrentCamera.CFrame
+	local CF_1 = Player.Character.HumanoidRootPart.CFrame
+	Character:MoveTo(Vector3.new(0,math.pi*1000000,0))
+	workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable
+	wait(.2)
+	workspace.CurrentCamera.CameraType = Enum.CameraType.Custom
+	InvisibleCharacter = InvisibleCharacter
+	Character.Parent = Lighting
+	InvisibleCharacter.Parent = workspace
+	InvisibleCharacter.HumanoidRootPart.CFrame = CF_1
+	Player.Character = InvisibleCharacter
+	fixcam()
+	Player.Character.Animate.Disabled = true
+	Player.Character.Animate.Disabled = false
+
+	function TurnVisible()
+		if IsInvis == false then return end
+		invisFix:Disconnect()
+		invisDied:Disconnect()
+		CF = workspace.CurrentCamera.CFrame
+		Character = Character
+		local CF_1 = Player.Character.HumanoidRootPart.CFrame
+		Character.HumanoidRootPart.CFrame = CF_1
+		InvisibleCharacter:Destroy()
+		Player.Character = Character
+		Character.Parent = workspace
+		IsInvis = false
+		Player.Character.Animate.Disabled = true
+		Player.Character.Animate.Disabled = false
+		invisDied = Character:FindFirstChildOfClass'Humanoid'.Died:Connect(function()
+			Respawn()
+			invisDied:Disconnect()
+		end)
+		invisRunning = false
+	end
+          else
+			   TurnVisible()
+	end
+  end    
+})
+
+LP:AddToggle("MyToggle", {Title = "Air Walk", Default = false ,Callback = function(state)
+  local Player = game.Players.LocalPlayer
+local Character = Player.Character
+    if state then
+      local function AirWalk()
+        local AirWPart = Instance.new("Part", workspace)
+        AirWPart.Size = Vector3.new(7, 2, 3)
+        AirWPart.CFrame = Character.HumanoidRootPart.CFrame + Vector3.new(0, -4, 0)
+        AirWPart.Transparency = 1
+        AirWPart.Anchored = true
+        AirWPart.Name = "Airwalk"
+        while true do
+          AirWPart.CFrame = Character.HumanoidRootPart.CFrame + Vector3.new(0, -4, 0)
+          wait(0.1)
+        end
+      end
+      AirWalk()
+    else
+      for _, v in pairs(workspace:GetChildren()) do
+        if v.Name == "Airwalk" then
+          v:Destroy()
+        end
+      end
+    end
+end})
+
+LP:AddToggle("MyToggle", {Title = "Noclip", Default = false ,Callback = function(Noclip)
+  local Player = game.Players.LocalPlayer
+local Character = Player.Character
+    if Noclip then
+      Clip = false
+      wait(0.1)
+      local function NoclipLoop()
+        if Clip == false and Character ~= nil then
+          for _, child in pairs(Character:GetDescendants()) do
+            if child:IsA("BasePart") and child.CanCollide == true then
+              child.CanCollide = false
+            end
+          end
+        end
+      end
+      Noclipping = game:GetService('RunService').Stepped:Connect(NoclipLoop)
+    else
+      Clip = true
+      if Noclipping then
+        Noclipping:Disconnect()
+        Noclipping = nil
+      if Character ~= nil then
+        for _, child in pairs(Character:GetDescendants()) do
+          if child:IsA("BasePart") then
+            child.CanCollide = true
+          end
+        end
+      end
+    end
+  end
+end})
+
+LP:AddToggle("MyToggle", {Title = "Fake Lag", Default = false ,Callback = function(state)
+  local Player = game.Players.LocalPlayer
+local Character = Player.Character
+    if state then
+      Lagging = true
+      repeat
+        wait()
+        Character.HumanoidRootPart.Anchored = false
+        wait(1.5)
+        Character.HumanoidRootPart.Anchored = true
+        wait(3)
+      until not Lagging
+    else
+      Lagging = false
+      wait(0.3)
+      Character.HumanoidRootPart.Anchored = false
+    end
+  end    
+})
+
+LP:AddToggle("MyToggle", {Title = "Super Fake Lag", Default = false ,Callback = function(state)
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+    if state then
+      Lagging = true
+      repeat
+        wait()
+        Character.HumanoidRootPart.Anchored = false
+        wait(0.1)
+        Character.HumanoidRootPart.Anchored = true
+        wait(0.1)
+      until not Lagging
+    else
+      Lagging = false
+      wait(0.3)
+      Character.HumanoidRootPart.Anchored = false
+    end
+  end    
+})
+
+LP:AddToggle("MyToggle", {Title = "Walk Fling", Default = false ,Callback = function(state)
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+        if state == true then
+            walkflinging = false
+            local character = Character
+            local humanoid = character and character:FindFirstChildWhichIsA("Humanoid")
+            if humanoid then
+                humanoid.Died:Connect(function()
+                    walkflinging = false
+                end)
+            end
+
+            walkflinging = true
+            repeat
+                RunService.Heartbeat:Wait()
+                local root = getRoot(character)
+
+                while not (character and character.Parent and root and root.Parent) do
+                    RunService.Heartbeat:Wait()
+                    character = Player.Character
+                    root = getRoot(character)
+                end
+
+                local vel = root.Velocity
+                root.Velocity = vel * 10000 + Vector3.new(0, 10000, 0)
+
+                RunService.RenderStepped:Wait()
+                if character and character.Parent and root and root.Parent then
+                    root.Velocity = vel
+                end
+
+                RunService.Stepped:Wait()
+                if character and character.Parent and root and root.Parent then
+                    root.Velocity = vel + Vector3.new(0, 0.1, 0)
+                end
+            until walkflinging == false
+        else
+            walkflinging = false
+        end
+    end
+})
+
+LP:AddToggle("MyToggle", {Title = "Spin Fling", Default = false ,Callback = function(state)
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+		local character = Character
+		if not character then return end
+		local root = getRoot(character)
+		if state then
+			flinging = false
+			Clip = false
+			for _, part in pairs(character:GetDescendants()) do
+				if part:IsA("BasePart") then
+					part.CustomPhysicalProperties = PhysicalProperties.new(math.huge, 0.3, 0.5)
+					part.CanCollide = false
+					part.Massless = true
+					part.Velocity = Vector3.zero
+				end
+			end
+			Noclipping = RunService.Stepped:Connect(function()
+				if not Clip and character then
+					for _, part in pairs(character:GetDescendants()) do
+						if part:IsA("BasePart") and part.CanCollide then
+							part.CanCollide = false
+						end
+					end
+				end
+			end)
+			local bambam = Instance.new("BodyAngularVelocity")
+			bambam.Name = randomString()
+			bambam.Parent = root
+			bambam.AngularVelocity = Vector3.new(0, 99999, 0)
+			bambam.MaxTorque = Vector3.new(0, math.huge, 0)
+			bambam.P = math.huge
+			flinging = true
+			flingDied = character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
+				if Noclipping then Noclipping:Disconnect() end
+				flinging = false
+				Clip = true
+			end)
+			repeat
+				bambam.AngularVelocity = Vector3.new(0, 99999, 0)
+				wait(0.2)
+				bambam.AngularVelocity = Vector3.zero
+				wait(0.1)
+			until not flinging
+		else
+			if Noclipping then Noclipping:Disconnect() end
+			Clip = true
+			if flingDied then flingDied:Disconnect() end
+			flinging = false
+			wait(0.1)
+			for _, v in pairs(getRoot(character):GetChildren()) do
+				if v:IsA('BodyAngularVelocity') then
+					v:Destroy()
+				end
+			end
+			for _, part in pairs(character:GetDescendants()) do
+				if part:IsA("BasePart") then
+					part.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+				end
+			end
+		end
+	end }) 
+
+
+
+Troll = Window:AddTab({ Title = "Troll", Icon = "rbxassetid://72879917771754" })
+
+--[[ Services ]]--
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+--[[ Valuables ]]--
+
+local Player = Players.LocalPlayer
+local Character = Player.Character
+local Humanoid = Character and Character:FindFirstChildWhichIsA("Humanoid") or false
+
+local Flinger = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Tabs/Troll%20Tab%20Things/Flinger"))()
+local Bringer = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Tabs/Troll%20Tab%20Things/Bringer1"))()
+
+
+
+--[[ Values ]]--
+
+local Target
+local KillConnection
+local NotificationSent = false
+local Players = {}
+local Target = nil
+local view = false
+walkto = false
+waypointwalkto = false
+local t
+local bangLoop
+local bangDied
+local bang
+local bangAnim
+local Target
+local headSit
+local sitLoop
+local sitDied
+
+
+--[[ FUNCTION ]]--
+
+function getTorso(x)
+	 x = game.Players.LocalPlayer.Character
+	 return x:FindFirstChild("Torso") or x:FindFirstChild("UpperTorso") or x:FindFirstChild("LowerTorso") or x:FindFirstChild("HumanoidRootPart")
+ end
+ 
+ function getRoot(char)
+ local rootPart = Character:FindFirstChild('HumanoidRootPart') or Character:FindFirstChild('Torso') or Character:FindFirstChild('UpperTorso')
+ return rootPart
+end
+
+function getHum()
+    return game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+end
+
+local function Fling(t)
+     Flinger:GetTarget(t)
+     Flinger:Fling()
+end
+
+local function Bring(t)
+     Bringer:Bring(t)
+end
+
+local Section = Troll:AddSection("Select a Player")
+
+local function UpdatePlayers()
+    Players = {}
+    for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+        table.insert(Players, player.DisplayName .. " (" .. player.Name .. ")")
+    end
+end
+
+UpdatePlayers()
+
+local Dropdown = Troll:AddDropdown("Dropdown", {
+    Title = "Select A Player",
+    Values = Players,
+    Multi = false,
+    Callback = function(Value)
+        Target = Value
+    end
+})
+
+local function RefreshDropdown()
+    UpdatePlayers()
+    Dropdown:SetValues(Players)
+end
+
+game:GetService("Players").PlayerAdded:Connect(function()
+    RefreshDropdown()
+end)
+
+game:GetService("Players").PlayerRemoving:Connect(function(player)
+    if Target and player and string.find(Target, player.Name) then
+        Fluent:Notify({
+            Title = "Warning",
+            Content = player.DisplayName .. " (" .. player.Name .. ") has left the game!",
+            SubContent = "",
+            Duration = 5
+        })
+    end
+    RefreshDropdown()
+end)
+
+Troll:AddButton({Title = "Click At Target",Callback = function()
+        local GetTargetTool = Instance.new("Tool")
+        GetTargetTool.Name = "ClickTarget"
+        GetTargetTool.RequiresHandle = false
+        GetTargetTool.ToolTip = "Select A Target"
+        
+        local function ActivateTool()
+            local player = game.Players.LocalPlayer
+            local mouse = player:GetMouse()
+            local hit = mouse.Target
+
+            if hit then
+                local character = hit.Parent
+                local person = game.Players:GetPlayerFromCharacter(character)
+
+                if person then
+                    Target = person.DisplayName .. " (" .. person.Name .. ")"
+                    Dropdown:SetValue(Target)
+                    
+         Fluent:Notify({
+        Title = "System Hub",
+        Content = "Selected Target: " .. person.DisplayName,
+        SubContent = "",
+        Duration = 5
+        })
+                else
+                    
+                end
+            end
+        end
+
+        GetTargetTool.Activated:Connect(ActivateTool)
+
+        local plr = game.Players.LocalPlayer
+        GetTargetTool.Parent = plr.Backpack
+    end    
+})
+
+local function getTargetPlayer()
+    if not Target then
+        return nil
+    end
+    local playerName = string.match(Target, "%(([^)]+)%)") or Target
+    return game.Players:FindFirstChild(playerName)
+end
+
+local Section = Troll:AddSection("Trolls")
+
+Troll:AddButton({Title = "Goto",Callback = function()
+        local targetPlayer = getTargetPlayer()
+        if targetPlayer then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame
+        end
+end})
+
+Troll:AddButton({Title = "Tween Goto",Callback = function()
+          local targetPlayer = getTargetPlayer()
+          local targetHRP = targetPlayer.Character.HumanoidRootPart
+          local TweenService = game:GetService("TweenService")
+          
+          local tween = TweenService:Create(Player.Character.HumanoidRootPart, TweenInfo.new(2, Enum.EasingStyle.Linear), {CFrame = targetHRP.CFrame + Vector3.new(3, 1, 0)})
+          tween:Play()
+end})
+
+Troll:AddToggle("MyToggle", {Title = "View", Default = false ,Callback = function(state)
+        if state then
+            local targetPlayer = getTargetPlayer()
+            if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
+                game:GetService("Workspace").CurrentCamera.CameraSubject = targetPlayer.Character.Humanoid
+                view = true
+            end
+        else
+            view = false
+            game:GetService("Workspace").CurrentCamera.CameraSubject = getHum()
+        end
+end})
+
+Troll:AddButton({Title = "Bring",Callback = function()
+     Bring(getTargetPlayer())
+end}) 
+
+Troll:AddToggle("MyToggle", {Title = "Handle Kill", Default = false ,Callback = function(state)
+        if state then
+            NotificationSent = false
+            if KillConnection then
+                KillConnection:Disconnect()
+                KillConnection = nil
+            end
+
+            local PlayerTarget = getTargetPlayer()
+
+            local Character = Player.Character
+            local Tool = Character and Character:FindFirstChildWhichIsA("Tool")
+            local Handle = Tool and Tool:FindFirstChild("Handle")
+
+            if not Tool or not Handle then
+        Fluent:Notify({
+        Title = "Warning",
+        Content = "You need a tool that can deal damage",
+        SubContent = "",
+        Duration = 5
+        })
+                return
+            end
+
+            KillConnection = game:GetService("RunService").RenderStepped:Connect(function()
+                if not PlayerTarget or not PlayerTarget.Character then return end
+
+                local Human = PlayerTarget.Character:FindFirstChildWhichIsA("Humanoid")
+                if not Human or Human.Health <= 0 then
+                    if not NotificationSent then
+
+                        NotificationSent = true
+                    end
+                    return
+                end
+
+                Tool:Activate()
+                for _, v in ipairs(PlayerTarget.Character:GetChildren()) do
+                    if v:IsA("BasePart") then
+                        firetouchinterest(Handle, v, 0)
+                        firetouchinterest(Handle, v, 1)
+                    end
+                end
+            end)
+        else
+            if KillConnection then
+                KillConnection:Disconnect()
+                KillConnection = nil
+            end
+        end
+    end    
+})
+
+Troll:AddToggle("MyToggle", {Title = "Handle Kill All", Default = false ,Callback = function(state)
+        if state then
+            NotificationSent = false
+
+            if KillAllConnection then
+                KillAllConnection:Disconnect()
+                KillAllConnection = nil
+            end
+
+            local Character = game.Players.LocalPlayer.Character
+            local Tool = Character and Character:FindFirstChildWhichIsA("Tool")
+            local Handle = Tool and Tool:FindFirstChild("Handle")
+
+            if not Tool or not Handle then
+        Fluent:Notify({
+        Title = "Warning",
+        Content = "You need a tool that can deal damage",
+        SubContent = "",
+        Duration = 5
+})
+                return
+            end
+
+            KillAllConnection = game:GetService("RunService").RenderStepped:Connect(function()
+                for _, otherPlayer in pairs(game.Players:GetPlayers()) do
+                    if otherPlayer ~= Player and otherPlayer.Character then
+                        local Human = otherPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+                        if Human and Human.Health > 0 then
+                            Tool:Activate()
+                            for _, part in ipairs(otherPlayer.Character:GetChildren()) do
+                                if part:IsA("BasePart") then
+                                    firetouchinterest(Handle, part, 0)
+                                    firetouchinterest(Handle, part, 1)
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        else
+            if KillAllConnection then
+                KillAllConnection:Disconnect()
+                KillAllConnection = nil
+            end
+        end
+    end    
+})
+
+
+Troll:AddToggle("MyToggle", {Title = "Steal Animation", Default = false ,Callback = function(animsteals)
+        local plr = game.Players.LocalPlayer
+        if animsteals then
+            
+            local PlayerTarget  = getTargetPlayer()
+            
+            if plr.Character.Humanoid.RigType ~= Enum.HumanoidRigType.R15 then
+      Fluent:Notify({
+        Title = "Warning",
+        Content = "You need to be R15 to steal animation.",
+        SubContent = "",
+        Duration = 5
+})
+                return
+            end
+
+            if PlayerTarget.Character.Humanoid.RigType ~= Enum.HumanoidRigType.R15 then
+     Fluent:Notify({
+        Title = "Warning",
+        Content = "The player you are trying to steal from is in R6. Try choosing another player.",
+        SubContent = "",
+        Duration = 5
+})
+                return
+            end
+
+            if PlayerTarget.Character:FindFirstChild("Animate") then
+                if plr.Character:FindFirstChild("Animate") then
+                    local checkifmyanim = plr.Character:FindFirstChild("animstorage")
+                    if checkifmyanim then
+                        plr.Character:FindFirstChild("Animate"):Destroy()
+                        checkifmyanim.Name = "Animate"
+                        checkifmyanim.Disabled = false
+                    end
+                end
+
+                local currentAnimate = plr.Character:FindFirstChild("Animate")
+                if currentAnimate then
+                    currentAnimate.Name = "animstorage"
+                    currentAnimate.Disabled = true
+                end
+
+                local newAnim = PlayerTarget.Character.Animate:Clone()
+                newAnim.Parent = plr.Character
+                newAnim.Name = "Animate"
+            end
+        else
+            if plr.Character:FindFirstChild("animstorage") then
+                if plr.Character:FindFirstChild("Animate") then
+                    plr.Character:FindFirstChild("Animate"):Destroy()
+                end
+                local animStorage = plr.Character:FindFirstChild("animstorage")
+                animStorage.Name = "Animate"
+                animStorage.Disabled = false
+            end
+        end
+end})
+
+Troll:AddToggle("MyToggle", {Title = "Head Stand", Default = false ,Callback = function(stand)
+        if stand then
+            if headSit then headSit:Disconnect() end
+
+      local Target = getTargetPlayer()
+
+
+            local sitPlr = Target.Name
+
+            sitDied = game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
+                if sitLoop then sitLoop:Disconnect() end
+                if headSit then headSit:Disconnect() end
+            end)
+
+            headSit = RunService.Heartbeat:Connect(function()
+                if game:GetService("Players"):FindFirstChild(Target.Name) and Target.Character ~= nil and getRoot(Target.Character) and getRoot(game.Players.LocalPlayer.Character) then
+                    getRoot(game.Players.LocalPlayer.Character).CFrame = Target.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, math.rad(0), 0) * CFrame.new(0, 4.6, 0.4)
+                else
+                    if headSit then headSit:Disconnect() end
+                end
+            end)
+        else
+            if headSit then headSit:Disconnect() end
+            if sitDied then sitDied:Disconnect() end
+        end
+    end
+})
+
+
+Troll:AddToggle("MyToggle", {Title = "Head Sit", Default = false ,Callback = function(state)
+    if state == true then
+        if headSit then 
+            headSit:Disconnect()
+        end
+
+        local players = getTargetPlayer()
+        
+        if players and players.Character then
+            local sitPlr = players.Name
+
+            sitDied = game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
+                if sitLoop then
+                    sitLoop:Disconnect()
+                end
+            end)
+
+            game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Sit = true
+
+            headSit = RunService.Heartbeat:Connect(function()
+                if game.Players:FindFirstChild(players.Name) 
+                and players.Character 
+                and getRoot(players.Character) 
+                and getRoot(game.Players.LocalPlayer.Character) 
+                and game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Sit == true then
+                    getRoot(game.Players.LocalPlayer.Character).CFrame = players.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, math.rad(0), 0) * CFrame.new(0, 1.6, 0.4)
+                else
+                    headSit:Disconnect()
+                end
+            end)
+        end
+    else
+        if headSit then 
+            headSit:Disconnect()
+        end
+
+        local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid and humanoid.Sit then
+            humanoid.Sit = false 
+        end
+    end
+  end    
+})
+
+if game.PlaceId == 4924922222 then
+
+local Section = Troll:AddSection("Brookhaven")
+
+local Brookhaven = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Tabs/Troll%20Tab%20Things/Brookhaven"))()
+
+Troll:AddButton({Title = "Bring",Callback = function()
+      	Brookhaven:Bring(getTargetPlayer())
+end})
+
+Troll:AddToggle("MyToggle", {Title = "Loop Bring", Default = false ,Callback = function(state)
+	if state == true then
+      Loopvoid = true
+      repeat wait()
+       Brookhaven:Bring(getTargetPlayer())
+      until Loopvoid == false
+        else
+            Loopvoid = false
+        end
+end})
+
+Troll:AddButton({Title = "Kill",Callback = function()
+      	Brookhaven:Kill(getTargetPlayer())
+end})
+
+Troll:AddToggle({Name = "Loop Kill", Default = false, Callback = function(state)
+	if state == true then
+      Loopvoid = true
+      repeat wait()
+       Brookhaven:Kill(getTargetPlayer())
+      until Loopvoid == false
+        else
+            Loopvoid = false
+        end
+end})
+end
+
+local Section = Troll:AddSection("Fling")
+
+Troll:AddButton({Title = "Fling",Callback = function()
+      	Fling(getTargetPlayer())
+end})
+
+Troll:AddToggle("MyToggle", {Title = "Loop Fling", Default = false ,Callback = function(state)
+ if state == true then
+      Loopvoid = true
+      repeat wait()
+       Fling(getTargetPlayer())
+      until Loopvoid == false
+        else
+            Loopvoid = false
+        end
+    end
+ })
+
+Troll:AddButton({Title = "Fling All",Callback = function()
+      	Flinger:GetTarget(getTargetPlayer())
+          Flinger:flingAll()
+end})
+
+Troll:AddToggle("MyToggle", {Title = "Loop Fling All", Default = false ,Callback = function(state)
+if state == true then
+      Loopvoid = true
+      repeat wait()
+     Flinger:GetTarget(getTargetPlayer())
+          Flinger:flingAll()
+      until Loopvoid == false
+        else
+            Loopvoid = false
+        end
+  end    
+})
+
+
+local Section = Troll:AddSection("Bang")
+
+local function getTorso(character)
+    return character:FindFirstChild("Torso") or character:FindFirstChild("UpperTorso") or character:FindFirstChild("HumanoidRootPart")
+end
+
+local function getRoot(character)
+    return character:FindFirstChild("HumanoidRootPart")
+end
+
+Troll:AddToggle("MyToggle", {Title = "Bang", Default = false ,Callback = function(bangState)
+        if bangState then
+            local speed = t or 10
+
+            local TargetPlayer = getTargetPlayer()
+
+            if not TargetPlayer then return end
+
+            bangAnim = Instance.new("Animation")
+            bangAnim.AnimationId = (game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').RigType == Enum.HumanoidRigType.R15) and "rbxassetid://5918726674" or "rbxassetid://148840371"
+            bang = game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):LoadAnimation(bangAnim)
+            bang:Play(0.1, 1, 1)
+            bang:AdjustSpeed(speed)
+
+            bangDied = game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
+                if bangLoop then bangLoop:Disconnect() end
+                bang:Stop()
+                bangAnim:Destroy()
+                bangDied:Disconnect()
+            end)
+
+            local bangOffset = CFrame.new(0, 0, 1.1)
+            bangLoop = RunService.Stepped:Connect(function()
+                pcall(function()
+                    local otherRoot = getTorso(TargetPlayer.Character)
+                    getRoot(game.Players.LocalPlayer.Character).CFrame = otherRoot.CFrame * bangOffset
+                end)
+            end)
+        else
+            if bangLoop then bangLoop:Disconnect() end
+            if bang then bang:Stop() end
+            if bangAnim then
+                bangAnim:Destroy()
+                bangAnim = nil
+            end
+            if bangDied then bangDied:Disconnect() end
+        end
+    end
+})
+
+
+Troll:AddToggle("MyToggle", {Title = "Head Bang", Default = false ,Callback = function(Bang)
+        if Bang then
+            local speed = t or 10
+            local TargetPlayer = getTargetPlayer()
+
+            if not TargetPlayer then return end
+
+            bangAnim = Instance.new("Animation")
+            bangAnim.AnimationId = (game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').RigType == Enum.HumanoidRigType.R15) and "rbxassetid://5918726674" or "rbxassetid://148840371"
+            bang = game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):LoadAnimation(bangAnim)
+            bang:Play(0.1, 1, 1)
+            bang:AdjustSpeed(speed)
+
+            bangDied = game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(function()
+                if bangLoop then bangLoop:Disconnect() end
+                if bang then bang:Stop() end
+                if bangAnim then bangAnim:Destroy() end
+                if bangDied then bangDied:Disconnect() end
+            end)
+
+            local bangOffset = CFrame.new(0, 1, -1.1)
+            bangLoop = RunService.Stepped:Connect(function()
+                pcall(function()
+                    local otherRoot = TargetPlayer.Character:FindFirstChild("Head")
+                    if otherRoot then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = otherRoot.CFrame * bangOffset
+                        local CharPos = game.Players.LocalPlayer.Character.PrimaryPart.Position
+                        local tpos = TargetPlayer.Character:FindFirstChild("HumanoidRootPart").Position
+                        local TPos = Vector3.new(tpos.X, CharPos.Y, tpos.Z)
+                        local NewCFrame = CFrame.new(CharPos, TPos)
+                        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(NewCFrame)
+                    end
+                end)
+            end)
+        else
+            if bangLoop then bangLoop:Disconnect() end
+            if bang then bang:Stop() end
+            if bangAnim then
+                bangAnim:Destroy()
+                bangAnim = nil
+            end
+            if bangDied then bangDied:Disconnect() end
+        end
+    end
+})
+
+Troll:AddInput("Input", {Title = "Bang Speed",Default = "",Numeric = true, Finished = false, Callback = function(h)
+        t = tonumber(h)
+end})
+ 
+ 
+Tab = Window:AddTab({ Title = "Universal Scripts", Icon = "rbxassetid://6031763428"})
+
+local UserInputService = game:GetService("UserInputService")
+local IsOnMobile = table.find({
+	Enum.Platform.IOS,
+	Enum.Platform.Android
+}, UserInputService:GetPlatform())
+
+local Section = Tab:AddSection("Universal Scripts")
+
+Tab:AddButton({Title = "Wall Walk", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/wallwalker.lua"))()
+end})
+
+Tab:AddButton({Title = "Esp", Callback = function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Esp-Universal-open-source-10455", true))()
+end})
+
+Tab:AddButton({Title = "Pshade", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua"))()
+end})
+
+Tab:AddButton({Title = "Dio Fly", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/qAxAp/DioFly/main/DioFly.lua"))()
+end})
+
+Tab:AddButton({Title = "Fake Lag", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/2VNG9fif"))()
+end})
+
+Tab:AddButton({Title = "Invisible", Callback = function()
+    loadstring(game:HttpGet("https://pastefy.app/AsFFApeN/raw"))()
+end})
+
+Tab:AddButton({Title = "CTTV Camera", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/CCTV%20Camera"))()
+end})
+
+Tab:AddButton({Title = "Spy", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/6sAUmxQH"))()
+end})
+
+Tab:AddButton({Title = "Fling Click", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Click%20fling"))()
+end})
+
+Tab:AddButton({Title = "Game Copier", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Sashkandro/RobloxUniversalGameCopier/main/Script"))()
+end})
+
+Tab:AddButton({Title = "Lag Switch", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/FE%20lagswitch.txt"))()
+end})
+
+Tab:AddButton({Title = "Freaky Animations", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ShutUpJamesTheLoser/freaky/refs/heads/main/fe"))()
+end})
+
+Tab:AddButton({Title = "Tigger Bot", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/eduxis/Script/refs/heads/main/scrpt.txt"))()
+end})
+
+if IsOnMobile then
+    Tab:AddButton({Title = "Keyboard", Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GGH52lan/GGH52lan/main/keyboard.txt"))()
+    end})
+end
+
+Tab:AddButton({Title = "Abaui Searcher", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/CaseohCASEOH/aabbaaii/refs/heads/main/abauiii2.lua"))()
+end})
+
+Tab:AddButton({Title = "Super Ring V4", Callback = function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Natural-Disaster-Survival-Super-ring-V4-24296"))()
+end})
+
+Tab:AddButton({Title = "Shiftlock", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/zBbLeZmD"))()
+end})
+
+Tab:AddButton({Title = "Audio Player", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Dan41/Scripts/refs/heads/main/GITHUB%20AUDIO%20PLAYER.lua"))()
+end})
+
+Tab:AddButton({Title = "Sprint", Callback = function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Mobile-sprint-33373"))()
+end})
+
+Tab:AddButton({Title = "Free Emotes", Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%20Emotes%20Gui"))()
+end})
+
+Tab:AddButton({Title = "Rainbow Coil", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Ahma174/Tool/refs/heads/main/Rainbow%20Coil"))()
+end})
+
+Tab:AddButton({Title = "Rochips", Callback = function()
+    if "you wanna use rochips universal" then
+        local z_x, z_z = "gzrux646yj/raw/main.ts", "https://glot.io/snippets/"
+        local im, lonely, z_c = task.wait, game, loadstring
+        z_c(lonely:HttpGet(z_z .. "" .. z_x))()
+        return ("This will load in about 2 - 30 seconds" or "according to your device and executor")
+    end
+end})
+
+Tab:AddButton({Title = "Realistic Arms", Callback = function()
+    loadstring(game:HttpGet("https://pastefy.app/aHXVk6rB/raw", true))()
+end})
+
+Tab:AddButton({Title = "Free Cam", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Freecam"))()
+end})
+
+Tab:AddButton({Title = "Sword Reach", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Sword%20reach"))()
+end})
+
+Tab:AddButton({Title = "Dynamic Island", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ECCSco/Dynamic-Installer/refs/heads/main/Dynamic%20Island%20V2.lua"))()
+end})
+
+Tab:AddButton({Title = "Boost Fps", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/vkhzwHQC"))()
+end})
+
+local Section = Tab:AddSection("Chat Bypasser")
+
+Tab:AddButton({Title = "AnnaBypasser",  Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypasser/refs/heads/main/AnnaBypasser.lua",true))()
+end})
+
+Tab:AddButton({Title = "Chat Bypasser ", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Synergy-Networks/products/main/BetterBypasser/loader.lua", true))()
+end})
+
+Tab:AddButton({Title = "Cat Bypasser", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/shadow62x/catbypass/main/upfix"))()
+end})
+
+Tab:AddButton({Title = "Chat Bypasseer Hub",  Callback = function()
+loadstring(game:HttpGet("https://pastebin.com/raw/z0YRv3y4"))(); 	
+end})
+
+local Section = Tab:AddSection("Chat")
+
+Tab:AddButton({Title = "Chat Spy", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Chat%20Spy"))()
+end})
+
+Tab:AddButton({Title = "Chat Logs", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/8vS5Dqdr"))()
+end})
+
+Tab:AddButton({Title = "Chat Executor",  Callback = function()
+      loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\34\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\122\101\112\104\121\114\49\48\49\48\49\47\114\53\103\102\54\115\56\104\106\115\57\47\109\97\105\110\47\99\104\97\116\45\101\120\101\99\117\116\111\114\34\44\116\114\117\101\41\41\40\41\10")()	
+end})
+
+Tab:AddButton({Title = "Chat Hax", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/Chat/FE%20Chat%20Haxx%20V3.5.txt"))()
+end})
+
+Tab:AddButton({Title = "Chat Art", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/WQ9YqdCJ"))()
+end})
+
+Tab:AddButton({Title = "Chat Lag", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/BidoSkinsYT/BidoSkinsYT/main/Fe%20lag%20chat%20Gui"))()
+end})
+
+Tab:AddButton({Title = "Chat Translator", Callback = function()
+    loadstring(game:HttpGet("https://paste.ee/r/Rranu", true))()
+end})
+
+local Section = Tab:AddSection("Tools")
+
+
+Tab:AddButton({Title = "Tp Tool",Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/0FqkSpaJ"))()
+end})
+
+Tab:AddButton({Title = "Telekinesis", Callback = function()
+    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/randomstring0/Qwerty/refs/heads/main/qwerty11.lua"))()
+end})
+
+Tab:AddButton({Title = "F3X", Callback = function()
+    loadstring(game:GetObjects("rbxassetid://6695644299")[1].Source)()
+end})
+
+Tab:AddButton({Title = "Btools", Callback = function()
+    Instance.new("HopperBin", game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")).BinType = 3
+    Instance.new("HopperBin", game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")).BinType = 4
+end})
+
+Tab:AddButton({Title = "Admin Tools", Callback = function()
+    loadstring(game:HttpGet("https://pastefy.app/VYIAk3o1/raw", true))()
+end})
+
+local Section = Tab:AddSection("Executors")
+
+Tab:AddButton({Title = "Krypton Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Script/main/Krypton.lua"))()
+end})
+
+Tab:AddButton({Title = "Kiwi X Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Giangplay/Script/main/Kiwi-Ui.lua"))()
+end})
+
+Tab:AddButton({Title = "RC7 Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/FD2Team/archive/main/rc7"))()
+end})
+
+Tab:AddButton({Title = "Synapse X Executor", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/QvnEA2cA"))()
+end})
+
+Tab:AddButton({Title = "Codex Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/KevinScripts2024/Code/main/HellNah"))()
+end})
+
+Tab:AddButton({Title = "Krnl Executor", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/M3HjLPU7"))()
+end})
+
+Tab:AddButton({Title = "Hydrogen Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AnyaHubsV2/executer/main/Hydroui.lua"))()
+end})
+
+Tab:AddButton({Title = "Cubix Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AnyaHubsV2/CMDXCBX/main/CubixBeta.lua"))()
+end})
+
+Tab:AddButton({Title = "Punk Team Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/scripthubekitten/punkteamui/main/punkteamui"))()
+end})
+
+Tab:AddButton({Title = "Vega X Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xxtan31/Ata/main/ata3.txt"))()
+end})
+
+Tab:AddButton({Title = "Solara Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/scripthubekitten/solaraui/main/solaraui"))()
+end})
+
+Tab:AddButton({Title = "Apple Ware Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/TableDevelopments/public/main/ui.lua"))()
+end})
+
+Tab:AddButton({Title = "Incognito Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/scripthubekitten/sdssdasd/main/sdsdds"))()
+end})
+
+Tab:AddButton({Title = "Fluxus Executor", Callback = function()
+    loadstring(game:HttpGet("https://scriptblox.com/raw/Universal-Script-Fluxus-Coral-Remake-7112"))()
+end})
+
+Tab:AddButton({Title = "Electron Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/scripthubekitten/electronui/main/electronui"))()
+end})
+
+Tab:AddButton({Title = "Trigon Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Xxtan31/Ata/main/trigonnormal.lua"))()
+end})
+
+Tab:AddButton({Title = "Arceus Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()
+end})
+
+Tab:AddButton({Title = "Arceus X Executor Fan Made", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/scripthubekitten/areceusxpc/main/arceusxppc"))()
+end})
+
+Tab:AddButton({Title = "Delta Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/scripthubekitten/deltax/main/deltax"))()
+end})
+
+Tab:AddButton({Title = "Delta X Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/KevinScripts2024/Deltozoz/main/Rick%20rolled"))()
+end})
+
+local Section = Tab:AddSection("Backdoor")
+
+Tab:AddButton({Title = "Backdoor Executor V8", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/iK4oS/backdoor.exe/master/source.lua"))()
+end})
+
+Tab:AddButton({Title = "Backdoor Executor V6X", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/iK4oS/backdoor.exe/v6x/source.lua"))()
+end})
+
+Tab:AddButton({Title = "Backdoor Executor V6", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/iK4oS/backdoor.exe/v6/source.lua"))()
+end})
+
+Tab:AddButton({Title = "Og Backdoor Executor", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/BackDoor/og.txt"))()
+end})
+
+Tab:AddButton({Title = "Frakture SS", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/BackDoor/Frakture%20SS.txt"))()
+end})
+
+Tab:AddButton({Title = "Tntmaster SS", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/BackDoor/tntmasterss.txt"))()
+end})
+
+Tab:AddButton({Title = "Jalon's Backdoor Scanner", Callback = function()
+    loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/jLn0n/scripts/main/backdoor-executor/backdoor-executor.lua"))()
+end})
+
+Tab:AddButton({Title = "K4scripts", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub-Backup/main/FE/BackDoor/forker.txt"))()
+end})
+
+local Section = Tab:AddSection("Remote Spies")
+
+Tab:AddButton({Title = "Dex", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
+end})
+
+Tab:AddButton({Title = "Remote Explainer",  Callback = function()
+      	loadstring(game:HttpGet("https://pastebin.com/raw/cSVRByp8"))()
+end})
+
+Tab:AddButton({Title = "RS2S Remote Spy", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/refs/heads/main/Universal/RS2V3.lua"))()
+end})
+
+Tab:AddButton({Title = "Simple Spy", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua"))()
+end})
+
+Tab:AddButton({Title = "Turtle Spy", Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Spy/refs/heads/main/source.lua"))()
+end})
+
+Tab:AddButton({Title = "FilterShark", Callback = function()
+    loadstring(game:HttpGet("https://paste.ee/r/Fffa4"))()
+end})
+
+Tab:AddButton({Title = "FrostHook", Callback = function()
+    loadstring(game:HttpGet("https://paste.ee/r/z29rx"))()
+end})
+
+Tab:AddButton({Title = "EngoSpy", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/SCqZXNvu"))()
+end})
+
+Tab:AddButton({Title = "Hydroxide", Callback = function()
+    local owner = "Upbolt"
+    local branch = "revision"
+    local function webImport(file)
+        return loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/%s/Hydroxide/%s/%s.lua"):format(owner, branch, file)), file .. '.lua')()
+    end
+    webImport("init")
+    webImport("ui/main")
+end})
+
+Tab:AddButton({Title = "MrSpy", Callback = function()
+    loadstring(game:HttpGet("https://paste.ee/r/z06zN"))()
+end})
+
+Tab:AddButton({Title = "Remote Grabber", Callback = function()
+    loadstring(game:HttpGet("https://paste.ee/r/Dddcj"))()
+end})
+
+Tab = Window:AddTab({ Title = "Admins", Icon = "rbxassetid://6034281935"})
+
+local Section = Tab:AddSection("Best Admins")
+
+Tab:AddButton({Title = "Infinite Yield",Callback = function()
+      loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+end})
+
+Tab:AddButton({Title = "Nameless Admin",Callback = function()
+        loadstring(game:HttpGet("https://github.com/ltseverydayyou/Nameless-Admin/blob/main/Source.lua?raw=NEWLOADSTRINGYAYAYA"))()
+end})
+
+Tab:AddButton({Title = "Quirky Admin",Callback = function()
+loadstring(game:HttpGet("https://gist.github.com/someunknowndude/38cecea5be9d75cb743eac8b1eaf6758/raw"))()
+end})
+
+Tab:AddButton({Title = "IV Admin",Callback = function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/BloodyBurns/Hex/main/Iv%20Admin%20v3.lua'))()	
+end})
+
+Tab:AddButton({Title = "Porton Admin V2",Callback = function()
+      _G.UI_Id = "default"
+		loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/5e6e6cc1bb32fd926764d064e2c60a3b.lua"))()	
+end })
+
+local Section = Tab:AddSection("Normal Admins")
+
+Tab:AddButton({Title = "Leg Admin",Callback = function()
+      loadstring(game:HttpGet('https://raw.githubusercontent.com/leg1337/legadmv2/main/legadminv2.lua'))()
+end})
+
+Tab:AddButton({Title = "CMD-X",Callback = function()
+      loadstring(game:HttpGet('https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source', true))()
+end})
+
+Tab:AddButton({Title = "Reviz Admin",Callback = function()
+      loadstring(game:HttpGet('https://pastebin.com/raw/Nh7n0hdX', true))()
+end})
+
+Tab:AddButton({Title = "Shattervast Admin",Callback = function()
+      loadstring(game:HttpGet('https://pastebin.com/raw/iL4NRDux', true))()
+end})
+
+Tab:AddButton({Title = "Fates Admin",Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/fatesc/fates-admin/main/main.lua"))();
+end })
+
+Tab:AddButton({Title = "Adonis Admin",Callback = function()
+      loadstring(game:HttpGet("https://paste.ee/r/HYshM"))();
+end })
+
+Tab:AddButton({Title = "Homebrew Admin",Callback = function()
+      _G.CustomUI = false
+      loadstring(game:HttpGet(('https://raw.githubusercontent.com/mgamingpro/HomebrewAdmin/master/Main'),true))()
+end })
+
+Tab:AddButton({Title = "Kohls Admin",Callback = function()
+      loadstring(game:HttpGet("https://pastebin.com/raw/237ERiAT"))();
+end})
+
+Tab:AddButton({Title = "IceGear Admin",Callback = function()
+loadstring(game:HttpGet(('https://paste.ee/r/e6T8l'),true))()
+end})
+
+Tab:AddButton({Title = "Overflow Admin",Callback = function()
+loadstring(game:HttpGet(('https://paste.ee/r/KaeZg'),true))()
+end})
+
+Tab:AddButton({Title = "Ultimate Admin",Callback = function()
+      loadstring(game:HttpGet("https://pastebin.com/raw/bVjM0xCS", true))()
+end})
+
+Tab = Window:AddTab({ Title = "FE Animations", Icon = "rbxassetid://7743875962" })
+
+local UserInputService = game:GetService("UserInputService")
+local IsOnMobile = table.find({
+	Enum.Platform.IOS,
+	Enum.Platform.Android
+}, UserInputService:GetPlatform())
+
+local plr = game.Players.LocalPlayer
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+
+if  IsOnMobile then
+Tab:AddButton({Title = "Keyboard",	Callback = function()  
+   	loadstring(game:HttpGet("https://raw.githubusercontent.com/GGH52lan/GGH52lan/main/keyboard.txt"))() 
+end})
+end
+
+Tab:AddToggle("MyToggle", {Title = "Touch Fling", Default = false ,Callback = function(state)
+        if state == true then
+            walkflinging = false
+            local RunService = game:GetService("RunService")
+            local character = game.Players.LocalPlayer.Character
+            
+            function getRoot(char)
+            local rootPart = game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') or game.Players.LocalPlayer.Character:FindFirstChild('Torso') or game.Players.LocalPlayer.Character:FindFirstChild('UpperTorso')
+      	  return rootPart
+            end
+            local humanoid = character and character:FindFirstChildWhichIsA("Humanoid")
+            if humanoid then
+                humanoid.Died:Connect(function()
+                    walkflinging = false
+                end)
+            end
+
+            walkflinging = true
+            repeat
+                RunService.Heartbeat:Wait()
+                local root = getRoot(character)
+
+                while not (character and character.Parent and root and root.Parent) do
+                    RunService.Heartbeat:Wait()
+                    character = speaker.Character
+                    root = getRoot(character)
+                end
+
+                local vel = root.Velocity
+                root.Velocity = vel * 10000 + Vector3.new(0, 10000, 0)
+
+                RunService.RenderStepped:Wait()
+                if character and character.Parent and root and root.Parent then
+                    root.Velocity = vel
+                end
+
+                RunService.Stepped:Wait()
+                if character and character.Parent and root and root.Parent then
+                    root.Velocity = vel + Vector3.new(0, 0.1, 0)
+                end
+            until walkflinging == false
+        else
+            walkflinging = false
+        end
+    end
+})
+
+Tab:AddToggle("MyToggle", {Title = "Dance", Default = false ,Callback = function(state)
+        if state then
+            local dances = {"27789359", "30196114", "248263260", "45834924", "33796059", "28488254", "52155728"}
+            if Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+                dances = {"3333432454", "4555808220", "4049037604", "4555782893", "10214311282", "10714010337", "10713981723", "10714372526", "10714076981", "10714392151", "11444443576"}
+            end
+
+            local animation = Instance.new("Animation")
+            animation.AnimationId = "rbxassetid://" .. dances[math.random(1, #dances)]
+            local humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+            if humanoid then
+                danceTrack = humanoid:LoadAnimation(animation)
+                danceTrack.Looped = true
+                danceTrack:Play()
+            end
+        else
+            if danceTrack then
+                danceTrack:Stop()
+                danceTrack:Destroy()
+            end
+        end
+    end
+})
+
+local Section = Tab:AddSection("Animation Guis")
+
+Tab:AddButton({Title = "Eazvy Hub",  Callback = function()
+      	loadstring(game:HttpGet("https://raw.githubusercontent.com/Eazvy/public-scripts/main/Universal_Animations_Emotes.lua"))()
+end})
+
+Tab:AddButton({Title = "Energize Gui",Callback = function()
+    loadstring(game:HttpGet(('https://pastebin.com/raw/1p6xnBNf'),true))()
+end})
+
+if plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
+
+local Section = Tab:AddSection("FE R6 Animations")
+
+Tab:AddButton({Title = "FE Workout Animation",  Callback = function()
+OrionLib:MakeNotification({
+       Title = "System Hub",
+       Content = "If The Animation Didn't Work Then Click Another Time",
+       Image = "rbxassetid://6031075938",  
+       Time = 5
+})
+loadstring(game:HttpGet("https://pastebin.com/raw/u74kjvFE"))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/SussyAstro/workoutscript-/main/workoutscriptroblox'))()
+
+end})
+
+Tab:AddButton({Title = "FE Sad Boy Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/062ec2b9f4fceeb477fc21430f651bf3/raw/41f4a5e64b210d7a32a5521d8369b72d3716afe1/FE%2520Sad%2520Boy"))()  	
+end})
+
+Tab:AddButton({Title = "FE Naruto Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/fd566163868b009d840e6f8df4bbe9a9/raw/99c34a8107c719716ee2110b9729ab6391afde64/FE%2520Naruto"))()  	
+end})
+
+Tab:AddButton({Title = "FE The Distorted Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/441d2206087c9821b68be16b639f0de0/raw/24685d2add228b036bdb2b501144e7a2f84a89af/FE%2520The%2520Distorted"))()  	
+end})
+
+Tab:AddButton({Title = "FE The Pacifist Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/6ca17b1dbbd1cfe8a8b021c8e02840de/raw/eae608e8f4777f2fd5c8c89840b48caa418c51e1/FE%2520The%2520Pacifist"))()  	
+end})
+
+Tab:AddButton({Title = "FE Furry Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/2e64b8c6e951fe0da6da7e2788fde422/raw/cf452021f0657b099663199a1e4396dd31bfbb35/FE%2520Furry"))()  	
+end})
+
+Tab:AddButton({Title = "FE Dog Animation",Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/cf9960ef3c3c697b8f2806a5ec7c9c28/raw/015a98ac087fd0f13f8a3d560273f42c3969ad0c/Dog%2520animation"))()
+end})
+
+Tab:AddButton({Title = "FE Chill Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/9583bff1635e88bc89b6cadc790832da/raw/d9a213dc80c827c765efdc08360e95e2b6325165/FE%2520Chill"))()  	
+end})
+
+Tab:AddButton({Title = "FE Nameless Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/e6cb83609cf7d8d2c0131dbf9716877c/raw/c486dfb47502f790af01fb9811a0048127cb82ef/FE%2520Nameless%2520Animation"))()  	
+end})
+
+Tab:AddButton({Title = "FE Booty Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/f47ce083f2e003cdcfd38d989fa9c063/raw/e743d63dc0dd83617494dc9aea2ff53624878fb9/FE%2520Booty"))()  	
+end})
+
+Tab:AddButton({Title = "FE Man Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/0f70ebdec6c190e79d8772d7485bf0df/raw/bf743a30bb34b1f2271a6fc6e7696e7ad4c56489/FE%2520Man%2520Animation"))()  	
+end})
+
+Tab:AddButton({Title = "FE Sonic Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/c072d2f569cd1fa5a05a9338b0af0f3a/raw/a2fc7f9258bebc05805e9f7ed5e1e64d300f8632/FE%2520Sonic"))()  	
+end})
+
+Tab:AddButton({Title = "FE 2006 Animation",Callback = function()
+     	loadstring(game:HttpGet("https://pastebin.com/raw/m0Z6DUwn"))()
+end})
+
+Tab:AddButton({Title = "FE Rickroll Dance",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/7a1ea6818a836b031446378363abf4f3/raw/00a84862215ed5c4991a6aae5452be3a45255468/FE%2520Rickroll"))()  	
+end})
+
+Tab:AddButton({Title = "FE Retard Dance",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/25f01d6dd7ce57d45ba6e06b86668df3/raw/37b64079e1cb23e361ce328bbc4a58dc7f05b050/FE%2520Retard%2520Dance"))()  	
+end})
+
+local Section = Tab:AddSection("Dances")
+
+local SdaDancefunction = loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/a14a3b603309b4283a349a379c29ddca/raw/c3a882220f02fb45e3ae2cf2838bea8ae5d90848/Sda%2520Dance"))()
+
+Tab:AddButton({Title = "Orange Justice Dance",  Callback = function()
+      	SdaDancefunction:Dance(3262592866)
+end})
+
+Tab:AddButton({Title = "Billy Bounce Dance",  Callback = function()
+      	SdaDancefunction:Dance(3381474830)
+end})
+
+Tab:AddButton({Title = "Anthony Dance",  Callback = function()
+SdaDancefunction:Dance(4809145259)
+end})
+
+Tab:AddButton({Title = "Goopie Dance",  Callback = function()
+      	SdaDancefunction:Dance(5238669868)
+end})
+
+Tab:AddButton({Title = "Casey Dance",  Callback = function()
+      	SdaDancefunction:Dance(3442913250)
+end})
+
+Tab:AddButton({Title = "Default Dance",  Callback = function()
+      SdaDancefunction:Dance(6495653138)
+end})
+
+Tab:AddButton({Title = "RickRoll Dance",  Callback = function()
+      SdaDancefunction:Dance(4459292790)
+end})
+
+Tab:AddButton({Title = "Breakdown Dance",  Callback = function()
+     SdaDancefunction:Dance(4558409610)
+end})
+
+Tab:AddButton({Title = "Take The L Dance",  Callback = function()
+      	SdaDancefunction:Dance(4827299133)
+end})
+
+Tab:AddButton({Title = "Robot Dance",  Callback = function()
+      	SdaDancefunction:Dance(4785986705)
+end})
+
+Tab:AddButton({Title = "Sumg Dance",  Callback = function()
+      	SdaDancefunction:Dance(5749601734)
+end})
+
+Tab:AddButton({Title = "Floss Dance",  Callback = function()
+      	SdaDancefunction:Dance(4812941481)
+end})
+
+Tab:AddButton({Title = "Electro Shuffle Dance",  Callback = function()
+      SdaDancefunction:Dance(3619935462)	
+end})
+
+Tab:AddButton({Title = "Rat Dance",  Callback = function()
+      SdaDancefunction:Dance(4746273203)
+end})
+
+Tab:AddButton({Title = "Whip Dance",  Callback = function()
+      SdaDancefunction:Dance(4633952191)
+end})
+
+Tab:AddButton({Title = "Pog Dance",  Callback = function()
+      SdaDancefunction:Dance(4300228160)
+end})
+
+Tab:AddButton({Title = "Kakyoin Dance",  Callback = function()
+      	SdaDancefunction:Dance(3448856633)
+end})
+
+Tab:AddButton({Title = "Dance",  Callback = function()
+      SdaDancefunction:Dance(101876334315959)	
+end})
+
+Tab:AddButton({Title = "Howard Dance",  Callback = function()
+      SdaDancefunction:Dance(4525385199)
+end})
+
+Tab:AddButton({Title = "Truk Dance",  Callback = function()
+      SdaDancefunction:Dance(3259216638)	
+end})
+
+Tab:AddButton({Title = "Joy Dance",  Callback = function()
+      SdaDancefunction:Dance(3564937614)
+end})
+
+Tab:AddButton({Title = "Scout Dance",  Callback = function()
+      SdaDancefunction:Dance(4679511279)
+end})
+
+Tab:AddButton({Title = "Pyro Dance",  Callback = function()
+      SdaDancefunction:Dance(4678151003)
+end})
+
+Tab:AddButton({Title = "Soldier Dance",  Callback = function()
+      SdaDancefunction:Dance(4787449997)
+end})
+
+Tab:AddButton({Title = "Electro Swing Dance",  Callback = function()
+      SdaDancefunction:Dance(4820078879)
+end})
+
+Tab:AddButton({Title = "Side Hustle Dance",  Callback = function()
+      SdaDancefunction:Dance(4841015627)
+end})
+
+Tab:AddButton({Title = "Dream Feet Dance",  Callback = function()
+      SdaDancefunction:Dance(4300218011)
+end})
+
+Tab:AddButton({Title = "Demoman Dance",  Callback = function()
+      SdaDancefunction:Dance(4764153637)
+end})
+
+Tab:AddButton({Title = "Medic Dance",  Callback = function()
+      SdaDancefunction:Dance(4679640288)
+end})
+
+Tab:AddButton({Title = "No Touching Dance",  Callback = function()
+      SdaDancefunction:Dance(3414624197)
+end})
+
+Tab:AddButton({Title = "Snoop Dance",  Callback = function()
+      	SdaDancefunction:Dance(4831391731)
+end})
+
+Tab:AddButton({Title = "Smooth Moves",  Callback = function()
+      	SdaDancefunction:Dance(4900539662)
+end})
+
+Tab:AddButton({Title = "Arm Shufflen Dance",  Callback = function()
+      SdaDancefunction:Dance(3607744332)	
+end})
+
+Tab:AddButton({Title = "Shuffle Dance",  Callback = function()
+      SdaDancefunction:Dance(3485013176)
+end})
+
+Tab:AddButton({Title = "Aerostep Dance",  Callback = function()
+      SdaDancefunction:Dance(4776588732)
+end})
+
+Tab:AddButton({Title = "Clean Groove Dance",  Callback = function()
+      SdaDancefunction:Dance(4776734129)
+end})
+
+Tab:AddButton({Title = "Double Step",  Callback = function()
+      SdaDancefunction:Dance(4715102040)
+end})
+
+Tab:AddButton({Title = "The Roll",  Callback = function()
+      SdaDancefunction:Dance(4699826237)
+end})
+
+Tab:AddButton({Title = "Loud Laugh",  Callback = function()
+      SdaDancefunction:Dance(4846000379)
+end})
+
+Tab:AddButton({Title = "Anthony Shuffle Dance",  Callback = function()
+      SdaDancefunction:Dance(4837748730)
+end})
+
+Tab:AddButton({Title = "Thriller Dance",  Callback = function()
+      SdaDancefunction:Dance(4699820365)
+end})
+
+Tab:AddButton({Title = "Spongebob Dance",  Callback = function()
+      SdaDancefunction:Dance(4896926493)
+end})
+
+Tab:AddButton({Title = "Drip Dance",  Callback = function()
+      SdaDancefunction:Dance(4959380041)
+end})
+
+Tab:AddButton({Title = "Side Step Dance",  Callback = function()
+      SdaDancefunction:Dance(4876471547)
+end})
+
+Tab:AddButton({Title = "Running In Terror",  Callback = function()
+      SdaDancefunction:Dance(5009879973)
+end})
+
+Tab:AddButton({Title = "Cruisin Dance",  Callback = function()
+      SdaDancefunction:Dance(5079952034)
+end})
+
+Tab:AddButton({Title = "Lose Control Dance",  Callback = function()
+      SdaDancefunction:Dance(5754164114)
+end})
+
+Tab:AddButton({Title = "Caramelldansen Dance",  Callback = function()
+      SdaDancefunction:Dance(5754318221)
+end})
+
+Tab:AddButton({Title = "Boogie Down Dance",  Callback = function()
+      SdaDancefunction:Dance(5025546871)
+end})
+
+Tab:AddButton({Title = "Kazotsky Kick",  Callback = function()
+      SdaDancefunction:Dance(4846209506)
+end})
+
+Tab:AddButton({Title = "Grabby Dance",  Callback = function()
+      SdaDancefunction:Dance(3643129020)	
+end})
+
+Tab:AddButton({Title = "ScoutRobics Dance",  Callback = function()
+      SdaDancefunction:Dance(3675001079)
+end})
+
+Tab:AddButton({Title = "Praise The Lord Dance",  Callback = function()
+      SdaDancefunction:Dance(4837753372)	
+end})
+
+Tab:AddButton({Title = "Gang Torture Dance",  Callback = function()
+      SdaDancefunction:Dance(4109162757)
+end})
+
+Tab:AddButton({Title = "Comeback Dance",  Callback = function()
+      SdaDancefunction:Dance(4256820336)
+end})
+
+Tab:AddButton({Title = "Radical Dance",  Callback = function()
+      SdaDancefunction:Dance(4686555525)
+end})
+
+Tab:AddButton({Title = "Spook Shufflen Dance",  Callback = function()
+      SdaDancefunction:Dance(4396327238)
+end})
+
+Tab:AddButton({Title = "Carlton Dance",  Callback = function()
+      SdaDancefunction:Dance(4837749916)
+end})
+
+Tab:AddButton({Title = "Sniper Dance",  Callback = function()
+      SdaDancefunction:Dance(4677930905)
+end})
+
+Tab:AddButton({Title = "Spy Dance",  Callback = function()
+      SdaDancefunction:Dance(4677880377)
+end})
+
+Tab:AddButton({Title = "Peter Parker Dance",  Callback = function()
+      SdaDancefunction:Dance(4776598075)
+end})
+
+Tab:AddButton({Title = "Carson Shearer Dance",  Callback = function()
+      SdaDancefunction:Dance(5806573931)
+end})
+
+Tab:AddButton({Title = "Rewind Dance",  Callback = function()
+      SdaDancefunction:Dance(5011408603)
+end})
+
+Tab:AddButton({Title = "Freestyling Dance",  Callback = function()
+      SdaDancefunction:Dance(4432024917)
+end})
+
+Tab:AddButton({Title = "Wess Dance",  Callback = function()
+      SdaDancefunction:Dance(4499527946)
+end})
+
+Tab:AddButton({Title = "Flipping Smooth",  Callback = function()
+      SdaDancefunction:Dance(4539565912)
+end})
+
+Tab:AddButton({Title = "Conga Dance",  Callback = function()
+      SdaDancefunction:Dance(4572096542)
+end})
+
+Tab:AddButton({Title = "Skibidi Dance",  Callback = function()
+      SdaDancefunction:Dance(4835795413)
+end})
+
+Tab:AddButton({Title = "Spasm Dance",  Callback = function()
+      SdaDancefunction:Dance(3383725246)
+end})
+
+end
+
+
+if plr.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+
+local function PlayAnim(id,time,speed)
+	pcall(function()
+		plr.Character.Animate.Disabled = false
+		local hum = plr.Character.Humanoid
+		local animtrack = hum:GetPlayingAnimationTracks()
+		for i,track in pairs(animtrack) do
+			track:Stop()
+		end
+		plr.Character.Animate.Disabled = true
+		local Anim = Instance.new("Animation")
+		Anim.AnimationId = "rbxassetid://"..id
+		local loadanim = hum:LoadAnimation(Anim)
+		loadanim:Play()
+		loadanim.TimePosition = time
+		loadanim:AdjustSpeed(speed)
+		loadanim.Stopped:Connect(function()
+			plr.Character.Animate.Disabled = false
+			for i, track in pairs (animtrack) do
+        		track:Stop()
+    		end
+		end)
+	end)
+end
+
+local function StopAnim()
+	plr.Character.Animate.Disabled = false
+    local animtrack = plr.Character.Humanoid:GetPlayingAnimationTracks()
+    for i, track in pairs (animtrack) do
+        track:Stop()
+    end
+end
+
+local Section = Tab:AddSection("FE R15 Animations")
+
+Tab:AddButton({Title = "FE R15&R6 Animations Gui",  Callback = function()
+      	loadstring(game:HttpGet(('https://pastebin.com/raw/1p6xnBNf'),true))()
+end})
+
+Tab:AddButton({Title = "FE Custom R15 Animations Gui",Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/Animation-Hub/main/Animation%20Gui", true))()
+end})
+
+Tab:AddButton({Title = "FE R15 Emotes",Callback = function()
+     	loadstring(game:HttpGetAsync("https://gist.githubusercontent.com/RedZenXYZ/3da6af1961efa275de6c3c2a6dbace03/raw/bb027f99cec0ea48ef9c5eabfb9116ddff20633d/FE%2520Emotes%2520Gui"))()
+end})
+
+
+Tab:AddButton({
+	Title = "FE Zombie Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=3489171152"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=3489171152"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=3489174223"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=3489173414"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Werewolf Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1083195517"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1083214717"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083178339"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083216690"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083218792"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083182000"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083189019"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Cartoon Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=742637544"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=742638445"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=742640026"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=742638842"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=742637942"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=742636889"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=742637151"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Patrol Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1149612882"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1150842221"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1151231493"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1150967949"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1150944216"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1148811837"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1148863382"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Toy Animation",
+	Callback = function()
+     local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=782841498"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=782845736"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=782843345"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=782842708"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=782847020"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=782843869"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=782846423"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false 	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Knight Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=657595757"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=657568135"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=657552124"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=657564596"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=658409194"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=658360781"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=657600338"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Cowboy Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1014390418"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1014398616"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1014421541"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1014401683"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1014394726"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1014380606"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1014384571"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Princess Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=941003647"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=941013098"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=941028902"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=941015281"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=941008832"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=940996062"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=941000007"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Ninja Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=656117400"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=656118341"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=656121766"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=656118852"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=656117878"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=656114359"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=656115606"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Zombie Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616158929"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616160636"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616168032"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616163682"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+Tab:AddButton({
+	Title = "Vampire Animation",
+	Callback = function()
+      		local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1083445855"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1083450166"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083473930"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083462077"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083455352"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083439238"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083443587"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Popstar Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1212900985"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1212900985"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1212980338"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1212980348"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1212954642"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1213044953"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1212900995"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Hero Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616111295"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616113536"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616122287"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616117076"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616115533"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616104706"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616108001"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Mage Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=707742142"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=707855907"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=707897309"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=707861613"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=707853694"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=707826056"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Confident Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1069977950"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1069987858"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1070017263"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1070001516"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1069984524"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1069946257"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1069973677"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Ghost Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616006778"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616008087"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616010382"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616013216"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616008936"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Elder Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=845397899"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=845400520"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=845403856"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=845386501"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=845398858"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=845392038"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=845396048"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Sneaky Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1132473842"
+    Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1132477671"
+    Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1132510133"
+    Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1132494274"
+    Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1132489853"
+    Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1132461372"
+    Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1132469004"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Levitation Animation",
+	Callback = function()
+     local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=616006778"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=616008087"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=616013216"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=616010382"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616008936"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false 	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Pirate Animation",
+	Callback = function()
+      local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=1132473842"
+    Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=1132477671"
+    Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1132510133"
+    Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1132494274"
+    Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1132489853"
+    Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1132461372"
+    Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1132469004"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false	
+  	end    
+})
+
+Tab:AddButton({
+	Title = "Astronaut Animation",
+	Callback = function()
+      	local Animate = plr.Character.Animate
+	Animate.Disabled = true
+	StopAnim()
+	Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=891621366"
+	Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=891633237"
+	Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=891667138"
+	Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=891636393"
+	Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=891627522"
+	Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=891609353"
+	Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=891617961"
+	plr.Character.Humanoid:ChangeState(3)
+	Animate.Disabled = false
+  	end    
+})
+end
+
+
+
+
+Tab = Window:AddTab({ Title = "FE Scripts", Icon = "scroll" })
+
+Tab:AddButton({Title = "R15 to R6 Client", Callback = function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/jHGVauVX", true))()
+end})
+
+Tab:AddButton({Title = "Reset", Callback = function()
+        if FakeCharacter then
+            FakeCharacter:Destroy()
+        end
+        local Player = game.Players.LocalPlayer
+        local Character = Player.Character
+
+        local function getRoot(char)
+            return char:FindFirstChild("HumanoidRootPart") 
+                or char:FindFirstChild("Torso") 
+                or char:FindFirstChild("UpperTorso")
+        end
+
+        local function getChar()
+            return Player.Character
+        end
+
+        local function respawn()
+            local rootPart = getRoot(Character)
+            if not rootPart then return end
+            
+            local cf = rootPart.CFrame
+            Character:BreakJoints()
+            
+            Player.CharacterAdded:Wait()
+            wait(0.2)
+
+            local newChar = getChar()
+            newChar:WaitForChild("HumanoidRootPart").CFrame = cf
+        end
+
+        local oldCFrame = getRoot(Character) and getRoot(Character).CFrame or nil
+        if oldCFrame then
+            respawn()
+            Player.CharacterAdded:Wait()
+            getChar():WaitForChild("HumanoidRootPart").CFrame = oldCFrame
+        end
+end})
+
+if IsOnMobile then
+    Tab:AddButton({Title = "Keyboard", Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Keyboard"))() 
+    end})
+end
+
+Tab:AddToggle("MyToggle", {Title = "Touch Fling", Default = false ,Callback = function(state)
+        if state == true then
+            walkflinging = false
+            local RunService = game:GetService("RunService")
+            local character = game.Players.LocalPlayer.Character
+            
+            function getRoot(char)
+            local rootPart = game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart') or game.Players.LocalPlayer.Character:FindFirstChild('Torso') or game.Players.LocalPlayer.Character:FindFirstChild('UpperTorso')
+      	  return rootPart
+            end
+            local humanoid = character and character:FindFirstChildWhichIsA("Humanoid")
+            if humanoid then
+                humanoid.Died:Connect(function()
+                    walkflinging = false
+                end)
+            end
+
+            walkflinging = true
+            repeat
+                RunService.Heartbeat:Wait()
+                local root = getRoot(character)
+
+                while not (character and character.Parent and root and root.Parent) do
+                    RunService.Heartbeat:Wait()
+                    character = speaker.Character
+                    root = getRoot(character)
+                end
+
+                local vel = root.Velocity
+                root.Velocity = vel * 10000 + Vector3.new(0, 10000, 0)
+
+                RunService.RenderStepped:Wait()
+                if character and character.Parent and root and root.Parent then
+                    root.Velocity = vel
+                end
+
+                RunService.Stepped:Wait()
+                if character and character.Parent and root and root.Parent then
+                    root.Velocity = vel + Vector3.new(0, 0.1, 0)
+                end
+            until walkflinging == false
+        else
+            walkflinging = false
+        end
+    end
+})
+
+Tab:AddButton({Title = "Click Fling",  Callback = function()
+      	loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Click%20fling"))()
+end})
+
+local Section = Tab:AddSection("FE Scripts converted by me")
+
+Tab:AddButton({Title = "FE Immortality Lord",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/98691a5a5e518e21d90919bfb8c13b65/raw/fe34c56992e7674520ea53c5fcbebce28429dbe8/FE%2520Immortality%2520Lord"))()
+end})
+
+Tab:AddButton({Title = "FE KillBot V2",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/3d692aa3d26a9163a095a21b99b55071/raw/6e7a0ac8b27e61a058a9b98ac617077e2295d114/FE%2520Kill%2520Bot%2520V2"))()  	
+end})
+
+Tab:AddButton({Title = "FE Kill Bot",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/2d8db7a13e04145fb1e3d451c29a77e6/raw/f9b413d13596a905cce2a2be38caedcc2cc3f53a/FE%2520Kill%2520Bot"))()  	
+end})
+
+Tab:AddButton({Title = "FE Xester",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/15a957519227b61ccc6727c06883b2ca/raw/a6b64744d61378f2a98635607765cb13426fc8b9/FE%2520Xester"))()  	
+end})
+
+Tab:AddButton({Title = "FE ExoticLC",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/271ea96a8d6c13bd202f41889bfaa7f5/raw/38c50441cf4fb515ef0c36bed7b2e45b249cee47/FE%2520ExoticLC"))()  	
+end})
+
+Tab:AddButton({Title = "FE Reaper",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/8c68d7325a77f853623c9780dc4f0e65/raw/2666f90bfe738dd528bc4f731df35f139682b5ff/FE%2520Reaper"))()  	
+end})
+
+Tab:AddButton({Title = "FE Caducus",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/466b4c7d38dfff3506a2fe8ae9935204/raw/380acc47c24c810d91a65ce466cffbdcb5795065/FE%2520Caducus"))()  	
+end})
+
+Tab:AddButton({Title = "FE Sans",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/82190ce72069c053153332d8b2a0ea30/raw/eed9565a4fe778bc60cf3b80b846d6eff3444647/Sans"))()  	
+end})
+
+Tab:AddButton({Title = "FE JoJo Gloves",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/05b9f681288e9f901291ce60ed3f7668/raw/5eb1f5ddda8cc8c565d06b30bdb9a958dc177de8/FE%2520JoJo%2520Gloves"))()  	
+end})
+
+Tab:AddButton({Title = "FE Darth Vadar",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/fe46d0017bc43287929ed224f1ef6505/raw/a39570c5c54dd4183fd046274a00e5da36f4d664/FE%2520Darth%2520Vadar"))()  	
+end})
+
+Tab:AddButton({Title = "FE Ender",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/36baef8f00c605890373d2f2c2fd0a03/raw/71e06845fa895692a3ddb765ed7aa9fa67499796/FE%2520Ender"))()  	
+end})
+
+Tab:AddButton({Title = "FE Joy",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/f82eb5bef538f1d4517d8f885ecc2715/raw/2df1b5eba9ad7d776e4214d1707b2019921b78c1/FE%2520Joy"))()  	
+end})
+
+Tab:AddButton({Title = "FE Ghost",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/cd90c794f913ebc35957fcb7b658be51/raw/42ceb33fcf90542a993de8a2df102f2f4f6450a4/FE%2520Ghost"))()  	
+end})
+
+Tab:AddButton({Title = "FE Craze Runner",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/21cb325eec8d74b9929cbe5e89e55617/raw/06602e0f819fc7b80842fd267920630b5d75aa9a/FE%2520Craze%2520Runner"))()  	
+end})
+
+Tab:AddButton({Title = "FE Grapple",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/aaac3bc63a0b033b26302f5ba011d3b8/raw/af48a4e88b723cc74850891b0d3f2e8cebd545b4/FE%2520Grapple"))()  	
+end})
+
+Tab:AddButton({Title = "FE Noob Bat",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/0137f82477ce56ad5b9bcead4f655c0e/raw/a5c7c0fa8ed681f27454677349ffe7d224265adc/FE%2520Noob%2520Bat"))()  	
+end})
+
+Tab:AddButton({Title = "FE Goner",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/9a7e03f3227788e1b907f46578ce17a1/raw/179819a2022c5c7f961c8cd2f55f4155f8b66a7b/FE%2520Goner"))()  	
+end})
+
+Tab:AddButton({Title = "FE Rainbow King",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/364df09c87b9450f697404bc041643be/raw/92ec6bb65865cb9e7223ddb426dc16edc449f23d/FE%2520Rainbow%2520King"))()  	
+end})
+
+Tab:AddButton({Title = "FE Angel",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/e83f9d883b5b697a13b8c89a8e71ef27/raw/6e23d95666ba62a034f1e377675c46ade1d9641b/FE%2520Angel"))()  	
+end})
+
+Tab:AddButton({Title = "FE Rainbow Puncher",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/b9b6fd031a10ad8e68afdf22297d2122/raw/79e10079687a3979ea2667980bac0837e8ea9d6a/FE%2520Rainbow%2520Puncher"))()  	
+end})
+
+Tab:AddButton({Title = "FE Holiday Feels",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/cc32f44bd4a5ebb18c57c9cc238904da/raw/031f4e44d4957454bd1ab5c4c4cceee85fcca329/FE%2520Holiday%2520Feels"))()  	
+end})
+
+Tab:AddButton({Title = "FE Gale Fighter",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/f5bd0524329dd356ce17e638aff30d90/raw/3c4a1e729b9c0083b4e352e3a10cb27d0084fe1e/FE%2520Gale%2520Fighter"))()  	
+end})
+
+Tab:AddButton({Title = "FE Krystal Dance",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/1f62d0d19407cf4ca2bc57816cd540b9/raw/3de3610b21f968a952be58e359584373c917731b/FE%2520Krystal%2520Dance"))()  	
+end})
+
+Tab:AddButton({Title = "FE Ravager",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/a6c7a2675722c7cc27cb2d708c258b12/raw/8fd0f5de88796b8ff2b17b8de3348c6c32fb72a6/FE%2520Ravager"))()  	
+end})
+
+Tab:AddButton({Title = "FE Turbolizer",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/5f2a6681819ee716e73f369fce1bd6d1/raw/7de309d9aca7253e63896c841ef51e8891c17aa7/FE%2520Turbolizer"))()  	
+end})
+
+Tab:AddButton({Title = "FE Neko V6",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/912084edf229c5d68e11bd6081c6535e/raw/bb8eb5013842acb14f17ac82d608d68ece9cb2df/FE%2520Neko%2520V6"))()  	
+end})
+
+Tab:AddButton({Title = "FE Corrupted Overseer",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/e51557bb450b93b9b83f3a98ebf8d669/raw/70b9d85a4039d5ffb06c4d14461953c17b0f6d39/FE%2520Corrupted%2520Overseer"))()  	
+end})
+
+Tab:AddButton({Title = "Neko V5",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/5ce4adf6a52325577ad0aa121a0eb3fb/raw/55aa43191d57e14de01ee050a89e25131dce3ab3/Neko%2520V5"))()
+end})
+
+local Section = Tab:AddSection("Other Fe Scripts ")
+
+Tab:AddButton({Title = "FE Fighter", Callback = function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/Fe-ProjectR/FE-Files/785403033b2b9161076ddaddc65923a7290e274d/Fe%20fighter%20optimized'))()
+end})
+
+Tab:AddButton({Title = "FE Figher 2",  Callback = function()
+      loadstring(game:HttpGet("https://pastefy.app/wxVAgZpT/raw"))()	
+end})
+
+Tab:AddButton({Title = "FE Shape Shifter ",  Callback = function()
+      loadstring(game:HttpGet("https://pastefy.app/2C3cRXXp/raw"))()	
+end})
+
+Tab:AddButton({Title = "FE Sin Dragon",Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/Fe-ProjectR/FE-Files/refs/heads/main/FE%20Void%20Dagon'))()
+end})
+
+Tab:AddButton({Title = "FE Monster Mash",  Callback = function()
+      	loadstring(game:HttpGet("https://raw.githubusercontent.com/zerpharix/utrenklpleaserapeme/refs/heads/main/monstermashpotion"))()
+end})
+
+Tab:AddButton({Title = "FE The Glios", Callback = function()
+    loadstring(game:HttpGet("https://glot.io/snippets/gua2ntmbdm/raw/main.lua", true))()
+end})
+
+Tab:AddButton({Title = "FE Scp 096",  Callback = function()
+loadstring(game:HttpGet("https://pastefy.app/YsJgITXR/raw"))()
+end})
+
+Tab:AddButton({Title = "FE Star Glitcher",Callback = function()
+        loadstring(game:HttpGet("https://gist.githubusercontent.com/Onlyscripts1/0469bbefe2103c5f7d30091c65c81070/raw/7a0d852944aa1b8d2368dc98c0a54a0cee257da4/star"))()
+end})
+
+Tab:AddButton({Title = "FE Dash ",  Callback = function()
+   loadstring(game:HttpGet("https://pastefy.app/ZhKVgCK3/raw"))()   	
+end})
+
+Tab:AddButton({Title = "FE Ball", Callback = function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/BZr9bGDy', true))()
+end})
+
+Tab:AddButton({Title = "FE Honored One",Callback = function()
+        loadstring(game:HttpGet("https://pastebin.com/raw/JjiYQghy"))("Alicescripts")
+end})
+
+Tab:AddButton({Title = "FE Punch", Callback = function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/FilteringEnabled/FE/main/punch', true))()
+end})
+
+Tab:AddButton({Title = "FE Psycho",  Callback = function()
+      	loadstring(game:HttpGet("https://pastefy.app/YJITpCRA/raw"))()
+end})
+
+Tab:AddButton({Title = "FE Jerk", Callback = function()
+       loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))()
+end})
+
+Tab:AddButton({Title = "FE Versus", Callback = function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Roblox-VEREUS-monster-script-3746"))()
+end})
+
+Tab:AddButton({Title = "FE Car", Callback = function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/AlexCr4sh/FeScripts/main/FeCarScript.lua', true))()
+end})
+
+Tab:AddButton({Title = "FE Seraphic Blade",  Callback = function()
+loadstring(game:HttpGet("https://pastefy.app/59mJGQGe/raw"))()
+end})
+
+Tab:AddButton({Title = "FE Goner Divine",  Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/Fe-ProjectR/FE-Files/refs/heads/main/Fe%20Divine%20Edge.lua"))()	
+end})
+
+Tab:AddButton({Title = "FE G-Man",  Callback = function()
+_G.clientsidedeffect = true 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/Qwerty/refs/heads/main/qwerty18.lua"))()
+end})
+
+Tab:AddButton({Title = "FE Zombie", Callback = function()
+    loadstring(game:HttpGet("https://pastefy.app/JOWniO6o/raw"))()
+end})
+
+Tab:AddButton({Title = "FE Hug",  Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/JSFKGBASDJKHIOAFHDGHIUODSGBJKLFGDKSB/fe/refs/heads/main/FEHUGG"))()
+end})
+
+Tab:AddButton({Title = "FE Killer",  Callback = function()
+      	loadstring(game:HttpGet("https://pastefy.app/riYch0rX/raw"))()
+end})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tab = Window:AddTab({ Title = "FE Animations Hats", Icon = "rbxassetid://7743875962" })
+
+local Section = Tab:AddSection("Main")
+
+local genesis_supported = game:FindFirstChildOfClass("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid").BreakJointsOnDeath
+if genesis_supported == true then
+    genesis_supported = "Hat Reanimte will work on this game! :)"
+else
+    genesis_supported = "Hat Reanimte will sadly not work on this game :("
+end
+
+Tab:AddParagraph({
+    Title = "Attention",
+    Content = "These Scripts Need Hats Btw\nThese Animations Are Converted By Me"
+})
+local Global = getgenv and getgenv() or _G
+
+if replicatesignal then
+
+Tab:AddParagraph({
+    Title = "Replicatesignal",
+    Content = "Your executor supports replicatesignal, which allows Permadeath and Hat Reanimate to function in most games.\n\nNote: Permadeath may not be compatible with every game. If you notice it's not working, you can simply disable it."
+})
+
+Global.PremadeathEnabled = true
+
+Tab:AddToggle("MyToggle", {Title = "Permanent Death", Default =Global.PremadeathEnabled  ,Callback = function(state)
+Global.PremadeathEnabled = state
+end})
+
+else
+
+Tab:AddParagraph({
+    Title = "Replicatesignal",
+    Content = "Your executor does not support replicatesignal, so Permadeath will not work.\n\ Executors that support replicatesignal:\n• Android: FrostWare, Nebula, Delta\n• iOS: Delta\n• Windows: Atlantis, Ronix, Seliware, Wave."
+})
+
+Tab:AddParagraph({
+    Title = "Game Supported ?",
+    Content = genesis_supported
+})
+
+end
+
+Global.FlingEnabled = true
+
+Tab:AddToggle("MyToggle", {Title = "Fling", Default =Global.FlingEnabled  ,Callback = function(state)
+Global.FlingEnabled = state
+end})
+
+
+local Section = Tab:AddSection("Animations")
+
+Tab:AddButton({Title = "Furry Animation",  Callback = function()
+      loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/aafb18b8083c300ae3fe613986c88f95/raw/25593b2acfdc908ea3801970dda94d7cfaf782a7/Furry%2520Animation%2520Hats"))()	
+end})
+
+Tab:AddButton({Title = "Man Animation",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/7aa68f8306c1ca5051aed99aec82fb78/raw/d0f157ea64b70e40bf41a3712c8c594f27dc09c7/Man%2520Animation%2520Hats"))()
+end})
+
+Tab:AddButton({Title = "Nameless Animation V4",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/115ab2682269b0a6dabeae88d088adec/raw/ca1e5aeb9091052cff72aea2c90b09d69374c40a/Nameless%2520Animation%2520V4"))()
+end})
+
+Tab:AddButton({Title = "Dog Animation",  Callback = function()
+    
+end})
+
+Tab:AddButton({Title = "Naruto Animation",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/6e2dbbc1612a040d8e82f875c2ce471b/raw/1dee0f1cadf6418212f7b73196beb47dada4429b/Naruto%2520Animation%2520Hats"))()
+end})
+
+Tab:AddButton({Title = "Chill Animation",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/36333a05c00c7fffbf3ed9cd37a4dc3d/raw/7d83ffe381d500efa3466165f736bdedddcdf203/Chill%2520Animation%2520Hats"))()
+end})
+
+Tab:AddButton({Title = "Sonic Animation",  Callback = function()
+      loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/d174af8d3ff7b1f4a9a3c7e786a40458/raw/ca6a763766c3caa37a53756f849a1d3149988ee5/Sonic%2520Animation"))()	
+end})
+
+Tab:AddButton({Title = "The Pacifist Animation",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/0a872db8939ce6abbd7673568f5d996b/raw/7cec334b0c153af747642ba6e768c8d4201d3b32/The%2520Pacifist%2520Animation%2520Hats"))()
+end})
+
+Tab:AddButton({Title = "Booty Animation",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/23a55ef9d3a804a598d1ef067b7f76b7/raw/32f37f19aaacfe343dc272a027e5889e91497e91/Booty%2520Animation%2520Hats"))()
+end})
+
+Tab:AddButton({Title = "Da Feet Animation",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/cdece07fc5601b244dbb73f298b1efd9/raw/4242e49a813e649f88eaa771114c6ef611c76ac4/Da%2520Feet%2520Animation%2520Hats"))()  	
+end})
+
+local Section = Tab:AddSection("Dances")
+
+local DanceFunction = loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/18043a125da660b8f822740952787933/raw/f2f4b751adb711d6cb4eca17d6ab7932bc7130c8/Dance"))()
+
+Tab:AddButton({Title = "Distraction Dance",  Callback = function()
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/bb663de44d5dd8ad5648635c568b0d39/raw/eb9b061998a3f58ab33549b89fc165110fd05556/Distraction%2520Dance"))()  	
+end})
+
+Tab:AddButton({Title = "Orange Justice Dance",  Callback = function()
+      	DanceFunction:Dance(3262592866)
+end})
+
+Tab:AddButton({Title = "Billy Bounce Dance",  Callback = function()
+      	DanceFunction:Dance(3381474830)
+end})
+
+Tab:AddButton({Title = "Anthony Dance",  Callback = function()
+DanceFunction:Dance(4809145259)
+end})
+
+Tab:AddButton({Title = "Goopie Dance",  Callback = function()
+      	DanceFunction:Dance(5238669868)
+end})
+
+Tab:AddButton({Title = "Casey Dance",  Callback = function()
+      	DanceFunction:Dance(3442913250)
+end})
+
+Tab:AddButton({Title = "Default Dance",  Callback = function()
+      DanceFunction:Dance(6495653138)
+end})
+
+Tab:AddButton({Title = "RickRoll Dance",  Callback = function()
+      DanceFunction:Dance(4459292790)
+end})
+
+Tab:AddButton({Title = "Breakdown Dance",  Callback = function()
+     DanceFunction:Dance(4558409610)
+end})
+
+Tab:AddButton({Title = "Take The L Dance",  Callback = function()
+      	DanceFunction:Dance(4827299133)
+end})
+
+Tab:AddButton({Title = "Robot Dance",  Callback = function()
+      	DanceFunction:Dance(4785986705)
+end})
+
+Tab:AddButton({Title = "Sumg Dance",  Callback = function()
+      	DanceFunction:Dance(5749601734)
+end})
+
+Tab:AddButton({Title = "Floss Dance",  Callback = function()
+      	DanceFunction:Dance(4812941481)
+end})
+
+Tab:AddButton({Title = "Electro Shuffle Dance",  Callback = function()
+      DanceFunction:Dance(3619935462)	
+end})
+
+Tab:AddButton({Title = "Rat Dance",  Callback = function()
+      DanceFunction:Dance(4746273203)
+end})
+
+Tab:AddButton({Title = "Whip Dance",  Callback = function()
+      DanceFunction:Dance(4633952191)
+end})
+
+Tab:AddButton({Title = "Pog Dance",  Callback = function()
+      DanceFunction:Dance(4300228160)
+end})
+
+Tab:AddButton({Title = "Retard Dance",  Callback = function()
+      	loadstring(game:HttpGet("https://gist.githubusercontent.com/AHMEDPLPL/d40154cf19384d8c5c0fd122e948be93/raw/896302835c61b4105dc6ee6907a606d46b0bc38c/Retard%2520Dance"))()
+end})
+
+Tab:AddButton({Title = "Kakyoin Dance",  Callback = function()
+      	DanceFunction:Dance(3448856633)
+end})
+
+Tab:AddButton({Title = "Dance",  Callback = function()
+      DanceFunction:Dance(101876334315959)	
+end})
+
+Tab:AddButton({Title = "Howard Dance",  Callback = function()
+      DanceFunction:Dance(4525385199)
+end})
+
+Tab:AddButton({Title = "Truk Dance",  Callback = function()
+      DanceFunction:Dance(3259216638)	
+end})
+
+Tab:AddButton({Title = "Joy Dance",  Callback = function()
+      DanceFunction:Dance(3564937614)
+end})
+
+Tab:AddButton({Title = "Scout Dance",  Callback = function()
+      DanceFunction:Dance(4679511279)
+end})
+
+Tab:AddButton({Title = "Pyro Dance",  Callback = function()
+      DanceFunction:Dance(4678151003)
+end})
+
+Tab:AddButton({Title = "Soldier Dance",  Callback = function()
+      DanceFunction:Dance(4787449997)
+end})
+
+Tab:AddButton({Title = "Electro Swing Dance",  Callback = function()
+      DanceFunction:Dance(4820078879)
+end})
+
+Tab:AddButton({Title = "Side Hustle Dance",  Callback = function()
+      DanceFunction:Dance(4841015627)
+end})
+
+Tab:AddButton({Title = "Dream Feet Dance",  Callback = function()
+      DanceFunction:Dance(4300218011)
+end})
+
+Tab:AddButton({Title = "Demoman Dance",  Callback = function()
+      DanceFunction:Dance(4764153637)
+end})
+
+Tab:AddButton({Title = "Medic Dance",  Callback = function()
+      DanceFunction:Dance(4679640288)
+end})
+
+Tab:AddButton({Title = "No Touching Dance",  Callback = function()
+      DanceFunction:Dance(3414624197)
+end})
+
+Tab:AddButton({Title = "Snoop Dance",  Callback = function()
+      	DanceFunction:Dance(4831391731)
+end})
+
+Tab:AddButton({Title = "Smooth Moves",  Callback = function()
+      	DanceFunction:Dance(4900539662)
+end})
+
+Tab:AddButton({Title = "Arm Shufflen Dance",  Callback = function()
+      DanceFunction:Dance(3607744332)	
+end})
+
+Tab:AddButton({Title = "Shuffle Dance",  Callback = function()
+      DanceFunction:Dance(3485013176)
+end})
+
+Tab:AddButton({Title = "Aerostep Dance",  Callback = function()
+      DanceFunction:Dance(4776588732)
+end})
+
+Tab:AddButton({Title = "Clean Groove Dance",  Callback = function()
+      DanceFunction:Dance(4776734129)
+end})
+
+Tab:AddButton({Title = "Double Step",  Callback = function()
+      DanceFunction:Dance(4715102040)
+end})
+
+Tab:AddButton({Title = "The Roll",  Callback = function()
+      DanceFunction:Dance(4699826237)
+end})
+
+Tab:AddButton({Title = "Loud Laugh",  Callback = function()
+      DanceFunction:Dance(4846000379)
+end})
+
+Tab:AddButton({Title = "Anthony Shuffle Dance",  Callback = function()
+      DanceFunction:Dance(4837748730)
+end})
+
+Tab:AddButton({Title = "Thriller Dance",  Callback = function()
+      DanceFunction:Dance(4699820365)
+end})
+
+Tab:AddButton({Title = "Spongebob Dance",  Callback = function()
+      DanceFunction:Dance(4896926493)
+end})
+
+Tab:AddButton({Title = "Drip Dance",  Callback = function()
+      DanceFunction:Dance(4959380041)
+end})
+
+Tab:AddButton({Title = "Side Step Dance",  Callback = function()
+      DanceFunction:Dance(4876471547)
+end})
+
+Tab:AddButton({Title = "Running In Terror",  Callback = function()
+      DanceFunction:Dance(5009879973)
+end})
+
+Tab:AddButton({Title = "Cruisin Dance",  Callback = function()
+      DanceFunction:Dance(5079952034)
+end})
+
+Tab:AddButton({Title = "Lose Control Dance",  Callback = function()
+      DanceFunction:Dance(5754164114)
+end})
+
+Tab:AddButton({Title = "Caramelldansen Dance",  Callback = function()
+      DanceFunction:Dance(5754318221)
+end})
+
+Tab:AddButton({Title = "Boogie Down Dance",  Callback = function()
+      DanceFunction:Dance(5025546871)
+end})
+
+Tab:AddButton({Title = "Kazotsky Kick",  Callback = function()
+      DanceFunction:Dance(4846209506)
+end})
+
+Tab:AddButton({Title = "Grabby Dance",  Callback = function()
+      DanceFunction:Dance(3643129020)	
+end})
+
+Tab:AddButton({Title = "ScoutRobics Dance",  Callback = function()
+      DanceFunction:Dance(3675001079)
+end})
+
+Tab:AddButton({Title = "Praise The Lord Dance",  Callback = function()
+      DanceFunction:Dance(4837753372)	
+end})
+
+Tab:AddButton({Title = "Gang Torture Dance",  Callback = function()
+      DanceFunction:Dance(4109162757)
+end})
+
+Tab:AddButton({Title = "Comeback Dance",  Callback = function()
+      DanceFunction:Dance(4256820336)
+end})
+
+Tab:AddButton({Title = "Radical Dance",  Callback = function()
+      DanceFunction:Dance(4686555525)
+end})
+
+Tab:AddButton({Title = "Spook Shufflen Dance",  Callback = function()
+      DanceFunction:Dance(4396327238)
+end})
+
+Tab:AddButton({Title = "Carlton Dance",  Callback = function()
+      DanceFunction:Dance(4837749916)
+end})
+
+Tab:AddButton({Title = "Sniper Dance",  Callback = function()
+      DanceFunction:Dance(4677930905)
+end})
+
+Tab:AddButton({Title = "Spy Dance",  Callback = function()
+      DanceFunction:Dance(4677880377)
+end})
+
+Tab:AddButton({Title = "Peter Parker Dance",  Callback = function()
+      DanceFunction:Dance(4776598075)
+end})
+
+Tab:AddButton({Title = "Carson Shearer Dance",  Callback = function()
+      DanceFunction:Dance(5806573931)
+end})
+
+Tab:AddButton({Title = "Rewind Dance",  Callback = function()
+      DanceFunction:Dance(5011408603)
+end})
+
+Tab:AddButton({Title = "Freestyling Dance",  Callback = function()
+      DanceFunction:Dance(4432024917)
+end})
+
+Tab:AddButton({Title = "Wess Dance",  Callback = function()
+      DanceFunction:Dance(4499527946)
+end})
+
+Tab:AddButton({Title = "Flipping Smooth",  Callback = function()
+      DanceFunction:Dance(4539565912)
+end})
+
+Tab:AddButton({Title = "Conga Dance",  Callback = function()
+      DanceFunction:Dance(4572096542)
+end})
+
+Tab:AddButton({Title = "Skibidi Dance",  Callback = function()
+      DanceFunction:Dance(4835795413)
+end})
+
+Tab:AddButton({Title = "Spasm Dance",  Callback = function()
+      DanceFunction:Dance(3383725246)
+end})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Window:SelectTab(1)
+Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+SaveManager:IgnoreThemeSettings()
+
+SaveManager:SetIgnoreIndexes({})
+
+local FileSupport = isfile and isfolder and writefile and readfile and makefolder
+if FileSupport then
+    if not isfolder("System-Hub-V3") then
+        makefolder("System-Hub-V3")
+    end
+    if not isfolder("System-Hub-V3/Library") then
+        makefolder("System-Hub-V3/Library")
+    end
+    if not isfolder("System-Hub-V3/Library/specific-game") then
+        makefolder("System-Hub-V3/Library/specific-game")
+    end
+end
+
+InterfaceManager:SetFolder("System-Hub-V3/Library")
+SaveManager:SetFolder("System-Hub-V3/Library/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Settings)
+SaveManager:BuildConfigSection(Settings)
+
+Notify("System Hub", "System Hub Has Fully Loaded in " .. string.format("%.2f", tick() - st) .. " Seconds", "", "5")
+
+local A  = "                                " 
+local A1 = "░██████╗██╗░░░██╗░██████╗████████╗███████╗███╗░░░███╗  ██╗░░██╗██╗░░░██╗██████╗░  ██╗░░░██╗██████╗░"
+local A2 = "██╔════╝╚██╗░██╔╝██╔════╝╚══██╔══╝██╔════╝████╗░████║  ██║░░██║██║░░░██║██╔══██╗  ██║░░░██║╚════██╗"
+local A3 = "╚█████╗░░╚████╔╝░╚█████╗░░░░██║░░░█████╗░░██╔████╔██║  ███████║██║░░░██║██████╦╝  ╚██╗░██╔╝░█████╔╝"
+local A4 = "░╚═══██╗░░╚██╔╝░░░╚═══██╗░░░██║░░░██╔══╝░░██║╚██╔╝██║  ██╔══██║██║░░░██║██╔══██╗  ░╚████╔╝░░╚═══██╗"
+local A5 = "██████╔╝░░░██║░░░██████╔╝░░░██║░░░███████╗██║░╚═╝░██║  ██║░░██║╚██████╔╝██████╦╝  ░░╚██╔╝░░██████╔╝"
+local A6 = "╚═════╝░░░░╚═╝░░░╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░░░░╚═╝  ╚═╝░░╚═╝░╚═════╝░╚═════╝░  ░░░╚═╝░░░╚═════╝░"
+print (""..A,A,A1,A2,A3,A4,A5,A6,A)
+
+end
+
+
+
+local function LoadKeySystem()
+if gethwid then
+
+local a=2^32;local b=a-1;local function c(d,e)local f,g=0,1;while d~=0 or e~=0 do local h,i=d%2,e%2;local j=(h+i)%2;f=f+j*g;d=math.floor(d/2)e=math.floor(e/2)g=g*2 end;return f%a end;local function k(d,e,l,...)local m;if e then d=d%a;e=e%a;m=c(d,e)if l then m=k(m,l,...)end;return m elseif d then return d%a else return 0 end end;local function n(d,e,l,...)local m;if e then d=d%a;e=e%a;m=(d+e-c(d,e))/2;if l then m=n(m,l,...)end;return m elseif d then return d%a else return b end end;local function o(p)return b-p end;local function q(d,r)if r<0 then return lshift(d,-r)end;return math.floor(d%2^32/2^r)end;local function s(p,r)if r>31 or r<-31 then return 0 end;return q(p%a,r)end;local function lshift(d,r)if r<0 then return s(d,-r)end;return d*2^r%2^32 end;local function t(p,r)p=p%a;r=r%32;local u=n(p,2^r-1)return s(p,r)+lshift(u,32-r)end;local v={0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2}local function w(x)return string.gsub(x,".",function(l)return string.format("%02x",string.byte(l))end)end;local function y(z,A)local x=""for B=1,A do local C=z%256;x=string.char(C)..x;z=(z-C)/256 end;return x end;local function D(x,B)local A=0;for B=B,B+3 do A=A*256+string.byte(x,B)end;return A end;local function E(F,G)local H=64-(G+9)%64;G=y(8*G,8)F=F.."\128"..string.rep("\0",H)..G;assert(#F%64==0)return F end;local function I(J)J[1]=0x6a09e667;J[2]=0xbb67ae85;J[3]=0x3c6ef372;J[4]=0xa54ff53a;J[5]=0x510e527f;J[6]=0x9b05688c;J[7]=0x1f83d9ab;J[8]=0x5be0cd19;return J end;local function K(F,B,J)local L={}for M=1,16 do L[M]=D(F,B+(M-1)*4)end;for M=17,64 do local N=L[M-15]local O=k(t(N,7),t(N,18),s(N,3))N=L[M-2]L[M]=(L[M-16]+O+L[M-7]+k(t(N,17),t(N,19),s(N,10)))%a end;local d,e,l,P,Q,R,S,T=J[1],J[2],J[3],J[4],J[5],J[6],J[7],J[8]for B=1,64 do local O=k(t(d,2),t(d,13),t(d,22))local U=k(n(d,e),n(d,l),n(e,l))local V=(O+U)%a;local W=k(t(Q,6),t(Q,11),t(Q,25))local X=k(n(Q,R),n(o(Q),S))local Y=(T+W+X+v[B]+L[B])%a;T=S;S=R;R=Q;Q=(P+Y)%a;P=l;l=e;e=d;d=(Y+V)%a end;J[1]=(J[1]+d)%a;J[2]=(J[2]+e)%a;J[3]=(J[3]+l)%a;J[4]=(J[4]+P)%a;J[5]=(J[5]+Q)%a;J[6]=(J[6]+R)%a;J[7]=(J[7]+S)%a;J[8]=(J[8]+T)%a end;local function Z(F)F=E(F,#F)local J=I({})for B=1,#F,64 do K(F,B,J)end;return w(y(J[1],4)..y(J[2],4)..y(J[3],4)..y(J[4],4)..y(J[5],4)..y(J[6],4)..y(J[7],4)..y(J[8],4))end;local e;local l={["\\"]="\\",["\""]="\"",["\b"]="b",["\f"]="f",["\n"]="n",["\r"]="r",["\t"]="t"}local P={["/"]="/"}for Q,R in pairs(l)do P[R]=Q end;local S=function(T)return"\\"..(l[T]or string.format("u%04x",T:byte()))end;local B=function(M)return"null"end;local v=function(M,z)local _={}z=z or{}if z[M]then error("circular reference")end;z[M]=true;if rawget(M,1)~=nil or next(M)==nil then local A=0;for Q in pairs(M)do if type(Q)~="number"then error("invalid table: mixed or invalid key types")end;A=A+1 end;if A~=#M then error("invalid table: sparse array")end;for a0,R in ipairs(M)do table.insert(_,e(R,z))end;z[M]=nil;return"["..table.concat(_,",").."]"else for Q,R in pairs(M)do if type(Q)~="string"then error("invalid table: mixed or invalid key types")end;table.insert(_,e(Q,z)..":"..e(R,z))end;z[M]=nil;return"{"..table.concat(_,",").."}"end end;local g=function(M)return'"'..M:gsub('[%z\1-\31\\"]',S)..'"'end;local a1=function(M)if M~=M or M<=-math.huge or M>=math.huge then error("unexpected number value '"..tostring(M).."'")end;return string.format("%.14g",M)end;local j={["nil"]=B,["table"]=v,["string"]=g,["number"]=a1,["boolean"]=tostring}e=function(M,z)local x=type(M)local a2=j[x]if a2 then return a2(M,z)end;error("unexpected type '"..x.."'")end;local a3=function(M)return e(M)end;local a4;local N=function(...)local _={}for a0=1,select("#",...)do _[select(a0,...)]=true end;return _ end;local L=N(" ","\t","\r","\n")local p=N(" ","\t","\r","\n","]","}",",")local a5=N("\\","/",'"',"b","f","n","r","t","u")local m=N("true","false","null")local a6={["true"]=true,["false"]=false,["null"]=nil}local a7=function(a8,a9,aa,ab)for a0=a9,#a8 do if aa[a8:sub(a0,a0)]~=ab then return a0 end end;return#a8+1 end;local ac=function(a8,a9,J)local ad=1;local ae=1;for a0=1,a9-1 do ae=ae+1;if a8:sub(a0,a0)=="\n"then ad=ad+1;ae=1 end end;error(string.format("%s at line %d col %d",J,ad,ae))end;local af=function(A)local a2=math.floor;if A<=0x7f then return string.char(A)elseif A<=0x7ff then return string.char(a2(A/64)+192,A%64+128)elseif A<=0xffff then return string.char(a2(A/4096)+224,a2(A%4096/64)+128,A%64+128)elseif A<=0x10ffff then return string.char(a2(A/262144)+240,a2(A%262144/4096)+128,a2(A%4096/64)+128,A%64+128)end;error(string.format("invalid unicode codepoint '%x'",A))end;local ag=function(ah)local ai=tonumber(ah:sub(1,4),16)local aj=tonumber(ah:sub(7,10),16)if aj then return af((ai-0xd800)*0x400+aj-0xdc00+0x10000)else return af(ai)end end;local ak=function(a8,a0)local _=""local al=a0+1;local Q=al;while al<=#a8 do local am=a8:byte(al)if am<32 then ac(a8,al,"control character in string")elseif am==92 then _=_..a8:sub(Q,al-1)al=al+1;local T=a8:sub(al,al)if T=="u"then local an=a8:match("^[dD][89aAbB]%x%x\\u%x%x%x%x",al+1)or a8:match("^%x%x%x%x",al+1)or ac(a8,al-1,"invalid unicode escape in string")_=_..ag(an)al=al+#an else if not a5[T]then ac(a8,al-1,"invalid escape char '"..T.."' in string")end;_=_..P[T]end;Q=al+1 elseif am==34 then _=_..a8:sub(Q,al-1)return _,al+1 end;al=al+1 end;ac(a8,a0,"expected closing quote for string")end;local ao=function(a8,a0)local am=a7(a8,a0,p)local ah=a8:sub(a0,am-1)local A=tonumber(ah)if not A then ac(a8,a0,"invalid number '"..ah.."'")end;return A,am end;local ap=function(a8,a0)local am=a7(a8,a0,p)local aq=a8:sub(a0,am-1)if not m[aq]then ac(a8,a0,"invalid literal '"..aq.."'")end;return a6[aq],am end;local ar=function(a8,a0)local _={}local A=1;a0=a0+1;while 1 do local am;a0=a7(a8,a0,L,true)if a8:sub(a0,a0)=="]"then a0=a0+1;break end;am,a0=a4(a8,a0)_[A]=am;A=A+1;a0=a7(a8,a0,L,true)local as=a8:sub(a0,a0)a0=a0+1;if as=="]"then break end;if as~=","then ac(a8,a0,"expected ']' or ','")end end;return _,a0 end;local at=function(a8,a0)local _={}a0=a0+1;while 1 do local au,M;a0=a7(a8,a0,L,true)if a8:sub(a0,a0)=="}"then a0=a0+1;break end;if a8:sub(a0,a0)~='"'then ac(a8,a0,"expected string for key")end;au,a0=a4(a8,a0)a0=a7(a8,a0,L,true)if a8:sub(a0,a0)~=":"then ac(a8,a0,"expected ':' after key")end;a0=a7(a8,a0+1,L,true)M,a0=a4(a8,a0)_[au]=M;a0=a7(a8,a0,L,true)local as=a8:sub(a0,a0)a0=a0+1;if as=="}"then break end;if as~=","then ac(a8,a0,"expected '}' or ','")end end;return _,a0 end;local av={['"']=ak,["0"]=ao,["1"]=ao,["2"]=ao,["3"]=ao,["4"]=ao,["5"]=ao,["6"]=ao,["7"]=ao,["8"]=ao,["9"]=ao,["-"]=ao,["t"]=ap,["f"]=ap,["n"]=ap,["["]=ar,["{"]=at}a4=function(a8,a9)local as=a8:sub(a9,a9)local a2=av[as]if a2 then return a2(a8,a9)end;ac(a8,a9,"unexpected character '"..as.."'")end;local aw=function(a8)if type(a8)~="string"then error("expected argument of type string, got "..type(a8))end;local _,a9=a4(a8,a7(a8,1,L,true))a9=a7(a8,a9,L,true)if a9<=#a8 then ac(a8,a9,"trailing garbage")end;return _ end;
+
+local lEncode, lDecode, lDigest = a3, aw, Z;
+
+local service = 87; 
+local secret = "3bd6b4c8-03c9-472f-9998-757459e1f3df";
+local useNonce = true; 
+
+local onMessage = function(message) end;
+
+repeat task.wait(1) until game:IsLoaded();
+
+local requestSending = false;
+
+local fSetClipboard, fStringChar, fToString, fStringSub, fOsTime, fMathRandom, fMathFloor, fGetHwid = setclipboard or toclipboard, string.char, tostring, string.sub, os.time, math.random, math.floor, gethwid or function() return game:GetService("Players").LocalPlayer.UserId end
+
+local cachedLink, cachedTime = "", 0;
+
+local fRequest = syn and syn.request or http and http.request or http_request or 
+                fluxus and fluxus.request or request or oxygen and oxygen.http or 
+                comet and comet.request or yoink and yoink.request or venus and venus.request or 
+                WRD and WRD.request or solara and solara.request or HttpPost
+
+local host = "https://api.platoboost.com";
+
+local hostResponse = fRequest({
+    Url = host .. "/public/connectivity",
+    Method = "GET"
+});
+
+if hostResponse.StatusCode ~= 200 or hostResponse.StatusCode ~= 429 then
+    host = "https://api.platoboost.net";
+end
+
+
+
+function cacheLink()
+    if cachedTime + (10*60) < fOsTime() then
+        local response = fRequest({
+            Url = host .. "/public/start",
+            Method = "POST",
+
+            Body = lEncode({
+                service = service,
+                identifier = lDigest(fGetHwid())
+            }),
+            
+            Headers = {
+                ["Content-Type"] = "application/json"
+            }
+        });
+
+        if response.StatusCode == 200 then
+            local decoded = lDecode(response.Body);
+
+            if decoded.success == true then
+                cachedLink = decoded.data.url;
+                cachedTime = fOsTime();
+                return true, cachedLink;
+            else
+                onMessage(decoded.message);
+                return false, decoded.message;
+       end
+        elseif response.StatusCode == 429 then
+            local msg = "you are being rate limited, please wait 20 seconds and try again.";
+            onMessage(msg);
+            return false, msg;
+        end
+
+        local msg = "Failed to cache link.";
+        onMessage(msg);
+        return false, msg;
+    else
+        return true, cachedLink;
+    end
+end
+
+cacheLink();
+
+local generateNonce = function()
+    local str = ""
+    for _ = 1, 16 do
+        str = str .. fStringChar(fMathFloor(fMathRandom() * (122 - 97 + 1)) + 97)
+    end
+    return str
+end
+
+
+
+for _ = 1, 5 do
+    local oNonce = generateNonce();
+    task.wait(0.2)
+    if generateNonce() == oNonce then
+        local msg = "platoboost nonce error.";
+        onMessage(msg);
+        error(msg);
+    end
+end
+
+
+local copyLink = function()
+    local success, link = cacheLink()
+    if success then
+        fSetClipboard(link)
+        return link 
+    else
+        return nil
+    end
+end
+
+local redeemKey = function(key)
+    local nonce = generateNonce();
+    local endpoint = host .. "/public/redeem/" .. fToString(service);
+
+    local body = {
+        identifier = lDigest(fGetHwid()),
+        key = key
+    }
+
+    if useNonce then
+      body.nonce = nonce;
+    end
+
+    local response = fRequest({
+        Url = endpoint,
+        Method = "POST",
+        Body = lEncode(body),
+        Headers = {
+            ["Content-Type"] = "application/json"
+        }
+    });
+
+    if response.StatusCode == 200 then
+        local decoded = lDecode(response.Body);
+
+        if decoded.success == true then
+            if decoded.data.valid == true then
+                if useNonce then
+                    if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
+                        return true;
+
+                    else
+
+                        onMessage("failed to verify integrity.");
+                        return false;
+                    end    
+                else
+                    return true;
+                end
+            else
+                onMessage("key is invalid.");
+                return false;
+            end         
+        else
+            if fStringSub(decoded.message, 1, 27) == "unique constraint violation" then
+           onMessage("you already have an active key, please wait for it to expire before redeeming it.");
+                return false;
+        else
+                onMessage(decoded.message);
+                return false;
+            end
+        end
+    elseif response.StatusCode == 429 then
+        onMessage("you are being rate limited, please wait 20 seconds and try again.");
+        return false;
+    else
+        onMessage("server returned an invalid status code, please try again later.");
+        return false; 
+    end
+end
+
+local verifyKey = function(key)
+    if requestSending == true then
+        onMessage("a request is already being sent, please slow down.");
+        return false;
+    else
+        requestSending = true;
+    end
+
+    local nonce = generateNonce();
+    local endpoint = host .. "/public/whitelist/" .. fToString(service) .. "?identifier=" .. lDigest(fGetHwid()) .. "&key=" .. key;
+
+    if useNonce then
+        endpoint = endpoint .. "&nonce=" .. nonce;
+    end
+
+    local response = fRequest({
+        Url = endpoint,
+        Method = "GET",
+    });
+    
+    requestSending = false;
+
+    if response.StatusCode == 200 then
+        local decoded = lDecode(response.Body);
+        
+     if decoded.success == true then
+           if decoded.data.valid == true then
+                if useNonce then
+                    if decoded.data.hash == lDigest("true" .. "-" .. nonce .. "-" .. secret) then
+                        return true;
+                  else
+                       onMessage("failed to verify integrity.");
+                        return false;
+                    end
+              else
+                    return true;
+                end
+            else
+                if fStringSub(key, 1, 4) == "KEY_" then
+                    return redeemKey(key);
+                else
+                    onMessage("key is invalid.");
+                    return false;
+                end
+            end
+        else
+            onMessage(decoded.message);
+            return false;
+        end
+
+    elseif response.StatusCode == 429 then
+        onMessage("you are being rate limited, please wait 20 seconds and try again.");
+        return false;
+    else
+        onMessage("server returned an invalid status code, please try again later.");
+        return false;
+    end
+end
+
+local getFlag = function(name)
+    local nonce = generateNonce();
+    local endpoint = host .. "/public/flag/" .. fToString(service) .. "?name=" .. name;
+
+    if useNonce then
+       endpoint = endpoint .. "&nonce=" .. nonce;
+    end
+
+    local response = fRequest({
+        Url = endpoint,
+        Method = "GET",
+    });
+
+    if response.StatusCode == 200 then
+        local decoded = lDecode(response.Body);
+        if decoded.success == true then
+            if useNonce then
+                if decoded.data.hash == lDigest(fToString(decoded.data.value) .. "-" .. nonce .. "-" .. secret) then
+                    return decoded.data.value;
+                else
+                    onMessage("failed to verify integrity.");
+                    return nil;
+                end
+            else
+                return decoded.data.value;
+            end
+       else
+            onMessage(decoded.message);
+            return nil;
+        end
+    else
+        return nil;
+    end
+end
+
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Library"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Save%20Manager"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Library/Interface%20Manager"))()
+
+local FileSupport = isfile and isfolder and writefile and readfile and makefolder
+
+if FileSupport and not isfolder("System-Hub-V3") then
+    makefolder("System-Hub-V3")
+end
+
+local function getSavedKey()
+    if FileSupport then
+        if isfile("System-Hub-V3/Key") then
+            return readfile("System-Hub-V3/Key")
+        else
+            return "empty"
+        end
+    else
+        return "empty"
+    end
+end
+
+function Notification(Title,Content,subcontent,duration)
+Fluent:Notify({
+        Title = Title,
+        Content = Content,
+        SubContent = subcontent,
+        Duration = duration
+})
+end
+
+Notification("Key", "Checking Key...","", 3)
+wait(1)
+if verifyKey(getSavedKey()) then
+   Notification("Success", "Key verified! Loading main script...","", 5)
+   wait(2.5)
+   LoadSySteMHuB()
+ else
+   Notification("Failed", "Key not verified! Loading Key System...","", 5)
+   wait(0.5)
+
+local Window = Fluent:CreateWindow({
+    Title = "System Hub Key System",
+    SubTitle = "by ahmed121212",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(570,365),
+    Acrylic = false,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.RightShift
+})
+
+Main = Window:AddTab({ Title = "Main", Icon = "rbxassetid://7743875263" })
+
+local key = ""
+
+local Input = Main:AddInput("Input", {
+        Title = "Enter Key",
+        Default = "",
+        Numeric = false,
+        Finished = false, 
+        Callback = function(Value)
+            key = Value
+        end
+})
+
+Main:AddButton({Title = "Check Key",Callback = function()
+             if key == "" then
+                    Notification("Error!", "Please enter a key before checking.","", 5)
+                    return
+                end
+
+                if verifyKey(key) then
+                    Notification("Correct Key!", "The key you entered is correct.","", 3)
+                    wait(1)
+                    Notification("Access Granted!", "You now have access for 48 hours. Have fun! :D","", 4)
+
+                    if FileSupport then
+                        writefile("System-Hub-V3/Key", key)
+                    else
+                        Notification("System Hub", "Your Executor Doesn't Support Files And Will Not Save The Key. Try Saving The Key Somewhere or Use Another Executor Like Solara or Delta.","", 10)
+                    end
+
+                    wait(3)
+                    Fluent:Destroy()
+                    wait(0.5)
+                    LoadSySteMHuB()
+                else
+          Notification("Incorrect Key!", "The key you entered is incorrect.","", 5)
+        end
+end})
+
+Main:AddButton({Title = "Get Key",Callback = function()
+        local keyLink = copyLink()
+       if keyLink then
+            setclipboard(keyLink)
+            Notification("System Hub", "Key link copied to clipboard!","", 5)
+        else
+             Notification("System Hub", "Failed to copy key link!","", 5)
+        end
+end})
+
+Main:AddButton({Title = "Discord Server",Callback = function()
+        setclipboard("https://discord.gg/hh9gBDaWd4")
+        Notification("System Hub","Discord Server Link copied to clipboard!","",5)
+end})
+
+Feedback = Window:AddTab({ Title = "Feedback", Icon = "message-circle" })
+
+Feedback:AddParagraph({
+        Title = "Key System",
+        Content = "If you are having problems with the key system, please send feedback so we can fix the issues, or just DM me ahmed121212 in discord."
+})
+
+local HttpService = game:GetService("HttpService")
+local player = game.Players.LocalPlayer
+local placeName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+local webhook = "https://discord.com/api/webhooks/1354646093702627398/9y6nXtYyLsW__uEm2uqc9tuu3461D9vseQf_fA0epGr1bPIMehBLUDPN710ANbyQb3yD"
+
+local feedbackTimes = {}
+
+local function sendFeedback(txt)
+    local currentTime = os.time()
+    
+    for i = #feedbackTimes, 1, -1 do
+        if currentTime - feedbackTimes[i] > 3600 then
+            table.remove(feedbackTimes, i)
+        end
+    end
+
+    if #feedbackTimes >= 3 then
+        OrionLib:MakeNotification({ 
+            Name = "System Hub", 
+            Content = "You can only send 3 feedbacks per hour!", 
+            Image = "rbxassetid://6031075938", 
+            Time = 5 
+        })
+        return
+    end
+
+    table.insert(feedbackTimes, currentTime)
+
+    local data = {
+        content = "",
+        embeds = {
+            {
+                title = "Feedback From : " .. player.Name,
+                description = "Executor : "..(identifyexecutor and identifyexecutor() or "Unknown").."   Game : "..placeName.."           Feedback : "..txt
+            }
+        }
+    }
+    local jsonData = HttpService:JSONEncode(data)
+    local headers = { ["Content-Type"] = "application/json" }
+
+    local request = syn and syn.request or http and http.request or http_request or request or fluxus and fluxus.request 
+                    or oxygen and oxygen.http or comet and comet.request or yoink and yoink.request 
+                    or venus and venus.request or WRD and WRD.request or solara and solara.request or HttpPost
+
+if request then
+    request({ Url = webhook, Method = "POST", Headers = headers, Body = jsonData })
+        Notification("System Hub","Feedback sent successfully","",5)
+    else
+        Notification("System Hub","Failed to send feedback. Try another executor.","",5)
+    end
+end
+
+local userInput = ""
+
+local Input = Feedback:AddInput("Input", {
+        Title = "Feedback",
+        Default = "",
+        Numeric = false,
+        Finished = false, 
+        Callback = function(Value)
+            userInput = Value
+        end
+})
+
+Feedback:AddButton({Title = "Send",Callback = function()
+            if userInput ~= "" then
+            sendFeedback(userInput)
+        else
+            Notification("System Hub","No Feedback to send","",5)
+        end
+end})
+
+Window:SelectTab(1)
+
+
+   end
+end
+end 
+
+function loadintrogui()
+
+local TweenService = game:GetService("TweenService")
+
+local CCOpeningScreen = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local BlurEffect = Instance.new("BlurEffect")
+local ImageLogo = Instance.new("ImageLabel")
+local T1 = Instance.new("TextLabel")
+local T2 = Instance.new("TextLabel")
+local T3 = Instance.new("TextLabel")
+local LoadBar = Instance.new("Frame")
+local LoadBarFill = Instance.new("Frame")
+local Corner = Instance.new("UICorner")
+local CornerMain = Instance.new("UICorner")
+
+BlurEffect.Parent = game:GetService("Lighting")
+BlurEffect.Size = 0
+
+CCOpeningScreen.Name = "CCOpeningScreen"
+CCOpeningScreen.Parent = game.CoreGui
+CCOpeningScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = CCOpeningScreen
+MainFrame.Active = true
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+MainFrame.BorderSizePixel = 0
+MainFrame.ClipsDescendants = true
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainFrame.Size = UDim2.new(0, 0, 0, 180)
+CornerMain.CornerRadius = UDim.new(0, 10)
+CornerMain.Parent = MainFrame
+
+ImageLogo.Name = "ImageLogo"
+ImageLogo.Parent = MainFrame
+ImageLogo.BackgroundTransparency = 1
+ImageLogo.Position = UDim2.new(0.05, 0, 0.5, 0)
+ImageLogo.AnchorPoint = Vector2.new(0, 0.5)
+ImageLogo.Size = UDim2.new(0, 70, 0, 70)
+ImageLogo.Image = "rbxassetid://112202836036494"
+ImageLogo.ImageTransparency = 1
+
+local function createTextEffect(label)
+    local gradient = Instance.new("UIGradient")
+    gradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 200, 200))
+    })
+    gradient.Parent = label
+    
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(255, 255, 255)
+    stroke.Transparency = 1
+    stroke.Thickness = 1
+    stroke.Parent = label
+    
+    return stroke, gradient
+end
+
+T1.Name = "T1"
+T1.Parent = MainFrame
+T1.AnchorPoint = Vector2.new(0, 0.5)
+T1.BackgroundTransparency = 1
+T1.Position = UDim2.new(0.35, 0, 0.35, 0)
+T1.Size = UDim2.new(0, 180, 0, 25)
+T1.Font = Enum.Font.GothamBold
+T1.Text = "Welcome To"
+T1.TextColor3 = Color3.fromRGB(255, 255, 255)
+T1.TextSize = 20
+T1.TextTransparency = 1
+T1.TextXAlignment = Enum.TextXAlignment.Left
+local stroke1, gradient1 = createTextEffect(T1)
+
+T2.Name = "T2"
+T2.Parent = MainFrame
+T2.AnchorPoint = Vector2.new(0, 0.5)
+T2.BackgroundTransparency = 1
+T2.Position = UDim2.new(0.35, 0, 0.55, 0)
+T2.Size = UDim2.new(0, 180, 0, 35)
+T2.Font = Enum.Font.GothamBlack
+T2.Text = "System Hub!"
+T2.TextColor3 = Color3.fromRGB(255, 255, 255)
+T2.TextSize = 30
+T2.TextTransparency = 1
+T2.TextXAlignment = Enum.TextXAlignment.Left
+local stroke2, gradient2 = createTextEffect(T2)
+
+T3.Name = "T3"
+T3.Parent = MainFrame
+T3.AnchorPoint = Vector2.new(0.5, 0.5)
+T3.BackgroundTransparency = 1
+T3.Position = UDim2.new(0.5, 0, 0.8, 0)
+T3.Size = UDim2.new(0.9, 0, 0, 15)
+T3.Font = Enum.Font.Gotham
+T3.TextColor3 = Color3.fromRGB(200, 200, 200)
+T3.TextSize = 14
+T3.TextTransparency = 1
+
+LoadBar.Name = "LoadBar"
+LoadBar.Parent = MainFrame
+LoadBar.AnchorPoint = Vector2.new(0.5, 0.5)
+LoadBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+LoadBar.Position = UDim2.new(0.5, 0, 0.92, 0)
+LoadBar.Size = UDim2.new(0.9, 0, 0, 8)
+Corner.CornerRadius = UDim.new(0, 4)
+Corner.Parent = LoadBar
+
+LoadBarFill.Name = "LoadBarFill"
+LoadBarFill.Parent = LoadBar
+LoadBarFill.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LoadBarFill.Size = UDim2.new(0, 0, 1, 0)
+local CornerFill = Corner:Clone()
+CornerFill.Parent = LoadBarFill
+
+local function animate(object, properties, time, style, direction, delay)
+    delay = delay or 0
+    wait(delay)
+    local tween = TweenService:Create(
+        object,
+        TweenInfo.new(time, Enum.EasingStyle[style], Enum.EasingDirection[direction]),
+        properties
+    )
+    tween:Play()
+    return tween
+end
+
+local function animateGradient(gradient)
+    local offset = 0
+    while wait() do
+        offset = (offset + 0.02) % 1
+        gradient.Offset = Vector2.new(offset, offset)
+    end
+end
+
+local function main()
+    animate(BlurEffect, {Size = 20}, 0.5, "Quad", "Out")
+    
+    wait(0.3)
+    animate(MainFrame, {Size = UDim2.new(0, 340, 0, 180)}, 0.8, "Back", "Out")
+    
+    wait(0.2)
+    animate(ImageLogo, {ImageTransparency = 0}, 0.6, "Quad", "Out")
+    
+    wait(0.3)
+    
+    animate(T1, {TextTransparency = 0}, 0.6, "Quad", "Out")
+    animate(T1, {Position = UDim2.new(0.35, 0, 0.35, 0)}, 0.8, "Back", "Out")
+    animate(stroke1, {Transparency = 0.8}, 0.6, "Quad", "Out")
+    
+    wait(0.2)
+    
+
+    animate(T2, {TextTransparency = 0}, 0.6, "Quad", "Out")
+    animate(T2, {Position = UDim2.new(0.35, 0, 0.55, 0)}, 0.8, "Back", "Out")
+    animate(stroke2, {Transparency = 0.8}, 0.6, "Quad", "Out")
+    
+    coroutine.wrap(function() animateGradient(gradient1) end)()
+    coroutine.wrap(function() animateGradient(gradient2) end)()
+    
+    wait(0.2)
+    animate(T3, {TextTransparency = 0}, 0.6, "Quad", "Out")
+    
+    local loadingSteps = {
+        {progress = 0.2, text = "System initialization...", time = 0.6},
+        {progress = 0.4, text = "Loading modules...", time = 0.5},
+        {progress = 0.6, text = "Configuring interface...", time = 0.5},
+        {progress = 0.8, text = "Final preparation...", time = 0.4},
+        {progress = 1, text = "Ready!", time = 0.3}
+    }
+    
+    for _, step in ipairs(loadingSteps) do
+        T3.Text = step.text
+        animate(LoadBarFill, {
+            Size = UDim2.new(step.progress, 0, 1, 0),
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        }, step.time, "Quad", "Out")
+        wait(step.time + 0.2)
+    end
+    
+    wait(0.8)
+    
+    animate(ImageLogo, {ImageTransparency = 1}, 0.3, "Quad", "In")
+    animate(LoadBarFill, {BackgroundTransparency = 1}, 0.3, "Quad", "In")
+    animate(LoadBar, {BackgroundTransparency = 1}, 0.3, "Quad", "In")
+    animate(T1, {TextTransparency = 1, Position = UDim2.new(0.35, -50, 0.35, 0)}, 0.3, "Quad", "In")
+    animate(T2, {TextTransparency = 1, Position = UDim2.new(0.35, -50, 0.55, 0)}, 0.3, "Quad", "In")
+    animate(T3, {TextTransparency = 1}, 0.3, "Quad", "In")
+    animate(BlurEffect, {Size = 0}, 0.5, "Quad", "In")
+    
+    wait(0.3)
+    animate(MainFrame, {Size = UDim2.new(0, 0, 0, 180)}, 0.5, "Back", "In")
+    
+    wait(0.5)
+    CCOpeningScreen:Destroy()
+    BlurEffect:Destroy()
+end
+
+coroutine.wrap(main)()
+end
+
+local playerName = game.Players.LocalPlayer.Name
+
+if playerName == "notmyrealnamee353" or playerName == "notmyrealnamee343" or playerName == "iiMa7moud10" then
+loadintrogui() 
+wait(2)
+    LoadSySteMHuB()
+end
+
+local player = game.Players.LocalPlayer
+
+if gethwid then
+    local hwid = gethwid()
+
+    if hwid == "9c359a4c5d5ccd7d17d2d4adff3f113a956c0003a835aac3ab9ce2c9d064279e" then
+        local function Callback(answer)
+            if answer == "Yes" then 
+                loadintrogui()
+                wait(3)
+                LoadKeySystem()
+            elseif answer == "No" then
+                LoadSySteMHuB()
+            end 
+        end
+
+        local Bindable = Instance.new("BindableFunction")
+        Bindable.OnInvoke = Callback
+
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "Welcome Owner",
+            Text = "Do You Want To Load The Key System",
+            Duration = 300,
+            Button1 = "Yes",
+            Button2 = "No",
+            Callback = Bindable
+        })
+
+    elseif hwid == "043cdacd574520c718bee341e1db7fac8e694704e0f13593f5631c325985f3b1" then
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "رساله من احمد الطرش",
+            Text = "منور يا انوس",
+            Duration = 10,
+        })
+        LoadSySteMHuB()
+
+    else
+        loadintrogui()
+        wait(3)
+        LoadKeySystem()
+    end
+
+else
+    loadintrogui()
+    wait(3)
+    LoadKeySystem()
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
