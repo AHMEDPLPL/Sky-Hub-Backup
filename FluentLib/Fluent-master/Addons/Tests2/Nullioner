@@ -4,12 +4,6 @@
 
 
 local Global = getgenv and getgenv() or _G
-Global.Fling = true
-Global.HatDrop = false
-Global.HatFling = false
-Global.ToolFling = false
-Global.PremadeathEnabled = true
-Global.ServerBreakJoints = true
 local Empyrean = loadstring(game:HttpGet("https://raw.githubusercontent.com/AHMEDPLPL/System-hub-V3/refs/heads/main/Scripts/Emper%20reanimte"))()
 
 Empyrean = Start({
